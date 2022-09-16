@@ -68,7 +68,11 @@ public class SaleDAOImpl implements SaleDAO {
 
 		sql.update(namespace + ".modifyPayAmt", updata);
 	}
-
+	@Override
+	public void delete_backup(String sale_num) throws Exception {
+		// TODO Auto-generated method stub
+		sql.insert(namespace + ".del_backup", sale_num);
+	}
 	@Override
 	public void delete(String sale_num) throws Exception {
 		// TODO Auto-generated method stub
@@ -111,6 +115,8 @@ public class SaleDAOImpl implements SaleDAO {
 		// TODO Auto-generated method stub
 		return sql.selectOne(namespace + ".countByWhere", strWhere);
 	}
+
+	
 
 	
 }

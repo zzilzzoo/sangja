@@ -836,7 +836,7 @@
 							>Cancel</a>
 						</div>
 						<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-							<a href="#"
+							<a href="#" onclick="del_sales('${salenum}')"
 								class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
 							> <i class="bx bx-trash text-4 me-2"></i> Delete Order
 							</a>
@@ -1658,6 +1658,46 @@
 		  calcTotal();
 	  });
 	});
+	</script>
+	<script type="text/javascript">
+	//삭제
+	function del_sales(salenum) {		
+		var sale_num=salenum;
+		if(salenum="")
+			{
+			alert("There is no information to delete.");
+			return;
+			}
+		if (!confirm("You sure you want to delete it?")) {            
+            return;
+        }else{
+        	alert(sale_num);
+		$.ajax({
+			url : "del-sales",
+			type : "POST",
+			data : {
+				"sale_num" : sale_num
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "ok") {
+					alert("Deleted!!.");
+					location.href="/order-list";
+				
+				}
+
+				else {
+					alert(data);
+				}
+			},
+			error : function(error) {
+				alert(error);
+			}
+		});
+        }
+		
+		
+		}
 	</script>
 	<script type="text/javascript">
 		var message = "${msg}";

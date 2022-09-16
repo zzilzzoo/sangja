@@ -19,6 +19,8 @@ public interface SaleService {
 	public void modifyPayAmt(String sale_num, double pay_amt, String pay_ymdt) throws Exception;
 
 	// 게시물 삭제
+	public void delete_backup(String sale_num) throws Exception;	
+	// 게시물 삭제
 	public void delete(String sale_num) throws Exception;
 
 	// 게시물 총 갯수

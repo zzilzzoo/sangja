@@ -54,7 +54,11 @@ public class SaleServiceImpl implements SaleService {
 		System.out.println(pay_ymdt);
 		dao.modifyPayAmt(sale_num, pay_amt, pay_ymdt);
 	}
-
+	@Override
+	public void delete_backup(String sale_num) throws Exception {
+		// TODO Auto-generated method stub
+		dao.delete_backup(sale_num);
+	}
 	@Override
 	public void delete(String sale_num) throws Exception {
 		// TODO Auto-generated method stub
@@ -97,6 +101,8 @@ public class SaleServiceImpl implements SaleService {
 		// TODO Auto-generated method stub
 		return dao.countByWhere(strWhere);
 	}
+
+	
 
 	
 

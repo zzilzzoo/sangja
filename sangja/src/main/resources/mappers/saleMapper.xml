@@ -28,10 +28,12 @@
 		editor,
 		crt_ymdt,
 		mod_ymdt
-		from tbs_sale_rec 
+		from
+		tbs_sale_rec
 	</select>
-	
-	<select id="listByWhere" parameterType="string" resultType="com.sangja.domain.SaleVO">
+
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.SaleVO">
 		select
 		sale_num,
 		ord_no,
@@ -55,7 +57,8 @@
 		editor,
 		crt_ymdt,
 		mod_ymdt
-		from tbs_sale_rec where 1=1 ${strWhere} 
+		from tbs_sale_rec where 1=1
+		${strWhere}
 	</select>
 
 	<!-- 게시물 작성 -->
@@ -138,7 +141,8 @@
 		from
 		tbs_sale_rec
 		where
-		sale_num = #{sale_num}
+		sale_num =
+		#{sale_num}
 	</select>
 
 	<!-- 게시물 수정 -->
@@ -146,8 +150,7 @@
 		update tbs_sale_rec
 		set
 		ord_no=#{ord_no},
-		<!-- sale_ymd=#{sale_ymd},
-		sale_time=#{sale_time},-->
+		<!-- sale_ymd=#{sale_ymd}, sale_time=#{sale_time}, -->
 		sale_type=#{sale_type},
 		sale_user_num=#{sale_user_num},
 		cust_num=#{cust_num},
@@ -160,8 +163,7 @@
 		tot_tax_amt=#{tot_tax_amt},
 		shopping_cost=#{shopping_cost},
 		tot_ord_amt=#{tot_ord_amt},
-		<!-- tot_pay_amt=#{tot_pay_amt},
-	    last_pay_ymdt=#{last_pay_ymdt},-->
+		<!-- tot_pay_amt=#{tot_pay_amt}, last_pay_ymdt=#{last_pay_ymdt}, -->
 		sale_note=#{sale_note},
 		editor=#{editor},
 		crt_ymdt=#{crt_ymdt},
@@ -180,6 +182,12 @@
 		sale_num = #{sale_num}
 	</update>
 
+	<!-- 게시물 삭제 전 백업 -->
+	<insert id="del_backup" parameterType="string">
+		insert into
+		tbs_sale_rec_del select DATE_FORMAT(now(), '%Y%m%d%H%i%s'), t1.* FROM
+		tbs_sale_rec t1 where sale_num = #{sale_num}
+	</insert>
 	<!-- 게시물 삭제 -->
 	<delete id="delete" parameterType="string">
 		delete
@@ -201,9 +209,11 @@
 		tbs_sale_rec
 	</select>
 	<!-- 게시물 총 갯수 -->
-	<select id="countByWhere" parameterType="string"  resultType="int">
+	<select id="countByWhere" parameterType="string"
+		resultType="int">
 		select count(sale_num) from
-		tbs_sale_rec where 1=1 ${strWhere}
+		tbs_sale_rec where 1=1
+		${strWhere}
 	</select>
 	<!-- 게시물 목록 + 페이징 -->
 	<select id="listPage" parameterType="hashMap"
