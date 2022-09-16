@@ -1725,6 +1725,29 @@ public class SalesMngController {
 		return cspvo;
 
 	}
+	
+	/*판매내역 삭제
+	 * 1.삭제할 내용을 tbs_sale_rec_del로 카피해서 이동 mapper - del_backup
+	 * 2.삭제 진행 mapper - delete  
+	 */
+	@RequestMapping(value = "/del-sales")
+	public @ResponseBody String postDelSales(@RequestParam(value = "sale_num") String sale_num) throws Exception {
+		System.out.print("del-sales:"+sale_num);
+		
+		try {
+			//삭제전 백업
+			saleService.delete_backup(sale_num);
+			//삭제
+			saleService.delete(sale_num);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "fail";
+		}
+		return "ok";
+
+	}
+
 
 	@RequestMapping(value = "/invoice-mobile-print-write", method = RequestMethod.POST)
 	public @ResponseBody String getInvoiceMobilePrintWrite(
@@ -2191,10 +2214,10 @@ public class SalesMngController {
 			ivvo.setInv_date(invo_date);
 
 			custvo = cuService.view(svo.getCust_num());
-			ivvo.setBill_title("SAS WHOLE SALE");
+			ivvo.setBill_title(custvo.getCust_nm());
 			ivvo.setBill_addr1(custvo.getAddr());
 			ivvo.setBill_addr2(custvo.getCity() + " " + custvo.getState() + " " + custvo.getZip_code());
-			ivvo.setShip_title("SAS WHOLE SALE");
+			ivvo.setShip_title(custvo.getCust_nm());
 			ivvo.setShip_addr1(custvo.getAddr());
 			ivvo.setShip_addr2(custvo.getCity() + " " + custvo.getState() + " " + custvo.getZip_code());
 
