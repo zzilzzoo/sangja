@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.user">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_user
+	</select>
+	
+	<select id="idcheck" parameterType="string" resultType="int">
+		select count(user_num) cnt from
+		tbl_user where user_id=#{user_id}
+	</select>
+	
+	<select id="listByWhere" parameterType="string" resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_user where 1=1 ${strWhere}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.UserVO">
+		insert into
+		tbl_user(
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		)
+		values(
+		#{user_nm_f},
+		#{user_nm_l},
+		#{user_id},
+		#{user_pwd},
+		#{category},
+		#{phone_no},
+		#{job},
+		#{user_status},
+		#{editor},
+		DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),
+		DATE_FORMAT(now(), '%Y-%m-%d
+		%H:%i:%s'))
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user
+		where
+		user_num =
+		#{user_num}
+
+	</select>
+	
+	<select id="login" parameterType="com.sangja.domain.UserVO"
+		resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user
+		where
+		user_id =
+		#{user_id} and user_pwd=#{user_pwd}
+
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.UserVO">
+		update tbl_user
+		set
+		user_nm_f=#{user_nm_f},
+		user_nm_l=#{user_nm_l},
+		user_id=#{user_id},
+		user_pwd=#{user_pwd},
+		category=#{category},
+		phone_no=#{phone_no},
+		job=#{job},
+		user_status=#{user_status},
+		editor=#{editor},		
+		mod_ymdt=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')
+		where
+		user_num = #{user_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete
+		from tbl_user
+		where
+		user_num = #{user_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(user_num) from
+		tbl_user
+	</select>
+	<!-- 상품관리 커미션용 -->
+	<select id="listForProduct" parameterType="int"
+		resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user
+		where user_num not in(select user_num from tbl_product_cmms
+		where prd_mng_num= #{prd_mng_num})
+		order by user_num desc
+	</select>
+	
+	
+
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user
+		order by user_num
+		desc
+		limit
+		#{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.UserVO">
+		select
+		user_num,
+		user_nm_f,
+		user_nm_l,
+		user_id,
+		user_pwd,
+		category,
+		phone_no,
+		job,
+		user_status,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by sale_prod_num desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(user_num) from tbl_user
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

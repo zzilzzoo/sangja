@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.usermenu">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.UserMenuVO">
+		select
+		user_num,
+		menu_num,
+		ifnull(read_yn,'n') read_yn,
+		ifnull(write_yn,'n') write_yn,
+		ifnull(delete_yn,'n') delete_yn,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_user_menu where
+		user_num = #{user_num} order by menu_num asc
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.UserMenuVO">
+		insert into
+		tbl_user_menu(
+		user_num,
+		menu_num,
+		read_yn,
+		write_yn,
+		delete_yn,
+		editor,
+		crt_ymdt,
+		mod_ymdt)
+		values(
+		#{user_num},
+		#{menu_num},
+		#{read_yn},
+		#{write_yn},
+		#{delete_yn},
+		#{editor},
+		#{crt_ymdt},
+		#{mod_ymdt})
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="hashMap"
+		resultType="com.sangja.domain.UserMenuVO">
+		select
+		user_num,
+		menu_num,
+		read_yn,
+		write_yn,
+		delete_yn,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user_menu
+		where
+		user_num = #{user_num}
+		and
+		menu_num=#{menu_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.UserMenuVO">
+		update tbl_user_menu
+		set
+		read_yn=#{read_yn},
+		write_yn=#{write_yn},
+		delete_yn=#{delete_yn},
+		editor=#{editor},
+		crt_ymdt=#{crt_ymdt},
+		mod_ymdt=#{mod_ymdt}
+		where
+		user_num = #{user_num}
+		and menu_num=#{menu_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="hashMap">
+		delete
+		from tbl_user_menu
+		where
+		user_num = #{user_num}
+		and menu_num=#{menu_num}
+	</delete>
+	<delete id="deleteAll" parameterType="int">
+		delete
+		from tbl_user_menu
+		where
+		user_num = #{user_num}
+	</delete>
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(menu_num) from
+		tbl_user_menu
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.UserMenuVO">
+		select
+		user_num,
+		menu_num,
+		read_yn,
+		write_yn,
+		delete_yn,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_user_menu
+		order by menu_num desc
+		limit
+		#{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.UserMenuVO">
+		select
+		user_num,
+		menu_num,
+		read_yn,
+		write_yn,
+		delete_yn,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_user_menu
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by menu_num asc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(menu_num) from tbl_user_menu
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

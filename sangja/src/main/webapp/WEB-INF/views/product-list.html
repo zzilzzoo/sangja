@@ -1,0 +1,321 @@
+itemId<!doctype html>
+<?php
+	include "sideba-fixed.html";
+?>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>Product List | SangJa Admin</title>
+		<meta name="keywords" content="SangJa Admin" />
+		<meta name="description" content="SangJa Admin">
+		<meta name="author" content="Sangja">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,600,700,800,900" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" />
+		<link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css" />
+		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap5.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="css/theme.css" />
+
+		<!-- Theme Layout -->
+		<link rel="stylesheet" href="css/layouts/modern.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="css/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="vendor/modernizr/modernizr.js"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<?php
+				$firstmenu_code=1;
+				$secondmenu_code=1;
+				$third_code=2;
+			    include "header.html";
+    	    ?>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<?php
+				    include "sidebar-left.html";
+    		    ?>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body content-body-modern mt-0">
+					<header class="page-header page-header-left-inline-breadcrumb">
+						<h2 class="font-weight-bold text-6">Product</h2>
+						<div class="right-wrapper">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Basic</span></li>
+
+								<li><span>Product Management </span></li>
+
+								<li><span>Product</span></li>
+
+							</ol>
+
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<div class="row">
+						<div class="col">										
+							<div class="card card-modern">
+								<div class="card-body">
+					    			<div class="datatables-header-footer-wrapper">
+										<div class="datatable-header">
+											<div class="row align-items-center mb-0">
+												<div class="col-8 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<a href="product-form.html" class="btn btn-primary btn-md font-weight-semibold btn-py-2 px-4">Add <i class="fas fa-plus"></i></a>
+												</div>
+												<div class="col-4 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+														<label class="ws-nowrap me-3 mb-0">Show:</label>
+														<select class="form-control results-per-page" name="results-per-page">
+															<option value="10" selected>10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-12 col-lg-auto ms-auto ml-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+														<label class="ws-nowrap me-3 mb-0">Filter By:</label>
+														<select class="form-control filter-by" name="filter-by">
+															<option value="all" selected>All</option>
+															<option value="1">Category</option>
+															<option value="2">Product</option>
+															<option value="8">Status</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-12 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="search search-style-1-lg mx-lg-auto">
+														<div class="input-group">
+															<input type="text" class="search-term form-control" name="search-term" id="search-term" placeholder="Search Product">
+															<button class="btn btn-default" type="submit"><i class="bx bx-search"></i></button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<table class="table table-ecommerce-simple table-striped mb-0" id="datatable-ecommerce-list" style="min-width: 750px;">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Category</th>
+													<th>Product</th>
+													<th>Product #</th>
+													<th>Description</th>
+													<th>UPC Code</th>
+													<th>Cost Price($)</th>
+													<th>Unit Price($)</th>
+													<th>Status</th>
+											  	</tr>
+											</thead>
+											<tbody>
+											  	<tr>
+													<td>1</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>USB Cable Lightning 3ft</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+											  	</tr>
+											  	<tr>
+													<td>2</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>2</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>3</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>3</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>4</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>4</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>5</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>5</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>6</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>6</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>7</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>U7</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>8</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>8t</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>9</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>9</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>10</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>0</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+												  <tr>
+													<td>11</td>
+													<td><a href="product-form.html"><strong>Phone Acc</strong></a></td>
+													<td><a href="product-form.html"><strong>5ddd</strong></a></td>
+													<td>C10013</td>
+													<td>Usb, Zinc Alloy</td>
+													<td>144030041357</td>
+													<td>1.25</td>
+													<td>3.00</td>
+													<td><span class="ecommerce-status active">Active</span></td>
+												  </tr>
+											</tbody>
+										</table>
+					      				<div class="datatable-footer">
+					        				<div class="row align-items-center justify-content-between mt-3">
+												<div class="col-lg-auto text-center order-3 order-lg-2">
+													<div class="results-info-wrapper"></div>
+												</div>
+					          					<div class="col-lg-auto order-2 order-lg-3 mb-3 mb-lg-0">
+					            					<div class="pagination-wrapper"></div>
+				              					</div>
+				            				</div>
+				          				</div>
+				        			</div>
+				  				</div>
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+				</section>
+			</div>
+
+		</section>
+		<!-- Vendor -->
+		<script src="vendor/jquery/jquery.js"></script>
+		<script src="vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="vendor/popper/umd/popper.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="vendor/common/common.js"></script>
+		<script src="vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/media/js/dataTables.bootstrap5.min.js"></script>
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="js/theme.init.js"></script>
+
+		<!-- Examples -->
+		<script src="js/examples/sangja.datatables.list.js"></script>
+
+
+
+	</body>
+</html>

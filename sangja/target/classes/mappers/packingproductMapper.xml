@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.packingproduct">
+	<!-- 게시물 목록 -->
+	<select id="list"
+		resultType="com.sangja.domain.PackingProductVO">
+		select
+		pack_prd_num,
+		sale_num,
+		prd_mng_num,
+		sale_qty,
+		qty_per_box,
+		box_qty 
+		from
+		tbl_packing_product
+	</select>
+	
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.PackingProductVO">
+		select
+		pack_prd_num,
+		sale_num,
+		prd_mng_num,
+		sale_qty,
+		qty_per_box,
+		box_qty 
+		from
+		tbl_packing_product where 1=1 ${strWhere}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write"
+		parameterType="com.sangja.domain.PackingProductVO">
+		insert into
+		tbl_packing_product(
+		pack_prd_num,
+		sale_num,
+		prd_mng_num,
+		sale_qty,
+		qty_per_box,
+		box_qty 
+		)
+		values(#{pack_prd_num},
+		#{sale_num},
+		#{prd_mng_num},
+		#{sale_qty},
+		#{qty_per_box},
+		#{box_qty} )
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.PackingProductVO">
+		select
+		pack_prd_num,
+		sale_num,
+		prd_mng_num,
+		sale_qty,
+		qty_per_box,
+		box_qty 
+		from
+		tbl_packing_product
+		where
+		pack_prd_num = #{pack_prd_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify"
+		parameterType="com.sangja.domain.PackingProductVO">
+		update tbl_board
+		set
+		title =
+		#{title},
+		content = #{content},
+		writer = #{writer}
+		where sale_num = #{sale_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<!-- 전체 삭제 -->
+	<delete id="delete" parameterType="string">
+		delete
+		from tbl_packing_product
+		where sale_num
+		= #{sale_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(bno) from tbl_board
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.PackingProductVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from tbl_board
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.PackingProductVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from tbl_board
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(bno) from tbl_board
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

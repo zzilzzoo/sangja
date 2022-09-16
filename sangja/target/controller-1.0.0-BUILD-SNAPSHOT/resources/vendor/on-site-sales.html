@@ -1,0 +1,477 @@
+<!doctype html>
+<html class="fixed">
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>User | SangJa Admin</title>
+		<meta name="keywords" content="SangJa Admin" />
+		<meta name="description" content="SangJa Admin">
+		<meta name="author" content="Sangja">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,600,700,800,900" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+		
+		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" />
+		<link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css" />
+		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap5.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="css/theme.css" />
+
+		<!-- Theme Layout -->
+		<link rel="stylesheet" href="css/layouts/modern.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="css/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="vendor/modernizr/modernizr.js"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<?php
+				$firstmenu_code=2;
+				$secondmenu_code=1;
+				$third_code=1;
+			    include "header.html";
+    	    ?>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<?php
+				    include "sidebar-left.html";
+    		    ?>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body content-body-modern mt-0">
+					<header class="page-header page-header-left-inline-breadcrumb">
+						<h2 class="font-weight-bold text-6">On-Site : Order# 00001</h2>
+						<div class="right-wrapper">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Sales</span></li>
+
+								<li><span>Sales Management </span></li>
+
+								<li><span>On-Site Sales</span></li>
+
+							</ol>
+
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<form class="order-details action-buttons-fixed" method="post">
+						<div class="row">
+							<div class="col-xl-4 mb-4 mb-xl-0">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">General Info</h2>
+									</div>
+									<div class="card-body">
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Option</label>
+												<select class="form-control" name="orderOption" required>
+												<option value="sales" selected>Sales</option>
+												<option value="credit">Credit</option>
+												<option value="sample">Sample</option>
+												<option value="defecitve-return">Defecitve Return</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Type</label>
+												<input type="text" value="On-Site" id="inputReadOnly" class="form-control" readonly="readonly">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Date</label>
+												<div class="date-time-field">
+													<div class="date">
+														<div class="input-group">
+															<span class="input-group-text">
+																<i class="fas fa-calendar-alt"></i>
+															</span>
+															<input type="text" class="form-control" name="orderDate" value="2019-11-21" required data-plugin-datepicker data-plugin-options='{"orientation": "bottom", "format": "yyyy-mm-dd"}' />
+														</div>
+													</div>
+													<div class="time">
+														<div class="input-group">
+															<span class="input-group-text">
+																<i class="far fa-clock"></i>
+															</span>
+															<input type="text" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false } /'>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Person</label>
+												<input type="text" value="Chang Ho" id="inputReadOnly" class="form-control" readonly="readonly">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-xl-8">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Customer Info</h2>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="input-group mb-3">
+													<span class="input-group-text">
+														<i class="fas fa-store"></i>
+													</span>
+													<input type="text" class="form-control" placeholder="Address Search">
+													<button class="btn btn-default" type="button"><i class="fas fa-search"></i></button>
+												</div>
+												<ul class="list list-unstyled list-item-bottom-space-0">
+													<li>
+														<label>Name</label>
+														<input type="text" value="" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>address</label>
+														<input type="text" value="974 US-51 Madison, MS 9110" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>City</label>
+														<input type="text" value="Madison" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>State</label>
+														<input type="text" value="MS" class="form-control" readonly="readonly">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Products</h2>
+									</div>
+									<div class="card-body">
+										<div class="form-group row pb-4">
+											<a class="col-lg-3 modal-with-form btn btn-primary btn-md btn-py-1 px-6 " href="#modalForm">Add Product <i class="fas fa-plus"></i></a>
+											<!-- modelForm start -->
+											<div id="modalForm" class="modal-block modal-block-md mfp-hide">
+												<section class="card">
+													<header class="card-header">
+														<h2 class="card-title">Product List</h2>
+													</header>
+													<div class="card-body">
+														<div class="datatables-header-footer-wrapper">
+															<table class="table table-ecommerce-simple mb-0" id="onsite-default">
+																<thead>
+																	<tr>
+																		<th width="3%"><input type="checkbox" name="select-all" class="select-all checkbox-style-1 p-relative top-2" value="" /></th>
+																		<th width="10%">Category</th>
+																		<th width="10%">UPC Code</th>
+																		<th width="72%">Item</th>
+																		<th width="5%">단가</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>Phone ACC</td>
+																		<td>14430041357</td>
+																		<td>USB CABLE LIGHTHNING 3FT</td>
+																		<td>$ 15.00</td>
+																	</tr>
+																	<tr>
+																		<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>Phone ACC</td>
+																		<td>144300413586</td>
+																		<td>USB CABLE ANDRCID 3FT</td>
+																		<td>$ 15.00</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+										    		</div>
+													<footer class="card-footer">
+														<div class="row">
+															<div class="col-md-12 center">
+																<button class="btn btn-primary modal-confirm">Add Product</button>
+																<button class="btn btn-default modal-dismiss">Cancel</button>
+															</div>
+														</div>
+													</footer>
+												</section>
+											</div>
+											<!-- modelForm end -->
+										</div>
+										<div class="row justify-content-md-center"> 
+											<div class="col-lg-12">
+												<div class="table-responsive pb-4">
+													<table class="table table-responsive-md table-hover mb-0" style="min-width: 850px;">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>UPC Code</th>
+																<th>Item</th>
+																<th>단가</th>
+																<th>판매가</th>
+																<th>Qty</th>
+																<th>Amount</th>
+																<th>Delete</th>
+															</tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td>1</td>
+																<td>144030041357</td>
+																<td>USB CABLE LIGHTNING 3Ft</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" readonly="readonly" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+																		<div class="input-group">
+																			<button type="button" class="btn btn-default spinner-up">
+																				<i class="fas fa-plus"></i>
+																			</button>
+																			<input type="text" class="spinner-input form-control" maxlength="3">
+																			<button type="button" class="btn btn-default spinner-down">
+																				<i class="fas fa-minus"></i>
+																			</button>
+																		</div>
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<a href="" class="btn btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+																</td>
+															</tr>
+															<tr>
+																<td>2</td>
+																<td>144030041355</td>
+																<td>USB CABLE ANDRCID 3Ft</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" readonly="readonly" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+																		<div class="input-group">
+																			<button type="button" class="btn btn-default spinner-up">
+																				<i class="fas fa-plus"></i>
+																			</button>
+																			<input type="text" class="spinner-input form-control" maxlength="3">
+																			<button type="button" class="btn btn-default spinner-down">
+																				<i class="fas fa-minus"></i>
+																			</button>
+																		</div>
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<a href="" class="btn btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+												
+												<div class="row justify-content-end"> 
+													<a class="col-lg-3 btn btn-success btn-md btn-py-1 px-6" href="#">Order Update <i class="fas fa-sync-alt"></i></a>
+												</div> 
+												<div class="row justify-content-end">
+													<div class="col-auto">
+														<h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
+														<span class="d-flex align-items-center">
+															2 Items
+															<i class="fas fa-chevron-right text-color-primary px-3"></i>
+															<span class="d-flex align-items-center justify-content-lg-end">
+																<strong class="text-color-dark text-5">$ 18.50</strong>
+															</span>
+														</span>
+													</div>
+												</div>
+												<div class="row justify-content-end mt-3"> 
+													<a href="invoice-mobile-print.html" target="_blank" class="col-lg-3 btn btn-dark btn-px-4 py-3 font-weight-semibold line-height-1">
+														<i class="bx bx-printer text-4 me-2"></i> Invoice Print
+													</a>													
+												</div> 
+										    </div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Pay By</h2>
+									</div>
+									<div class="card-body">
+										<div class="row  justify-content-center">
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary">													
+													<input id="cash" name="payby" type="radio" value="cash">
+													<label for="cash">Cash</label>
+												</div>
+											</div>
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary">													
+													<input id="moneyorder" name="payby" type="radio" value="moneyorder">
+													<label for="moneyorder">Money Order</label>
+												</div>
+												
+											</div>
+											<div class="col-lg-2">
+												<div class="input-group">
+											  	  <div class="radio-custom radio-primary">
+														<input id="check" name="payby" type="radio" value="check"> 
+													  	<label for="check">Check</label>
+												  	</div>
+													<input type="text" class="form-control" size="4" maxlength="4">
+												</div>
+											</div>
+											<div class="col col-lg-2">
+												AR(Account Receivable)
+											</div>
+											<div class="col col-lg-2">
+												By Mail
+											</div>
+										</div>
+										<div class="row justify-content-center">
+											<div class="col">Payment Amount</div>
+											<div class="col">결제</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row action-buttons">
+							<div class="col-12 col-md-auto">
+								<button type="submit" class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+									<i class="bx bx-save text-4 me-2"></i> Save Order
+								</button>
+							</div>
+							<div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+								<a href="ecommerce-orders-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+							</div>
+							<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+								<a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+									<i class="bx bx-trash text-4 me-2"></i> Delete Order
+								</a>
+							</div>
+						</div>
+					</form>
+
+					<!-- end: page -->
+				</section>
+			</div>
+
+		</section>
+
+		<!-- Vendor -->
+		<script src="vendor/jquery/jquery.js"></script>
+		<script src="vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="vendor/popper/umd/popper.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="vendor/common/common.js"></script>
+		<script src="vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/media/js/dataTables.bootstrap5.min.js"></script>
+		<script src="vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+		<script src="vendor/fuelux/js/spinner.js"></script>
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="js/theme.init.js"></script>
+
+		<!-- Examples -->
+		<script src="js/examples/onsite.datatables.default.js"></script>
+		<script src="js/examples/examples.modals.js"></script>
+
+	</body>
+</html>

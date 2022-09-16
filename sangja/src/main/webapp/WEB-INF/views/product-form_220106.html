@@ -1,0 +1,353 @@
+<!doctype html>
+<?php
+	include "sideba-fixed.html";
+?>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>Product | SangJa Admin</title>
+		<meta name="keywords" content="SangJa Admin" />
+		<meta name="description" content="SangJa Admin">
+		<meta name="author" content="Sangja">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,600,700,800,900" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" />
+		<link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css" />
+		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap5.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="css/theme.css" />
+
+		<!-- Theme Layout -->
+		<link rel="stylesheet" href="css/layouts/modern.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="css/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="vendor/modernizr/modernizr.js"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<?php
+				$firstmenu_code=1;
+				$secondmenu_code=1;
+				$third_code=2;
+			    include "header.html";
+    	    ?>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<?php
+				    include "sidebar-left.html";
+    		    ?>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body content-body-modern mt-0">
+					<header class="page-header page-header-left-inline-breadcrumb">
+						<h2 class="font-weight-bold text-6">Product</h2>
+						<div class="right-wrapper">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Basic</span></li>
+
+								<li><span>Product Management </span></li>
+
+								<li><span>Product</span></li>
+
+							</ol>
+
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<form class="ecommerce-form action-buttons-fixed" action="#" method="post">
+						<div class="row">
+							<div class="col">
+								<section class="card card-dark">
+									<header class="card-header">
+										<div class="card-actions">
+											<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+										</div>
+
+										<h2 class="card-title"><i class="card-icon bx bx-box mx-2"></i> General Info</h2>
+										<p class="card-subtitle">Add here the product description with all details and necessary information.</p>
+									</header>
+									<div class="card-body">
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Category <span class="required">*</span></label>
+											<div class="col-lg-6">
+												<select class="form-control" name="" required>
+													<option value="phone-acc">Phone Acc</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Product Name <span class="required">*</span></label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" name="" value="" required />
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Product#</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" name="" value="">
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Discription</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" name="" value="">
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">UPC Code</label>
+											<div class="col-lg-6">
+												<input type="text" class="form-control" name="" value="">
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Status <span class="required">*</span></label>
+											<div class="col-lg-6">
+												<select class="form-control" name="" required>
+													<option value="active">Active</option>
+													<option value="inactive">Inactive</option>
+													<option value="delete">Delete</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<div class="row justify-content-md-center">
+												<div class="col-lg-5 col-xl-3 mb-0">
+													Date of registration : 2021-11-17
+										  		</div>
+										  		<div class="col-lg-5 col-xl-3 mb-0">
+													Date of modification : 2021-11-17
+												</div>
+											</div>
+										</div>
+
+									</div>
+								</section>
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col">
+								<section class="card card-dark">
+									<header class="card-header">
+										<div class="card-actions">
+											<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+										</div>
+
+										<h2 class="card-title"><i class="card-icon bx bx-purchase-tag mx-2"></i>Price Info</h2>
+										<p class="card-subtitle">Add here the product price info with all details and necessary information.</p>
+									</header>
+									<div class="card-body">
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Cost Price <span class="required">*</span></label>
+											<div class="col-lg-6">
+												<div class="input-group">
+													<span class="input-group-text">$</span>
+													<input type="text" class="form-control" name="" value="" required />
+												</div>
+											</div>
+										</div>
+										<div class="form-group row pb-4">
+											<label class="col-lg-3 control-label text-lg-end pt-2" for="inputDefault">Unit Price <span class="required">*</span></label>
+											<div class="col-lg-6">
+												<div class="input-group">
+													<span class="input-group-text">$</span>
+													<input type="text" class="form-control" name="" value="" required />
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</div>
+						</div>
+											
+						<div class="row">
+							<div class="col">
+								<section class="card card-dark">
+									<header class="card-header">
+										<div class="card-actions">
+											<a href="#" class="card-action card-action-toggle" data-card-toggle></a>
+										</div>
+
+										<h2 class="card-title"><i class="card-icon bx bx-user-circle mx-2"></i>Commission Info</h2>
+										<p class="card-subtitle">Add here the user commission info with all details and necessary information.</p>
+									</header>
+									<div class="card-body">
+										<div class="form-group row pb-4">
+											<a class="col-lg-3 modal-with-form btn btn-primary btn-md btn-py-1 px-6 " href="#modalForm">Add User <i class="fas fa-plus"></i></a>
+											<!-- modelForm start -->
+											<div id="modalForm" class="modal-block modal-block-sm mfp-hide">
+												<section class="card">
+													<header class="card-header">
+														<h2 class="card-title">User List</h2>
+													</header>
+													<div class="card-body">
+														<div class="datatables-header-footer-wrapper">
+															<table class="table table-ecommerce-simple mb-0" id="datatable-default">
+																<thead>
+																	<tr>
+																		<th width="3%"><input type="checkbox" name="select-all" class="select-all checkbox-style-1 p-relative top-2" value="" /></th>
+																		<th>User ID</th>
+																		<th>First Name</th>
+																		<th width= "40">%</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td width="30"><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>10001</td>
+																		<td>CangHo</td>
+																		<td class="center"><input type="text" class="form-control input-block" value=""></td>
+																	</tr>
+																	<tr>
+																		<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>10002</td>
+																		<td>Danielra</td>
+																		<td class="center"><input type="text" class="form-control input-block" value="10"></td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+										    		</div>
+													<footer class="card-footer">
+														<div class="row">
+															<div class="col-md-12 center">
+																<button class="btn btn-primary modal-confirm">Add User</button>
+																<button class="btn btn-default modal-dismiss">Cancel</button>
+															</div>
+														</div>
+													</footer>
+												</section>
+											</div>
+											<!-- modelForm end -->
+										</div>
+										<div class="row justify-content-md-center"> 
+											<div class="col-lg-10">
+												<div class="datatables-header-footer-wrapper">
+													<table class="table table-ecommerce-simple mb-0" id="datatable-default-user" style="min-width: 550px;">
+														<thead>
+															<tr>
+																<th width="3%"><input type="checkbox" name="select-all" class="select-all checkbox-style-1 p-relative top-2" value="" /></th>
+																<th>User ID</th>
+																<th>First Name</th>
+																<th width= "40">%</th>
+																<th>Modify</th>
+															</tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td width="30"><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																<td>10001</td>
+																<td>CangHo</td>
+																<td><input type="text" class="form-control input-block" value="15"></td>
+																<td class="actions">
+																	<a href="" class="btn btn-light btn-px-4 py-2 border font-weight-semibold text-color-dark 	text-3"><i class="fas fa-pencil-alt"></i> Modify</a>
+																</td>
+																			</tr>
+														    <tr>
+																<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																<td>10002</td>
+																<td>Danielra</td>
+																<td><input type="text" class="form-control input-block" value="10"></td>
+																<td class="actions">
+																	<a href="" class="btn btn-light btn-px-4 py-2 border font-weight-semibold text-color-dark 	text-3"><i class="fas fa-pencil-alt"></i> Modify</a>
+																</td>
+															</tr>
+														</tbody>
+													</table>
+												</div>
+										    </div>
+										</div>
+									</div>
+								</section>
+
+							</div>
+						</div>
+						
+						<div class="row action-buttons">
+							<div class="col-12 col-md-auto">
+								<button type="submit" class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+									<i class="bx bx-save text-4 me-2"></i> Save Product
+								</button>
+							</div>
+							<div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+								<a href="product-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+							</div>
+							<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+								<a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+									<i class="bx bx-trash text-4 me-2"></i> Delete Product
+								</a>
+							</div>
+						</div>
+					</form>
+
+					<!-- end: page -->
+				</section>
+			</div>
+
+		</section>
+
+		<!-- Vendor -->
+		<script src="vendor/jquery/jquery.js"></script>
+		<script src="vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="vendor/popper/umd/popper.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="vendor/common/common.js"></script>
+		<script src="vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/media/js/dataTables.bootstrap5.min.js"></script>
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="js/theme.init.js"></script>
+
+		<!-- Examples -->
+		<script src="js/examples/product.datatables.default.js"></script>
+		<script src="js/examples/examples.modals.js"></script>
+
+
+	</body>
+</html>

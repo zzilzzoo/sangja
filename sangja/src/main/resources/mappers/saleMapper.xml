@@ -1,0 +1,294 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.sale">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.SaleVO">
+		select
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		cust_nm,
+		addr,
+		city,
+		state,
+		zip_code,
+		tot_sale_amt,
+		tot_tax_amt,
+		shopping_cost,
+		tot_ord_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		sale_note,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbs_sale_rec 
+	</select>
+	
+	<select id="listByWhere" parameterType="string" resultType="com.sangja.domain.SaleVO">
+		select
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		cust_nm,
+		addr,
+		city,
+		state,
+		zip_code,
+		tot_sale_amt,
+		tot_tax_amt,
+		shopping_cost,
+		tot_ord_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		sale_note,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbs_sale_rec where 1=1 ${strWhere} 
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.SaleVO">
+		insert into
+		tbs_sale_rec(
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		cust_nm,
+		addr,
+		city,
+		state,
+		zip_code,
+		tot_sale_amt,
+		tot_tax_amt,
+		shopping_cost,
+		tot_ord_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		sale_note,
+		editor,
+		crt_ymdt,
+		mod_ymdt)
+		values(
+		#{sale_num},
+		#{ord_no},
+		#{sale_ymd},
+		#{sale_time},
+		#{sale_type},
+		#{sale_user_num},
+		#{cust_num},
+		#{cust_nm},
+		#{addr},
+		#{city},
+		#{state},
+		#{zip_code},
+		#{tot_sale_amt},
+		#{tot_tax_amt},
+		#{shopping_cost},
+		#{tot_ord_amt},
+		#{tot_pay_amt},
+		#{last_pay_ymdt},
+		#{sale_note},
+		#{editor},
+		#{crt_ymdt},
+		#{mod_ymdt})
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="string"
+		resultType="com.sangja.domain.SaleVO">
+		select
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		cust_nm,
+		addr,
+		city,
+		state,
+		zip_code,
+		tot_sale_amt,
+		tot_tax_amt,
+		shopping_cost,
+		tot_ord_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		sale_note,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbs_sale_rec
+		where
+		sale_num = #{sale_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.SaleVO">
+		update tbs_sale_rec
+		set
+		ord_no=#{ord_no},
+		<!-- sale_ymd=#{sale_ymd},
+		sale_time=#{sale_time},-->
+		sale_type=#{sale_type},
+		sale_user_num=#{sale_user_num},
+		cust_num=#{cust_num},
+		cust_nm=#{cust_nm},
+		addr=#{addr},
+		city=#{city},
+		state=#{state},
+		zip_code=#{zip_code},
+		tot_sale_amt=#{tot_sale_amt},
+		tot_tax_amt=#{tot_tax_amt},
+		shopping_cost=#{shopping_cost},
+		tot_ord_amt=#{tot_ord_amt},
+		<!-- tot_pay_amt=#{tot_pay_amt},
+	    last_pay_ymdt=#{last_pay_ymdt},-->
+		sale_note=#{sale_note},
+		editor=#{editor},
+		crt_ymdt=#{crt_ymdt},
+		mod_ymdt=#{mod_ymdt}
+		where
+		sale_num = #{sale_num}
+	</update>
+	<!-- 총 결제 금액 수정 hashMap(sale_num,tot_pay_amt,last_pay_ymdt) -->
+	<update id="modifyPayAmt"
+		parameterType="com.sangja.domain.SaleVO">
+		update tbs_sale_rec
+		set
+		tot_pay_amt=tot_pay_amt+#{tot_pay_amt},
+		last_pay_ymdt=#{last_pay_ymdt}
+		where
+		sale_num = #{sale_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="string">
+		delete
+		from tbs_sale_rec
+		where
+		sale_num
+		= #{sale_num}
+	</delete>
+
+	<!-- 게시물 판매번호 -->
+	<select id="getsalenum" parameterType="string"
+		resultType="string">
+		select func_getSalenumSeq(#{saletype})
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(sale_num) from
+		tbs_sale_rec
+	</select>
+	<!-- 게시물 총 갯수 -->
+	<select id="countByWhere" parameterType="string"  resultType="int">
+		select count(sale_num) from
+		tbs_sale_rec where 1=1 ${strWhere}
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.SaleVO">
+		select
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		tot_sale_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbs_sale_rec
+		order by sale_num desc
+		limit
+		#{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.SaleVO">
+		select
+		sale_num,
+		ord_no,
+		sale_ymd,
+		sale_time,
+		sale_type,
+		sale_user_num,
+		cust_num,
+		tot_sale_amt,
+		tot_pay_amt,
+		last_pay_ymdt,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbs_sale_rec
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by sale_prod_num desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(sale_prod_num) from tbs_sale_rec
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

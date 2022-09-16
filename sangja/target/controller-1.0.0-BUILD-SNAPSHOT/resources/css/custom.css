@@ -1,0 +1,76 @@
+/* Add here all your CSS customizations */
+header.page-header.page-header-left-inline-breadcrumb {
+	background: #f5f5f8;  !important;
+	padding-bottom: 12px;  !important;
+}
+
+ul.g-info li {
+	clear: both;
+}
+
+ul.g-info li label {
+	display: block;
+	float: left;
+	width: 100px;
+}
+
+ul.g-info li span {
+	float: left;
+	display: block;
+	padding: 0 4px;
+}
+
+ul.g-info li select {
+	width: 150px;
+}
+
+ul.g-info li input {
+	width: 120px;
+}
+
+ul.c-info li {
+	clear: both;
+}
+
+ul.c-info li label {
+	display: block;
+	float: left;
+	width: 100px;
+}
+
+ul.c-info li span {
+	float: left;
+	display: block;
+	padding: 0 4px;
+}
+/*
+button.multiselect{
+	min-width: 250px !important;
+	width: 250px !important;
+}
+*/
+div.multiselect-container {
+	min-width: 180px !important;
+}
+
+span.multiselect-selected-text {
+	font-size: 14px !important;
+}
+
+span.multiselect-group.dropdown-item-text {
+	font-size: 14px !important;
+}
+
+label.form-check-label {
+	font-size: 14px !important;
+}
+
+span.id_ok {
+	color: #fff;
+	display: none;
+}
+
+span.id_already {
+	color: #6A82FB;
+	display: none;
+}

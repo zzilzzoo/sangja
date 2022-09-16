@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.inventoryinout">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.InventoryInOutVO">
+		select
+		mng_num,
+		prd_mng_num,
+		user_num,
+		inout_ymdt,
+		event_opt,
+		bf_comp_qty,
+		bf_user_qty,
+		cost_price,
+		unit_price,
+		event_qty,
+		event_amt,
+		af_comp_qty,
+		af_user_qty,
+		tot_qty,
+		event_note
+		FROM tbl_inventory_inout
+	</select>
+
+	<select id="InvIOUserList" parameterType="int"
+		resultType="com.sangja.domain.InventoryUserVO">
+		SELECT t1.prd_mng_num,t1.inout_ymdt,
+       t1.user_num,
+       t2.category,
+       ifnull(concat(t2.user_nm_f, ' ', t2.user_nm_f), '회사') user_nm,
+       t1.event_opt,
+       t1.bf_comp_qty,
+       t1.bf_user_qty,
+       t1.unit_price,
+       t1.event_qty,
+       t1.event_amt,
+       t1.af_comp_qty,
+       t1.af_user_qty,
+       t1.tot_qty,
+       t1.event_note
+FROM tbl_inventory_inout t1
+     LEFT OUTER JOIN tbl_user t2 ON t1.user_num = t2.user_num where t1.prd_mng_num=#{prd_mng_num}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.InventoryInOutVO">
+		insert into
+		tbl_inventory_inout(
+		prd_mng_num,
+		user_num,
+		inout_ymdt,
+		event_opt,
+		bf_comp_qty,
+		bf_user_qty,
+		cost_price,
+		unit_price,
+		event_qty,
+		event_amt,
+		af_comp_qty,
+		af_user_qty,
+		tot_qty,
+		event_note
+		)
+		values(
+		#{prd_mng_num},
+		#{user_num},
+		#{inout_ymdt},
+		#{event_opt},
+		#{bf_comp_qty},
+		#{bf_user_qty},
+		#{cost_price},
+		#{unit_price},
+		#{event_qty},
+		#{event_amt},
+		#{af_comp_qty},
+		#{af_user_qty},
+		#{tot_qty},
+		#{event_note}
+		)
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="PrdInvView" parameterType="int"
+		resultType="com.sangja.domain.ProductInventoryVO">
+		SELECT tt1.prd_mng_num prd_mng_num,
+		tt1.ctgry_nm ctgry_nm,
+		tt1.prd_nm prd_nm,
+		tt1.prd_code prd_code,
+		tt1.prd_dscp prd_dscp,
+		tt1.upc_code upc_code,
+		tt1.sale_status sale_status,
+		tt1.unit_price
+		unit_price,
+		tt1.cost_price cost_price,
+		tt1.prd_qty prd_qty,
+		tt1.editor
+		editor,
+		tt1.crt_ymdt crt_ymdt,
+		tt1.mod_ymdt mod_ymdt,
+		ifnull(tt2.comp_qty, 0) comp_qty,
+		ifnull(tt2.user_qty, 0) user_qty,
+		ifnull(tt2.tot_qty, 0) tot_qty
+		FROM (SELECT prd_mng_num,
+		t2.ctgry_nm
+		ctgry_nm,
+		prd_nm,
+		prd_code,
+		prd_dscp,
+		upc_code,
+		sale_status,
+		unit_price,
+		cost_price,
+		prd_qty,
+		t1.editor editor,
+		t1.crt_ymdt crt_ymdt,
+		t1.mod_ymdt
+		mod_ymdt
+		FROM tbl_product t1, tbl_category t2
+		WHERE t1.ctgry_mng_num =
+		t2.ctgry_mng_num) tt1
+		LEFT OUTER JOIN tbl_inventory tt2 ON
+		tt1.prd_mng_num = tt2.prd_mng_num where tt1.prd_mng_num=#{prd_mng_num}
+	</select>
+
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.InventoryVO">
+		select
+		prd_mng_num,
+		user_num,
+		comp_qty,
+		user_qty,
+		tot_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_inventory
+		where
+		prd_mng_num =
+		#{prd_mng_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify"
+		parameterType="com.sangja.domain.InventoryVO">
+		update tbl_inventory
+		set
+		user_num=#{user_num},
+		comp_qty=#{comp_qty},
+		user_qty=#{user_qty},
+		tot_qty=#{tot_qty},
+		editor=#{editor},
+		mod_ymdt=#{mod_ymdt}
+		where
+		prd_mng_num = #{prd_mng_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete
+		from tbl_inventory_inout
+		where
+		mng_num
+		= #{mng_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(prd_mng_num) from
+		tbl_product
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.ProductVO">
+		select
+		prd_mng_num,
+		ctgry_mng_num,
+		prd_nm,
+		prd_code,
+		prd_dscp,
+		upc_code,
+		sale_status,
+		unit_price,
+		cost_price,
+		prd_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_product
+		order by prd_mng_num desc
+		limit #{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.ProductVO">
+		select
+		prd_mng_num,
+		ctgry_mng_num,
+		prd_nm,
+		prd_code,
+		prd_dscp,
+		upc_code,
+		sale_status,
+		unit_price,
+		cost_price,
+		prd_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_product
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by prd_mng_num desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(prd_mng_num) from tbl_product
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

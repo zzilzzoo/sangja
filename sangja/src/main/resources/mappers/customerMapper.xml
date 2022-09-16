@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.customer">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,ifnull(last_visit_ymd, '1900-01-01') last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt
+		from tbl_customer
+	</select>
+
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,ifnull(last_visit_ymd, '1900-01-01') last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt
+		from tbl_customer where 1=1 ${strWhere}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.CustomerVO">
+		insert into
+		tbl_customer(mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt)
+		values(#{mng_user_num}, #{cust_nm},
+		#{zip_code},#{state},#{city},#{addr},#{visit_term},#{last_visit_ymd},#{cust_status},#{editor},
+		DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),
+		DATE_FORMAT(now(), '%Y-%m-%d
+		%H:%i:%s'))
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt
+		from
+		tbl_customer
+		where
+		cust_num = #{cust_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.CustomerVO">
+		update tbl_customer
+		set
+		cust_num=#{cust_num},
+		mng_user_num=#{mng_user_num},
+		cust_nm=#{cust_nm},
+		zip_code=#{zip_code},
+		state=#{state},
+		city=#{city},
+		addr=#{addr},
+		visit_term=#{visit_term},
+		cust_status=#{cust_status},
+		editor=#{editor},
+		mod_ymdt=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')
+		where cust_num =
+		#{cust_num}
+	</update>
+
+	<update id="modifyVisitYmd" parameterType="hashmap">
+		update tbl_customer
+		set
+		last_visit_ymd=#{last_visit_ymd}
+		where cust_num =
+		#{cust_num}
+	</update>
+
+	<update id="deletemodify" parameterType="int">
+		update tbl_customer
+		set
+		cust_status='delete',
+		mod_ymdt=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')
+		where cust_num = #{cust_num}
+	</update>
+
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete
+		from tbl_customer
+		where
+		cust_num
+		= #{cust_num}
+	</delete>
+	<!-- 사용자 관리 고객 -->
+	<select id="listForUser" parameterType="int"
+		resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num, cust_nm,zip_code,state,city,
+		addr, visit_term, last_visit_ymd, cust_status,editor,crt_ymdt,mod_ymdt
+		from
+		tbl_customer
+		where mng_user_num=#{mng_user_num}
+		order by cust_num
+		desc
+	</select>
+	<!-- 담당 사용자 -->
+	<update id="modifyMngUser" parameterType="hashMap">
+		update tbl_customer
+		set
+		mng_user_num=#{mng_user_num}
+		where
+		cust_num = #{cust_num}
+	</update>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" parameterType="string" resultType="int">
+		select
+		count(cust_num) from
+		tbl_customer where 1=1 ${strWhere}
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt
+		from tbl_customer
+		order by cust_num desc
+		limit #{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.CustomerVO">
+		select
+		cust_num,mng_user_num,cust_nm,zip_code,state,city,addr,visit_term,last_visit_ymd,cust_status,editor,crt_ymdt,mod_ymdt
+		from tbl_customer
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by cust_num desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(cust_num) from tbl_customer
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

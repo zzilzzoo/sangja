@@ -1,0 +1,72 @@
+/*
+
+// BASIC
+// -----------------------------------------------------------------------------
+@import "base/elements";
+
+// PAGES
+// -----------------------------------------------------------------------------
+@import "../../modules/tables/css/tables";
+@import "../../modules/pages/css/invoice";
+
+*/
+/*
+// INVOICE BASIC
+// -----------------------------------------------------------------------------
+/* Invoice */
+body {
+	color: #777;
+	font-family: "Poppins", Arial, sans-serif;
+	line-height: 15px;
+	margin: 0;
+	font-size: 12px;
+}
+header{
+	margin: 0px;
+	
+}
+.invoice {
+	padding: 0px;
+}
+.bill-info h6{
+	display: block;
+	float: left;
+	font-size:11px;
+}
+
+.bill-info div.address{
+	display: block;
+	margin-left: 40px;	
+}
+.ship-info h6{
+	display: block;
+	float: left;
+	font-size:11px;
+}
+.ship-info div.address{
+	display: block;
+	margin-left: 50px;
+}
+hr{
+	margin: 5px 0px 20px;
+	
+}
+table.invoice-items th{
+	padding-left: 10px;
+	font-size: 12px;
+}
+table.invoice-items td{
+	padding-left: 10px;
+	font-size: 11px;
+}
+td.total{
+	font-weight: bold;
+}
+td.totalprice{
+	font-size: 12px;
+	font-weight: bold;
+	background-color:lightblue;
+}
+td.shippingcost{
+	font-size: 12px;	
+}

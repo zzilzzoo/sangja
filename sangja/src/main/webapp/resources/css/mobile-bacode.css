@@ -1,0 +1,29 @@
+body {
+    background-color: #fff;
+    margin: 0px;
+    padding: 0;
+    color: #000;
+    font-family: Helvetica, Arial;
+}
+
+#upc-container {
+    /* width: 285px;
+	height: 86px; */
+}
+
+@media print {
+	
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+    }
+	@page { 
+    size:10cm 20cm;
+  	} 
+	body {
+	margin-top: 0mm;
+	margin-bottom: 0mm;
+	margin-left: 0mm;
+	margin-right: 0mm
+	}
+}

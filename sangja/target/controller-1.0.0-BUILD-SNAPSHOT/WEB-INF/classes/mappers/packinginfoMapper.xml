@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.packing">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.PackingVO">
+		select
+		pack_num,
+		sale_num,
+		pack_date,
+		invoice_no,
+		cust_po_num,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_remark,
+		po_number,
+		terms,
+		ship_date,
+		ship_method,
+		payment,
+		remark,
+		tot_box_qty,
+		tot_sale_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_packing_info
+	</select>
+
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.PackingVO">
+		select
+		pack_num,
+		sale_num,
+		pack_date,
+		invoice_no,
+		cust_po_num,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		po_number,
+		terms,
+		ship_date,
+		ship_method,
+		payment,
+		remark,
+		tot_box_qty,
+		tot_sale_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_packing_info where 1=1 ${strWhere}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.PackingVO">
+		insert into
+		tbl_packing_info(
+		sale_num,
+		pack_date,
+		invoice_no,
+		cust_po_num,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		po_number,
+		terms,
+		ship_date,
+		ship_method,
+		payment,
+		remark,
+		tot_box_qty,
+		tot_sale_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt)
+		values(
+		#{sale_num},
+		#{pack_date},
+		#{invoice_no},
+		#{cust_po_num},
+		#{cust_num},
+		#{bill_title},
+		#{bill_addr1},
+		#{bill_addr2},
+		#{bill_to_remark},
+		#{ship_title},
+		#{ship_addr1},
+		#{ship_addr2},
+		#{ship_to_remark},
+		#{po_number},
+		#{terms},
+		#{ship_date},
+		#{ship_method},
+		#{payment},
+		#{remark},
+		#{tot_box_qty},
+		#{tot_sale_qty},
+		#{editor},
+		#{crt_ymdt},
+		#{mod_ymdt})
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="string"
+		resultType="com.sangja.domain.PackingVO">
+		select
+		pack_num,
+		sale_num,
+		pack_date,
+		invoice_no,
+		cust_po_num,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		po_number,
+		terms,
+		ship_date,
+		ship_method,
+		payment,
+		remark,
+		tot_box_qty,
+		tot_sale_qty,
+		editor,
+		crt_ymdt,
+		mod_ymdt 
+		from 
+		tbl_packing_info 
+		where
+		sale_num = #{sale_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.PackingVO">
+		update tbl_packing_info
+		set
+		pack_date=#{pack_date},
+		invoice_no=#{invoice_no},
+		cust_po_num=#{cust_po_num},
+		cust_num=#{cust_num},
+		bill_title=#{bill_title},
+		bill_addr1=#{bill_addr1},
+		bill_addr2=#{bill_addr2},
+		bill_to_remark=#{bill_to_remark}
+		ship_title=#{ship_title},
+		ship_addr1=#{ship_addr1},
+		ship_addr2=#{ship_addr2},
+		ship_to_remark=#{ship_to_remark}
+		po_number=#{po_number},
+		terms=#{terms},
+		ship_date=#{ship_date},
+		ship_method=#{ship_method},
+		payment=#{payment},
+		remark=#{remark},
+		tot_box_qty=#{tot_box_qty},
+		tot_sale_qty=#{tot_sale_qty},
+		editor=#{editor},
+		crt_ymdt=#{crt_ymdt},
+		mod_ymdt=#{mod_ymdt}
+		where sale_num =
+		#{sale_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="string">
+		delete
+		from tbl_packing_info
+		where sale_num =
+		#{sale_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(sale_num) from
+		tbl_packing_info
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.PackingVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from
+		tbl_packing_info
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.PackingVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from tbl_packing_info
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(bno) from tbl_packing_info
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

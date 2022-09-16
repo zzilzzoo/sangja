@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.productcomms">
+	<!-- 목록 -->
+	<select id="list" parameterType="int"
+		resultType="com.sangja.domain.ProductCommsVO">
+		SELECT t1.prd_mng_num,
+		t1.user_num,
+		t2.user_id,
+		t2.user_nm_f,
+		t1.comms_rate
+		FROM tbl_product_cmms t1, tbl_user t2
+		WHERE t1.user_num =
+		t2.user_num and t1.prd_mng_num= #{prd_mng_num}
+	</select>
+
+
+	<!-- 게시물 작성 -->
+	<insert id="write"
+		parameterType="com.sangja.domain.ProductCommsVO">
+		insert into
+		tbl_product_cmms(
+		prd_mng_num,
+		user_num,
+		comms_rate,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		)
+		values(
+		#{prd_mng_num},
+		#{user_num},
+		#{comms_rate},
+		#{editor}, DATE_FORMAT(now(), '%Y-%m-%d
+		%H:%i:%s'),DATE_FORMAT(now(),
+		'%Y-%m-%d %H:%i:%s')
+		)
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="hashMap"
+		resultType="com.sangja.domain.ProductCommsVO">
+		select
+		t1.prd_mng_num,
+		t1.user_num,
+		t2.user_nm_f,
+		t1.comms_rate
+		FROM tbl_product_cmms t1, tbl_user t2
+		WHERE t1.user_num =
+		t2.user_num and
+		t1.prd_mng_num=#{prd_mng_num} and
+		r1.user_num=#{user_num}
+	</select>
+
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.ProductCommsVO">
+		update tbl_product_cmms
+		set
+		comms_rate=#{comms_rate},
+		editor = #{editor},
+		mod_ymdt
+		=DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')
+		where
+		prd_mng_num =
+		#{prd_mng_num} and user_num=#{user_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="hashMap">
+		delete
+		from tbl_product_cmms
+		where
+		prd_mng_num=#{prd_mng_num} and user_num=#{user_num}
+	</delete>
+
+</mapper>

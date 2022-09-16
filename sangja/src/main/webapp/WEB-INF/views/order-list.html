@@ -1,0 +1,372 @@
+<!doctype html>
+<?php
+	include "sideba-fixed.html";
+?>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>Order Report | SangJa Admin</title>
+		<meta name="keywords" content="SangJa Admin" />
+		<meta name="description" content="SangJa Admin">
+		<meta name="author" content="Sangja">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,600,700,800,900" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" />
+		<link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css" />
+		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap5.css" />
+		<link rel="stylesheet" href="vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-multiselect/css/bootstrap-multiselect.css" />
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="css/theme.css" />
+
+		<!-- Theme Layout -->
+		<link rel="stylesheet" href="css/layouts/modern.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="css/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="vendor/modernizr/modernizr.js"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<?php
+				$firstmenu_code=2;
+				$secondmenu_code=1;
+				$third_code=4;
+			    include "header.html";
+    	    ?>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<?php
+				    include "sidebar-left.html";
+    		    ?>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body content-body-modern mt-0">
+					<header class="page-header page-header-left-inline-breadcrumb">
+						<h2 class="font-weight-bold text-6">Order Report</h2>
+						<div class="right-wrapper">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Sales</span></li>
+
+								<li><span>Sales Management </span></li>
+
+								<li><span>Order Report</span></li>
+
+							</ol>
+
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<div class="row">
+						<div class="col">										
+							<div class="card card-modern">
+								<div class="card-body">
+					    			<div class="datatables-header-footer-wrapper">
+										<div class="datatable-header">
+											<div class="row align-items-end mb-0">
+												<div class="col-8 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<a href="#" class="btn btn-success btn-md font-weight-semibold">Excel <i class="far fa-file-excel"></i></a>
+												</div>
+												<div class="col-4 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+														<label class="ws-nowrap me-3 mb-0">Show:</label>
+														<select class="form-control results-per-page" name="results-per-page">
+															<option value="10" selected>10</option>
+															<option value="25">25</option>
+															<option value="50">50</option>
+															<option value="100">100</option>
+														</select>
+													</div>
+												</div>
+												<div class="col-12 col-lg-auto ms-auto ml-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="input-daterange input-group" data-plugin-datepicker>
+														<span class="input-group-text">
+															<i class="fas fa-calendar-alt"></i>
+														</span>
+														<input name="start" type="text" class="form-control">
+														<span class="input-group-text border-start-0 border-end-0 rounded-0">
+															to
+														</span>
+														<input type="text" class="form-control" name="end">
+													</div>
+												</div>
+												<div class="col-6 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+														<label class="ws-nowrap me-3 mb-0">Sales Person:</label>
+														<select class="form-control" multiple="multiple" data-plugin-multiselect data-plugin-options='{ "maxHeight": 200, "includeSelectAllOption": true}' id="ms_example5">
+															<optgroup label="Employee">
+															<option value="changho" selected>ChangHo</option>
+															<option value="danielra" selected>Danielra</option>
+															<option value="anna" selected>Anna</option>
+															</optgroup><optgroup label="Commissioner">
+																<option value="changsu" selected>Changsu</option>
+																<option value="daniel" selected>Daniel</option>
+																<option value="anni" selected>Anni</option>
+															</optgroup>
+															<optgroup label="Individual Saller">
+																<option value="coco">Coco</option>
+																<option value="nana">Nana</option>
+															</optgroup>
+														</select>
+													</div>
+												</div>
+												<div class="col-6 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+														<label class="ws-nowrap me-3 mb-0">Filter By:</label>
+														<select class="form-control filter-by" name="filter-by">
+															<option value="all" selected>All</option>
+															<option value="3">Name</option>
+															<option value="4">Address</option>
+															<option value="5">City</option>
+															<option value="6">State</option>
+															<option value="7">Zip Code</option>
+															<option value="8">Item, Option</option>
+															<option value="12">Sale Type</option>
+															<option value="14">Status</option>
+														</select>
+													</div>
+												</div>
+													
+												<div class="col-12 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<div class="search search-style-1-lg mx-lg-auto">
+														<div class="input-group">
+															<input type="text" class="search-term form-control" name="search-term" id="search-term" placeholder="Search Order List">
+															<button class="btn btn-default" type="submit"><i class="bx bx-search"></i></button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<table class="table table-ecommerce-simple table-striped mb-0" id="datatable-ecommerce-list" style="min-width: 900px;">
+											<thead>
+												<tr>
+													<th>#</th>
+													<th>Date</th>
+													<th>Sales Person</th>
+													<th>Name</th>
+													<th>Address</th>
+													<th>City</th>
+													<th>State</th>
+													<th>Zip Code</th>
+													<th>Item, Option, Qty</th>
+													<th>Amount($)</th>
+													<th>Payment($)</th>
+													<th>AR($)</th>
+													<th>Type</th>
+													<th>PayBy</th>
+													<th style="min-width: 120px;">Status</th>
+											  	</tr>
+											</thead>
+											<tbody>
+											  	<tr>
+													<td>1</td>
+													<td><a href="on-site-sales-detail.html"><strong>2021-11-17</strong></a></td>
+													<td>Chang Ho</td>
+													<td>SHELL</td>
+													<td>974 US-51</td>
+													<td>Madison</td>
+													<td>MS</td>
+													<td>39110</td>
+													<td>
+														<div>
+															<span class="product">USB CABLE LIGHTNING 3Ft</span>, 
+															<span class="option">Sales</span>,
+															<span class="qty">1</span>
+														</div>
+														<div>
+															<span class="product">USB CABLE ANDRCID 3Ft</span>, 
+															<span class="option">Sample</span>, 
+															<span class="qty">10</span>
+														</div>
+													</td>
+													<td>25.00</td>
+													<td>25.00</td>
+													<td> 0.00</td>
+													<td>On-Site</td>
+													<td>Check : 1235</td>
+													<td><span class="ecommerce-status completed">Completed</span></td>
+												</tr>
+											  	<tr>
+													<td>2</td>
+													<td><a href="on-site-sales-detail.html"><strong>2021-11-17</strong></a></td>
+													<td>ANNIE</td>
+													<td>Fuller's Hill</td>
+													<td>17123 Midway Rd</td>
+													<td>TERRY</td>
+													<td>MS</td>
+													<td>52144</td>
+													<td>
+														<div>
+															<span class="product">USB CABLE LIGHTNING 3Ft</span>, 
+															<span class="option">Sales</span>, 
+															<span class="qty">1</span>
+														</div>
+														<div>
+															<span class="product">USB CABLE ANDRCID 3Ft</span>, 
+															<span class="option">Credit</span>, 
+															<span class="qty">3</span>
+														</div>
+													</td>
+													<td> 250.00</td>
+													<td> 250.00</td>
+													<td> 0.00</td>
+													<td>On-Site</td>
+													<td>Money Order</td>
+													<td><span class="ecommerce-status completed">Completed</span></td>
+											  	</tr>
+											  	<tr>
+													<td>3</td>
+													<td><a href="on-site-sales-detail.html"><strong>2021-11-17</strong></a></td>
+													<td>COCO</td>
+													<td>SHELL</td>
+													<td>8390 S Stemmons Pkwy</td>
+													<td>DALLAS</td> 
+													<td>TX</td>
+													<td>75247</td>
+													<td>
+														<div>
+															<span class="product">USB CABLE LIGHTNING 3Ft</span>, 
+															<span class="option">Defective Return</span>, 
+															<span class="qty">1</span>
+														</div>
+														<div>
+															<span class="product">USB CABLE ANDRCID 3Ft</span>, 
+															<span class="option">Sales</span>, 
+															<span class="qty">3</span>
+														</div>
+														<div>
+															<span class="product">USB CABLE</span>, 
+															<span class="option">Sales</span>, 
+															<span class="qty">20</span>
+														</div>
+													</td>
+													<td>0.00</td>
+													<td> 250.00</td>
+													<td> 1,250.00</td>
+													<td>On-Site</td>
+													<td>AR</td>
+													<td><span class="ecommerce-status pending">Pending payment</span></td>
+											  	</tr>
+											  	<tr>
+													<td>4</td>
+													<td><a href="other-sales-detail.html"><strong>2021-11-17</strong></a></td>
+													<td>COCO</td>
+													<td>SHELL</td>
+													<td>8390 S Stemmons Pkwy</td>
+													<td>DALLAS</td> 
+													<td>TX</td> 
+													<td>75247</td>
+													<td>
+														<div>
+															<span class="product">USB CABLE LIGHTNING 3Ft</span>, <span class="option">Sales</span>, <span class="qty">1</span>
+														</div>
+														<div>
+															<span class="product">USB CABLE ANDRCID 3Ft</span>, <span class="option">Sales</span>, <span class="qty">3</span>
+														</div>
+													</td>
+													<td>0.00</td>
+													<td> 250.00</td>
+													<td>1,250.00 </td>
+													<td>Other</td>
+													<td>AR</td>
+													<td><span class="ecommerce-status pending">Pending payment</span></td>
+											  	</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="9" align="right" class="text-4 font-weight-bold">Total</td>
+													<td class="text-4 font-weight-bold"> 2,775.00 </td>
+													<td class="text-4 font-weight-bold">275.00</td>
+													<td class="text-4 font-weight-bold">2,500.00 </td>
+													<td colspan="3"></td>
+											  	</tr>
+											</tfoot>
+										</table>
+					      				<div class="datatable-footer">
+					        				<div class="row align-items-center justify-content-between mt-3">
+												<div class="col-lg-auto text-center order-3 order-lg-2">
+													<div class="results-info-wrapper"></div>
+											  	</div>
+					          					<div class="col-lg-auto order-2 order-lg-3 mb-3 mb-lg-0">
+					            					<div class="pagination-wrapper"></div>
+				              					</div>
+				            				</div>
+				          				</div>
+				        			</div>
+				  				</div>
+							</div>
+						</div>
+					</div>
+					<!-- end: page -->
+				</section>
+			</div>
+
+		</section>
+		<!-- Vendor -->
+		<script src="vendor/jquery/jquery.js"></script>
+		<script src="vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="vendor/popper/umd/popper.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="vendor/common/common.js"></script>
+		<script src="vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/media/js/dataTables.bootstrap5.min.js"></script>
+		<script src="vendor/select2/js/select2.js"></script>
+		<script src="vendor/bootstrapv5-multiselect/js/bootstrap-multiselect.js"></script>
+
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="js/theme.init.js"></script>
+
+		<!-- Examples -->
+		<script src="js/examples/sangja.datatables.list.js"></script>
+		<script src="js/examples/examples.advanced.form.js"></script>
+
+
+	</body>
+</html>

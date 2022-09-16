@@ -1,0 +1,552 @@
+<form class="order-details action-buttons-fixed" method="post">
+<div class="row">
+	<section class="card card-modern">
+		<header class="card-header">
+			<h2 class="card-title">Unstoring</h2>
+		</header>
+		<div class="card-body">
+			<div class="row">
+				<div class="col-6 form-row">
+					<label>출고일자</label>
+					<div class="input-group">
+						<span class="input-group-text">
+							<i class="fas fa-calendar-alt"></i>
+						</span>
+					<input type="text" data-plugin-datepicker class="form-control">
+					</div>
+				</div>
+				<div class="col-6 form-row">
+					<label>옵션</label>
+					<select class="form-control" id="select" onchange="setDisplay();">
+						<option>직원출고</option>
+						<option>-  재고조정</option>
+						<option>Seller판매출고</option>
+						<option>Seller교환</option>
+					</select>
+				</div>
+			</div>
+			
+			<div id="data1" class="row mb-3">
+				<div class="col-6 form-row">
+					<label>User</label>
+					<select class="form-control">
+						<optgroup label="Employee">
+							<option value="changho">ChangHo</option>
+							<option value="danielra">Danielra</option>
+							<option value="anna">Anna</option>
+						</optgroup>
+						<optgroup label="Commissioner">
+							<option value="changsu">Changsu</option>
+							<option value="daniel">Daniel</option>
+							<option value="anni">Anni</option>
+						</optgroup>
+					</select>
+				</div>
+				<div class="col-6 form-row">
+					<label>메모</label>
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			
+			<div id="data2" class="row mb-3" style="display: none">
+				<div class="col-6 form-row">
+					<label>User</label>
+					<input type="text" value="회사" id="inputReadOnly" class="form-control" readonly="readonly">
+				</div>
+				<div class="col-6 form-row">
+					<label>메모</label>
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			
+			<div id="data3" class="row mb-3" style="display: none">
+				<div class="col-6 form-row">
+					<label>User</label>
+					<select class="form-control">
+						<optgroup label="Individual Saller">
+							<option value="coco">Coco</option>
+							<option value="nana">Nana</option>
+						</optgroup>
+					</select>
+				</div>
+				<div class="col-6 form-row">
+					<label>메모</label>
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			
+			<div id="data4" class="row mb-3" style="display: none">
+				<div class="col-6 form-row">
+					<label>User</label>
+					<select class="form-control">
+						<optgroup label="Individual Saller">
+							<option value="coco">Coco</option>
+							<option value="nana">Nana</option>
+						</optgroup>
+					</select>
+				</div>
+				<div class="col-6 form-row">
+					<label>메모</label>
+					<input type="text" class="form-control">
+				</div>
+			</div>
+			
+			<div class="datatables-header-footer-wrapper">
+				<div class="form-group row pb-4">
+					<a class="col-lg-3 modal-with-form btn btn-primary btn-md btn-py-1 px-6 " href="#modalForm">Add Product <i class="fas fa-plus"></i></a>
+				</div>
+					
+				<div id="data_table1" class="row justify-content-md-center"> 
+					<div class="table-responsive pb-4">
+						<table class="table table-responsive-md table-hover mb-0" style="min-width: 900px;">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Product</th>
+									<th>Product#</th>
+									<th>회사재고</th>
+									<th>User 재고</th>
+									<th>Qty</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>USB CABLE LIGHTNING 3Ft</td>
+									<td>C10013</td>
+									<td>200</td>
+									<td>5</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>USB CABLE ANDRCID 3Ft</td>
+									<td>C10013</td>
+									<td>150</td>
+									<td>4</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div id="data_table2" class="row justify-content-md-center" style="display: none"> 
+					<div class="table-responsive pb-4">
+						<table class="table table-responsive-md table-hover mb-0" style="min-width: 900px;">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Product</th>
+									<th>Product#</th>
+									<th>회사재고</th>
+									<th>Qty</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>USB CABLE LIGHTNING 3Ft</td>
+									<td>C10013</td>
+									<td>200</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>USB CABLE ANDRCID 3Ft</td>
+									<td>C10013</td>
+									<td>150</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div id="data_table3" class="row justify-content-md-center" style="display: none"> 
+					<div class="table-responsive pb-4">
+						<table class="table table-responsive-md table-hover mb-0" style="min-width: 900px;">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Product</th>
+									<th>Product#</th>
+									<th>회사재고</th>
+									<th>User 재고</th>
+									<th>Unit Price</th>
+									<th>Sales Price</th>
+									<th>Qty</th>
+									<th>Amount</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>USB CABLE LIGHTNING 3Ft</td>
+									<td>C10013</td>
+									<td>200</td>
+									<td>5</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" readonly="readonly" value="15.00">
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" value="15.00">
+										</div>
+									</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" value="15.00">
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>USB CABLE ANDRCID 3Ft</td>
+									<td>C10013</td>
+									<td>150</td>
+									<td>4</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" readonly="readonly" value="3.50">
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" value="3.50">
+										</div>
+									</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<div class="input-group">
+											<span class="input-group-text">$</span>
+											<input type="text" class="form-control" value="3.50">
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+				<div id="data_table4" class="row justify-content-md-center" style="display: none"> 
+					<div class="table-responsive pb-4">
+						<table class="table table-responsive-md table-hover mb-0" style="min-width: 900px;">
+							<thead>
+								<tr>
+									<th>#</th>
+									<th>Product</th>
+									<th>Product#</th>
+									<th>회사재고</th>
+									<th>User 재고</th>
+									<th>Qty</th>
+									<th>Delete</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>USB CABLE LIGHTNING 3Ft</td>
+									<td>C10013</td>
+									<td>200</td>
+									<td>5</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>USB CABLE ANDRCID 3Ft</td>
+									<td>C10013</td>
+									<td>150</td>
+									<td>4</td>
+									<td>
+										<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+											<div class="input-group">
+												<button type="button" class="btn btn-default spinner-up">
+													<i class="fas fa-plus"></i>
+												</button>
+												<input type="text" class="spinner-input form-control" maxlength="3">
+												<button type="button" class="btn btn-default spinner-down">
+													<i class="fas fa-minus"></i>
+												</button>
+											</div>
+										</div>
+									</td>
+									<td>
+										<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+		<footer class="card-footer">
+			<div class="row">
+				<div class="col-md-12 center">
+					<button class="btn btn-primary modal-confirm">입고</button>
+				</div>
+			</div>
+		</footer>
+	</section>
+</div>
+
+<!-- Product select modelForm start -->
+<div id="modalForm" class="modal-block modal-block-md mfp-hide">
+	<section class="card">
+		<header class="card-header">
+			<h2 class="card-title">Product List</h2>
+		</header>
+
+		<div class="card-body">
+			<div class="datatables-header-footer-wrapper">
+				<div class="datatable-header">
+					<div class="row align-items-center mb-0">
+						<div class="col-4 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+							<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+								<label class="ws-nowrap me-3 mb-0">Show:</label>
+								<select class="form-control results-per-page" name="results-per-page">
+									<option value="10" selected>5</option>
+									<option value="25">10</option>
+								</select>
+							</div>
+					  	</div>
+						<div class="col-8 col-lg-auto ms-auto ml-auto ps-lg-1 mb-3 mb-lg-3">
+							<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+								<label class="ws-nowrap me-3 mb-0">Filter By:</label>
+								<select class="form-control filter-by" name="filter-by">
+									<option value="all" selected>All</option>
+									<option value="1">Category</option>
+									<option value="2">Product</option>
+									<option value="3">Product#</option>
+								</select>
+							</div>
+					  	</div>
+						<div class="col-12 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+							<div class="search search-style-1-lg mx-lg-auto">
+								<div class="input-group">
+									<input type="text" class="search-term form-control" name="search-term" id="search-term" placeholder="Search Product">
+									<button class="btn btn-default" type="submit"><i class="bx bx-search"></i></button>
+								</div>
+							</div>
+					  	</div>
+					</div>
+				</div>
+			  	<table class="table table-ecommerce-simple mb-0" id="addproduct-ecommerce-list">
+					<thead>
+						<tr>
+							<th width="3%"><input type="checkbox" name="select-all" class="select-all checkbox-style-1 p-relative top-2" value="" /></th>
+							<th width="10%">Category</th>
+							<th width="67%">Product</th>
+							<th width="10%">Product#</th>
+							<th width="5%">Cost Price($)</th>
+							<th width="5%">Unit Price($)</th>
+						</tr>
+					</thead>
+				  	<tbody>
+						<tr>
+							<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+						  	<td>Phone ACC</td>
+						  	<td>USB CABLE LIGHTHNING 3FT</td>
+						  	<td>14430041357</td>
+							<td>999.00</td>
+						  	<td>999.00</td>
+					  	</tr>
+					  	<tr>
+						  	<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+						  	<td>Phone ACC</td>
+						  	<td>USB CABLE ANDRCID 3FT</td>
+						  	<td>144300413586</td>
+							<td>999.00</td>
+						  <td>999.00</td>
+					  	</tr>
+				  	</tbody>
+			  	</table>
+			</div>
+		</div>
+		<footer class="card-footer">
+			<div class="row">
+				<div class="col-md-12 center">
+					<button class="btn btn-primary modal-confirm">Add Product</button>
+					<button class="btn btn-default modal-dismiss">Cancel</button>
+				</div>
+			</div>
+		</footer>
+	</section>
+</div>
+</form>
+<!-- modelForm end -->
+
+<!-- Theme Base, Components and Settings -->
+<script src="js/theme.js"></script>
+
+<!-- Theme Initialization Files -->
+<script src="js/theme.init.js"></script>
+<script src="js/examples/inventory.addproduct.datatables.list.js"></script>
+<script src="js/examples/examples.modals.js"></script>
+
+<script>
+	function setDisplay(){
+		var property = document.getElementById('select').value;
+		
+		if(property=="직원출고"){
+			$('#data1').show();
+			$('#data2').hide();
+			$('#data3').hide();
+			$('#data4').hide();
+
+			$('#data_table1').show();
+			$('#data_table2').hide();
+			$('#data_table3').hide();
+			$('#data_table4').hide();
+		} else if(property=="- 재고조정") {
+			$('#data1').hide();
+			$('#data2').show();
+			$('#data3').hide();
+			$('#data4').hide();
+
+			$('#data_table1').hide();
+			$('#data_table2').show();
+			$('#data_table3').hide();
+			$('#data_table4').hide();
+		} else if(property=="Seller판매출고") {
+			$('#data1').hide();
+			$('#data2').hide();
+			$('#data3').show();
+			$('#data4').hide();
+
+			$('#data_table1').hide();
+			$('#data_table2').hide();
+			$('#data_table3').show();
+			$('#data_table4').hide();
+		} else if(property=="Seller교환") {
+			$('#data1').hide();
+			$('#data2').hide();
+			$('#data3').hide();
+			$('#data4').show();
+
+			$('#data_table1').hide();
+			$('#data_table2').hide();
+			$('#data_table3').hide();
+			$('#data_table4').show();
+		}
+		
+	}
+</script>

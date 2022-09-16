@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.saleprod">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.SaleProdVO">
+		select
+		t1.sale_prod_num,
+		t1.sale_num,
+		t1.prd_mng_num,
+		t2.prd_nm,
+		t1.sale_opt,
+		t1.unit_price,
+		t1.sale_price,
+		t1.sale_qty,
+		t1.tot_sale_price,
+		t1.editor,
+		t1.crt_ymdt,
+		t1.mod_ymdt
+		from tbl_sale_prod t1, tbl_product t2 where t1.prd_mng_num=t2.prd_mng_num
+	</select>
+	
+	<select id="listBysalenum" parameterType="string" resultType="com.sangja.domain.SaleProdVO">
+		select
+		t1.sale_prod_num,
+		t1.sale_num,
+		t1.prd_mng_num,
+		t2.prd_nm,
+		t2.upc_code,
+		t1.sale_opt,
+		t1.unit_price,
+		t1.sale_price,
+		t1.sale_qty,
+		t1.tot_sale_price,
+		t1.editor,
+		t1.crt_ymdt,
+		t1.mod_ymdt
+		from tbl_sale_prod t1, tbl_product t2 where t1.prd_mng_num=t2.prd_mng_num and sale_num=#{sale_num}
+	</select>
+	
+	<select id="listBysalenums" parameterType="java.util.List" resultType="com.sangja.domain.SaleProdVO">
+		select
+		t1.sale_prod_num,
+		t1.sale_num,
+		t1.prd_mng_num,
+		t2.prd_nm,
+		t2.upc_code,
+		t1.sale_opt,
+		t1.unit_price,
+		t1.sale_price,
+		t1.sale_qty,
+		t1.tot_sale_price,
+		t1.editor,
+		t1.crt_ymdt,
+		t1.mod_ymdt
+		from tbl_sale_prod t1, tbl_product t2 where t1.prd_mng_num=t2.prd_mng_num and t1.sale_num in (
+		<foreach collection="list" item="item" separator=",">
+            #{item.sale_num}
+        </foreach>)
+		order by t1.sale_num,t1.sale_prod_num
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.SaleProdVO">
+		insert into
+		tbl_sale_prod(
+		sale_num,
+		prd_mng_num,
+		sale_opt,
+		unit_price,
+		sale_price,
+		sale_qty,
+		tot_sale_price,
+		editor,
+		crt_ymdt,
+		mod_ymdt)
+		values(
+		#{sale_num},
+		#{prd_mng_num},
+		#{sale_opt},
+		#{unit_price},
+		#{sale_price},
+		#{sale_qty},
+		#{tot_sale_price},
+		#{editor},
+		#{crt_ymdt},
+		#{mod_ymdt})
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.SaleProdVO">
+		select
+		sale_prod_num,
+		sale_num,
+		prd_mng_num,
+		sale_opt,
+		unit_price,
+		sale_price,
+		sale_qty,
+		tot_sale_price,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_sale_prod
+		where
+		sale_prod_num = #{sale_prod_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.SaleProdVO">
+		update tbl_sale_prod
+		set
+		sale_num=#{sale_num},
+		prd_mng_num=#{prd_mng_num},
+		sale_opt=#{sale_opt},
+		unit_price=#{unit_price},
+		sale_price=#{sale_price},
+		sale_qty=#{sale_qty},
+		tot_sale_price=#{tot_sale_price},
+		editor=#{editor},
+		crt_ymdt=#{crt_ymdt},
+		mod_ymdt=#{mod_ymdt}
+		where
+		sale_prod_num = #{sale_prod_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="int">
+		delete
+		from tbl_sale_prod
+		where
+		sale_prod_num
+		= #{sale_prod_num}
+	</delete>
+    <!-- 게시물 모두 삭제 -->
+	<delete id="deleteAll" parameterType="string">
+		delete
+		from tbl_sale_prod
+		where
+		sale_num
+		= #{sale_num}
+	</delete>
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(sale_prod_num) from
+		tbl_sale_prod
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.SaleProdVO">
+		select
+		sale_prod_num,
+		sale_num,
+		prd_mng_num,
+		sale_opt,
+		unit_price,
+		sale_price,
+		sale_qty,
+		tot_sale_price,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_sale_prod
+		order by sale_prod_num desc
+		limit #{displayPost},
+		#{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.SaleProdVO">
+		select
+		sale_prod_num,
+		sale_num,
+		prd_mng_num,
+		sale_opt,
+		unit_price,
+		sale_price,
+		sale_qty,
+		tot_sale_price,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_sale_prod
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by sale_prod_num desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(sale_prod_num) from tbl_sale_prod
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

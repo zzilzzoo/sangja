@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.invoiceinfo">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.InvoiceVO">
+		select
+		inv_num,
+		sale_num,
+		inv_date,
+		invoice_no,
+		cust_order_no,
+		cust_invoice_no,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		ship_method,
+		tracking_no,
+		payment,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from tbl_invoice_info
+	</select>
+
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.InvoiceVO">
+		select
+		inv_num,
+		sale_num,
+		inv_date,
+		invoice_no,
+		cust_order_no,
+		cust_invoice_no,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		ship_method,
+		tracking_no,
+		payment,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_invoice_info where 1=1 ${strWhere}
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.InvoiceVO">
+		insert into
+		tbl_invoice_info(
+		sale_num,
+		inv_date,
+		invoice_no,
+		cust_order_no,
+		cust_invoice_no,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		ship_method,
+		tracking_no,
+		payment,
+		editor,
+		crt_ymdt,
+		mod_ymdt)
+		values(
+		#{sale_num},
+		#{inv_date},
+		#{invoice_no},
+		#{cust_order_no},
+		#{cust_invoice_no},
+		#{cust_num},
+		#{bill_title},
+		#{bill_addr1},
+		#{bill_addr2},
+		#{bill_to_remark},
+		#{ship_title},
+		#{ship_addr1},
+		#{ship_addr2},
+		#{ship_to_remark},
+		#{ship_method},
+		#{tracking_no},
+		#{payment},
+		#{editor},
+		#{crt_ymdt},
+		#{mod_ymdt})
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="string"
+		resultType="com.sangja.domain.InvoiceVO">
+		select
+		sale_num,
+		inv_date,
+		invoice_no,
+		cust_order_no,
+		cust_invoice_no,
+		cust_num,
+		bill_title,
+		bill_addr1,
+		bill_addr2,
+		bill_to_remark,
+		ship_title,
+		ship_addr1,
+		ship_addr2,
+		ship_to_remark,
+		ship_method,
+		tracking_no,
+		payment,
+		editor,
+		crt_ymdt,
+		mod_ymdt
+		from
+		tbl_invoice_info
+		where
+		sale_num = #{sale_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.InvoiceVO">
+		update tbl_invoice_info
+		set
+		inv_num=#{inv_num},
+		sale_num=#{sale_num},
+		inv_date=#{inv_date},
+		invoice_no=#{invoice_no},
+		cust_order_no=#{cust_order_no},
+		cust_invoice_no=#{cust_invoice_no},
+		cust_num=#{cust_num},
+		bill_title=#{bill_title},
+		bill_addr1=#{bill_addr1},
+		bill_addr2=#{bill_addr2},
+		bill_to_remark=#{bill_to_remark},
+		ship_title=#{ship_title},
+		ship_addr1=#{ship_addr1},
+		ship_addr2=#{ship_addr2},
+		ship_to_remark=#{ship_to_remark},
+		ship_method=#{ship_method},
+		tracking_no=#{tracking_no},
+		payment=#{payment},
+		editor=#{editor},		
+		mod_ymdt=#{mod_ymdt}
+		where
+		sale_num =
+		#{sale_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="string">
+		delete
+		from tbl_invoice_info
+		where sale_num =
+		#{sale_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(sale_num) from
+		tbl_invoice_info
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.InvoiceVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from
+		tbl_invoice_info
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.InvoiceVO">
+		select
+		bno, title, writer, regDate, viewCnt
+		from tbl_invoice_info
+
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+		order by bno desc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(bno) from tbl_invoice_info
+		<if test='searchType.equals("title")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("content")'>
+			WHERE content LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("title_content")'>
+			WHERE title LIKE concat('%', #{keyword}, '%')
+			or content
+			LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		<if test='searchType.equals("writer")'>
+			WHERE writer LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>

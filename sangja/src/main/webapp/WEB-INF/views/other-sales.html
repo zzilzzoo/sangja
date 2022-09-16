@@ -1,0 +1,762 @@
+<!doctype html>
+<?php
+	include "sideba-fixed.html";
+?>
+	<head>
+
+		<!-- Basic -->
+		<meta charset="UTF-8">
+
+		<title>Other Sales | SangJa Admin</title>
+		<meta name="keywords" content="SangJa Admin" />
+		<meta name="description" content="SangJa Admin">
+		<meta name="author" content="Sangja">
+
+		<!-- Mobile Metas -->
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+		<!-- Web Fonts  -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800|Shadows+Into+Light" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link href="https://fonts.googleapis.com/css?family=Poppins:100,300,400,600,700,800,900" rel="stylesheet" type="text/css">
+
+		<!-- Vendor CSS -->
+		<link rel="stylesheet" href="vendor/bootstrap/css/bootstrap.css" />
+		
+		<link rel="stylesheet" href="vendor/animate/animate.compat.css">
+		<link rel="stylesheet" href="vendor/font-awesome/css/all.min.css" />
+		<link rel="stylesheet" href="vendor/boxicons/css/boxicons.min.css" />
+		<link rel="stylesheet" href="vendor/magnific-popup/magnific-popup.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-datepicker/css/bootstrap-datepicker3.css" />
+		<link rel="stylesheet" href="vendor/bootstrap-timepicker/css/bootstrap-timepicker.css" />
+		<link rel="stylesheet" href="vendor/datatables/media/css/dataTables.bootstrap5.css" />
+		<link rel="stylesheet" href="vendor/select2/css/select2.css" />
+		<link rel="stylesheet" href="vendor/select2-bootstrap-theme/select2-bootstrap.min.css" />
+
+
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="css/theme.css" />
+
+		<!-- Theme Layout -->
+		<link rel="stylesheet" href="css/layouts/modern.css" />
+
+		<!-- Skin CSS -->
+		<link rel="stylesheet" href="css/skins/default.css" />
+
+		<!-- Theme Custom CSS -->
+		<link rel="stylesheet" href="css/custom.css">
+
+		<!-- Head Libs -->
+		<script src="vendor/modernizr/modernizr.js"></script>
+
+	</head>
+	<body>
+		<section class="body">
+
+			<!-- start: header -->
+			<?php
+				$firstmenu_code=2;
+				$secondmenu_code=1;
+				$third_code=3;
+			    include "header.html";
+    	    ?>
+			<!-- end: header -->
+
+			<div class="inner-wrapper">
+				<!-- start: sidebar -->
+				<?php
+				    include "sidebar-left.html";
+    		    ?>
+				<!-- end: sidebar -->
+
+				<section role="main" class="content-body content-body-modern mt-0">
+					<header class="page-header page-header-left-inline-breadcrumb">
+						<h2 class="font-weight-bold text-6">Other</h2>
+						<div class="right-wrapper">
+							<ol class="breadcrumbs">
+								<li>
+									<a href="index.html">
+										<i class="bx bx-home-alt"></i>
+									</a>
+								</li>
+
+								<li><span>Sales</span></li>
+
+								<li><span>Sales Management </span></li>
+
+								<li><span>Other Sales</span></li>
+
+							</ol>
+
+						</div>
+					</header>
+
+					<!-- start: page -->
+					<form class="ecommerce-form action-buttons-fixed" action="#" method="post">
+						<div class="row">
+							<div class="col-lg-6 mb-4 mb-lg-0">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">General Info</h2>
+									</div>
+									<div class="card-body">
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Order #</label>
+												<input type="text" value="100001" id="inputReadOnly" class="form-control" readonly="readonly">
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Type</label>
+												<div class="row">
+													<div class="col-12 pb-2">
+														<select class="form-control">
+															<option>UPS</option>
+															<option>Other</option>
+														</select>
+													</div>
+													<div class="col-12">
+														<input type="text" class="form-control">
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Date</label>
+												<div class="date-time-field">
+													<div class="date">
+														<div class="input-group">
+															<span class="input-group-text">
+																<i class="fas fa-calendar-alt"></i>
+															</span>
+															<input type="text" class="form-control" name="orderDate" value="2019-11-21" required data-plugin-datepicker data-plugin-options='{"orientation": "bottom", "format": "yyyy-mm-dd"}' />
+														</div>
+													</div>
+													<div class="time">
+														<div class="input-group">
+															<span class="input-group-text">
+																<i class="far fa-clock"></i>
+															</span>
+															<input type="text" data-plugin-timepicker class="form-control" data-plugin-options='{ "showMeridian": false } /'>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="form-row">
+											<div class="form-group col mb-3">
+												<label>Sales Person</label>
+												<input type="text" value="Chang Ho" id="inputReadOnly" class="form-control" readonly="readonly">
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+							<div class="col-lg-6 mb-4 mb-lg-0">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Customer Info</h2>
+									</div>
+									<div class="card-body">
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="input-group mb-3">
+													<span class="input-group-text">
+														<i class="fas fa-store"></i>
+													</span>
+													<!-- 모든 주소중 셀렉트 검색하여 찾기 -->
+													<select id="selectaddress" name="selectaddress" data-plugin-selectTwo class="form-control populate" data-plugin-options='{ "minimumInputLength": 2 }' title="Please search address" required>
+														<option value="">Choose Address</option>
+														<optgroup label="State MS Zone">
+															<option value="1">
+																<span class="address">974 US-51</span>,
+																<span class="city">Madison</span>,
+																<span class="state">MS</span>
+																<span class="zip">9110</span>
+															</option>
+															<option value="2">
+																<span class="address">17123 Midway Rd</span>,
+																<span class="city">TERRY</span>,
+																<span class="state">MS</span>
+																<span class="zip">39170</span>
+															</option>
+														</optgroup>
+														<optgroup label="State TX Zone">
+															<option value="3">
+																<span class="address">8401 N Hardwood Rd</span>,
+																<span class="city">North Richland Hills</span>,
+																<span class="state">TX</span>
+																<span class="zip">76180</span>
+															</option>
+															<option value="4">
+																<span class="address">100 E Kennedale Pkwy</span>,
+																<span class="city">Kennedale</span>,
+																<span class="state">TX</span>
+																<span class="zip">76060</span>
+															</option>
+														</optgroup>
+													</select>
+												<!--모든 주소중 셀렉트 검색하여 찾기 끝-->
+														
+												<!-- 검색버튼 눌러서 주소 찾기 
+													<input type="text" class="form-control" placeholder="Address Search">
+													<a href="#searchForm" class="btn btn-default modal-with-form" type="button"><i class="fas fa-search"></i></a>
+													<!-- search start -->
+													<div id="searchForm" class="modal-block modal-block-md mfp-hide">
+														<section class="card">
+															<header class="card-header">
+																<h2 class="card-title">Customer List</h2>
+															</header>
+															<div class="card-body">
+																<div class="datatables-header-footer-wrapper">
+																	<table class="table table-ecommerce-simple mb-0" id="search-default">
+																		<thead>
+																			<tr>
+																				<th></th>
+																				<th>Name</th>
+																				<th>Addrsss</th>
+																				<th>City</th>
+																				<th>State</th>
+																				<td>Zip Code</td>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<tr>
+																				<td><input type="radio" id="searchAddress1" name="searchAddress"></td>
+																				<td></td>
+																				<td>974 US-51 Madison, MS 9110</td>
+																				<td>Madison</td>
+																				<td>MS</td>
+																				<td>39110</td>
+																			</tr>
+																		<tr>
+																			<td><input type="radio" id="searchAddress2" name="searchAddress"></td>
+																			<td>Fuller's Hill</td>
+																			<td>17123 Midway Rd, TERRY, MS 39170</td>
+																			<td>Madison</td>
+																			<td>MS</td>
+																			<td>39110</td>
+																		</tr>
+																	</tbody>
+																	</table>
+																</div>
+															</div>
+															<footer class="card-footer">
+																<div class="row">
+																	<div class="col-md-12 center">
+																		<button class="btn btn-primary modal-confirm">Add Customer</button>
+																		<button class="btn btn-default modal-dismiss">Cancel</button>
+																	</div>
+																</div>
+															</footer>
+														</section>
+													</div>
+													<!-- modelForm end -->
+												<!-- 검색버튼 눌러서 주소 찾기 끝 -->	
+												</div>
+												<ul class="list list-unstyled list-item-bottom-space-0">
+													<li>
+														<label>Name</label>
+														<input type="text" value="" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>Address</label>
+														<input type="text" value="974 US-51" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>City</label>
+														<input type="text" value="Madison" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>State</label>
+														<input type="text" value="MS" class="form-control" readonly="readonly">
+													</li>
+													<li>
+														<label>Zip code</label>
+														<input type="text" value="39110" class="form-control" readonly="readonly">
+													</li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Products</h2>
+									</div>
+									<div class="card-body">
+										<div class="form-group row pb-4">
+											<a class="col-lg-3 modal-with-form btn btn-primary btn-md btn-py-1 px-6 " href="#modalForm">Add Product <i class="fas fa-plus"></i></a>
+											<!-- modelForm start -->
+											<div id="modalForm" class="modal-block modal-block-md mfp-hide">
+												<section class="card">
+													<header class="card-header">
+														<h2 class="card-title">Product List</h2>
+													</header>
+													<div class="card-body">
+														<div class="datatables-header-footer-wrapper">
+															<div class="datatable-header">
+																<div class="row align-items-center mb-0">
+																	<div class="col-4 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+																		<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+																			<label class="ws-nowrap me-3 mb-0">Show:</label>
+																			<select class="form-control results-per-page" name="results-per-page">
+																				<option value="10" selected>5</option>
+																				<option value="25">10</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="col-8 col-lg-auto ms-auto ml-auto ps-lg-1 mb-3 mb-lg-3">
+																		<div class="d-flex align-items-lg-center flex-column flex-lg-row">
+																			<label class="ws-nowrap me-3 mb-0">Filter By:</label>
+																			<select class="form-control filter-by" name="filter-by">
+																				<option value="all" selected>All</option>
+																				<option value="1">Category</option>
+																				<option value="2">UPC Code</option>
+																				<option value="3">Item</option>
+																				<option value="4">Unit Price</option>
+																			</select>
+																		</div>
+																	</div>
+																	<div class="col-12 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+																		<div class="search search-style-1-lg mx-lg-auto">
+																			<div class="input-group">
+																				<input type="text" class="search-term form-control" name="search-term" id="search-term" placeholder="Search Product">
+																				<button class="btn btn-default" type="submit"><i class="bx bx-search"></i></button>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<table class="table table-ecommerce-simple mb-0" id="addproduct-ecommerce-list">
+																<thead>
+																	<tr>
+																		<th width="3%"><input type="checkbox" name="select-all" class="select-all checkbox-style-1 p-relative top-2" value="" /></th>
+																		<th width="10%">Category</th>
+																		<th width="10%">UPC Code</th>
+																		<th width="72%">Item</th>
+																		<th width="5%">Unit Price($)</th>
+																	</tr>
+																</thead>
+																<tbody>
+																	<tr>
+																		<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>Phone ACC</td>
+																		<td>14430041357</td>
+																		<td>USB CABLE LIGHTHNING 3FT</td>
+																		<td>999.00</td>
+																	</tr>
+																	<tr>
+																		<td><input type="checkbox" name="checkboxRow1" class="checkbox-style-1 p-relative top-2" value="" /></td>
+																		<td>Phone ACC</td>
+																		<td>144300413586</td>
+																		<td>USB CABLE ANDRCID 3FT</td>
+																		<td>999.00</td>
+																	</tr>
+																</tbody>
+															</table>
+														</div>
+										    		</div>
+													<footer class="card-footer">
+														<div class="row">
+															<div class="col-md-12 center">
+																<button class="btn btn-primary modal-confirm">Add Product</button>
+																<button class="btn btn-default modal-dismiss">Cancel</button>
+															</div>
+														</div>
+													</footer>
+												</section>
+											</div>
+											<!-- modelForm end -->
+										</div>
+										<div class="row justify-content-md-center"> 
+											<div class="col-lg-12">
+												<div class="table-responsive pb-4">
+													<table class="table table-responsive-md table-hover mb-0" style="min-width: 900px;">
+														<thead>
+															<tr>
+																<th>#</th>
+																<th>UPC Code</th>
+																<th>Item</th>
+																<th>Option</th>
+																<th>Unit Price</th>
+																<th>Sales Price</th>
+																<th>Qty</th>
+																<th>Amount</th>
+																<th>Delete</th>
+															</tr>
+													    </thead>
+														<tbody>
+															<tr>
+																<td>1</td>
+																<td>144030041357</td>
+																<td>USB CABLE LIGHTNING 3Ft</td>
+																<td>
+																	<select class="form-control" name="orderOption" required>
+																		<option value="sales" selected>Sales</option>
+																		<option value="credit">Credit</option>
+																		<option value="sample">Sample</option>
+																		<option value="defecitve-return">Defecitve Return</option>
+																	</select>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" readonly="readonly" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+																		<div class="input-group">
+																			<button type="button" class="btn btn-default spinner-up">
+																				<i class="fas fa-plus"></i>
+																			</button>
+																			<input type="text" class="spinner-input form-control" maxlength="3">
+																			<button type="button" class="btn btn-default spinner-down">
+																				<i class="fas fa-minus"></i>
+																			</button>
+																		</div>
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="15.00">
+																	</div>
+																</td>
+																<td>
+																	<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+																</td>
+															</tr>
+															<tr>
+																<td>2</td>
+																<td>144030041355</td>
+																<td>USB CABLE ANDRCID 3Ft</td>
+																<td>
+																	<select class="form-control" name="orderOption" required>
+																		<option value="sales" selected>Sales</option>
+																		<option value="credit">Credit</option>
+																		<option value="sample">Sample</option>
+																		<option value="defecitve-return">Defecitve Return</option>
+																	</select>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" readonly="readonly" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<div data-plugin-spinner data-plugin-options="{ 'value':1, 'step': 1, 'min': 1}">
+																		<div class="input-group">
+																			<button type="button" class="btn btn-default spinner-up">
+																				<i class="fas fa-plus"></i>
+																			</button>
+																			<input type="text" class="spinner-input form-control" maxlength="3">
+																			<button type="button" class="btn btn-default spinner-down">
+																				<i class="fas fa-minus"></i>
+																			</button>
+																		</div>
+																	</div>
+																</td>
+																<td>
+																	<div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="3.50">
+																	</div>
+																</td>
+																<td>
+																	<a href="" class="btn btn-danger btn-px-2 py-2"><i class="fas fa-times"></i></a>
+																</td>
+															</tr>
+														</tbody>
+														<tfoot>
+															<tr>
+																<td colspan="5" class="border-0"></td>
+																<td align="center" class="font-weight-bold">Subtotal</td>
+																<td align="center">2</td>
+																<td colspan="2"><div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" readonly="readonly" value="18.50">
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<td colspan="5" class="border-0"></td>
+																<td align="center" class="font-weight-bold">Sales Tax</td>
+																<td align="center"></td>
+																<td colspan="2"><div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="0.00">
+																	</div>
+																</td>
+															</tr>
+															<tr>
+																<td colspan="5" class="border-0"></td>
+																<td align="center" class="font-weight-bold">Shopping Cost</td>
+																<td align="center"></td>
+																<td colspan="2"><div class="input-group">
+																		<span class="input-group-text">$</span>
+																		<input type="text" class="form-control" value="3.50">
+																	</div>
+																</td>
+															</tr>
+														</tfoot>
+													</table>
+												</div>
+												
+												<div class="row justify-content-end"> 
+													<a class="col-lg-3 btn btn-success btn-md btn-py-1 px-6" href="#">Order Update <i class="fas fa-sync-alt"></i></a>
+												</div> 
+												<div class="row justify-content-end flex-column flex-lg-row my-3">
+													<div class="col-auto me-5">
+														<h3 class="font-weight-bold text-color-dark text-4 mb-3">Items Subtotal</h3>
+														<span class="d-flex align-items-center">
+															2 Items
+															<i class="fas fa-chevron-right text-color-primary px-3"></i>
+															<b class="text-color-dark text-xxs">$ 18.50</b>
+														</span>
+														
+													</div>
+													<div class="col-auto me-5">
+														<h3 class="font-weight-bold text-color-dark text-4 mb-3">Sales Tax</h3>
+														<span class="d-flex align-items-center">
+															Sales Tax
+															<i class="fas fa-chevron-right text-color-primary px-3"></i>
+															<b class="text-color-dark text-xxs">$ 0.00</b>
+														</span>
+													</div>
+													<div class="col-auto me-5">
+														<h3 class="font-weight-bold text-color-dark text-4 mb-3">Shopping Cost</h3>
+														<span class="d-flex align-items-center">
+															Sales Tax
+															<i class="fas fa-chevron-right text-color-primary px-3"></i>
+															<b class="text-color-dark text-xxs">$ 3.0</b>
+														</span>
+													</div>
+													<div class="col-auto">
+														<h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
+														<span class="d-flex align-items-center justify-content-lg-end">
+															<strong class="text-color-dark text-5">$ 22.00</strong>
+														</span>
+													</div>
+												</div>
+										    </div>
+										</div>
+									</div>
+								</div>
+
+							</div>
+						</div>
+						<div class="row">
+							<div class="col">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Pay By</h2>
+									</div>
+									<div class="card-body">
+										<div class="row justify-content-center mb-4">
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary">													
+													<input name="payby" type="radio" id="cash" checked="checked" value="cash" onchange="setDisplay()">
+													<label for="cash" class="text-4">Cash</label>
+												</div>
+											</div>
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary">													
+													<input id="moneyorder" name="payby" type="radio" value="moneyorder" onchange="setDisplay()">
+													<label for="moneyorder" class="text-4">Money Order</label>
+												</div>
+											</div>
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary form-check-inline">
+													<input id="check" name="payby" type="radio" value="check" onchange="setDisplay()"> 
+													<label for="check" class="text-4">Check</label>
+												</div>
+											</div>
+											<div class="col-lg-3">
+												<div class="radio-custom radio-primary form-check-inline">
+													<input id="ar" name="payby" type="radio" value="ar" onchange="setDisplay()"> 
+										  			<label for="ar" class="text-4">AR<span class="text-1">(Account Receivable)</span></label>
+												</div>
+											</div>
+											<div class="col-lg-2">
+												<div class="radio-custom radio-primary form-check-inline">
+													<input id="bymail" name="payby" type="radio" value="bymail" onchange="setDisplay()"> 
+										  			<label for="bymail" class="text-4">By Mail</label>
+												</div>
+											</div>
+										</div>
+										
+										<!-- cash Money Order -->
+										<div id="payment" class="row justify-content-center">
+											<div class="col-lg-12 alert alert-default">
+												<h4 class="font-weight-bold text-dark">Payment Amount</h4>
+												<div class="row">
+													<div class="col-lg-3">
+														<div class="input-group my-2">
+															<span class="input-group-text">$</span>
+															<input type="text" class="form-control" value="22.00">
+														</div>
+													</div>
+													<a href="#" class="col-lg-3 btn btn-success my-2">Pay</a>
+												</div>
+											</div>
+										</div>
+										
+										<!-- check -->
+										<div id="checkpayment" class="row justify-content-center"  style="display: none">
+											<div class="col-lg-12 alert alert-default">
+												<h4 class="font-weight-bold text-dark">Payment Amount</h4>
+												<div class="row">
+													<div class="col-lg-auto">
+														<div class="input-group my-2">
+															<span class="input-group-text text-2">Check #</span>
+															<input type="text" class="form-control" maxlength="4" style="width: 80px">
+														</div>
+													</div>
+													<div class="col-lg-3">
+														<div class="input-group my-2">
+															<span class="input-group-text">$</span>
+															<input type="text" class="form-control" value="22.00">
+														</div>
+													</div>
+													<a href="#" class="col-lg-3 btn btn-success my-2">Pay</a>
+												</div>
+											</div>
+										</div>
+
+									</div>
+										
+								</div>
+
+							</div>
+						</div>
+						
+						<div class="row">
+							<div class="col">
+
+								<div class="card card-modern">
+									<div class="card-header">
+										<h2 class="card-title">Invoice &amp; Packing List Print</h2>
+									</div>
+									<div class="card-body">
+										<div class="row justify-content-center mt-3">
+											<a href="invoice-setting.html" target="_blank" class="mt-2 m-lg-2 mt-sm-2 mt-xl-2 col-lg-3 btn btn-dark btn-px-4 py-3 font-weight-semibold line-height-1">
+												<i class="bx bx-printer text-4 me-2"></i> Print Invoice
+											</a>	
+											<a href="packing-list-setting.html" target="_blank" class="mt-2 m-lg-2 mt-sm-2 mt-xl-2 col-lg-3 btn btn-dark btn-px-4 py-3 font-weight-semibold line-height-1">
+												<i class="bx bx-package text-4 me-2"></i> Packing List
+											</a>	
+										</div> 
+									</div>
+										
+								</div>
+
+							</div>
+						</div>
+						<div class="row action-buttons">
+							<div class="col-12 col-md-auto">
+								<button type="submit" class="submit-button btn btn-primary btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1" data-loading-text="Loading...">
+									<i class="bx bx-save text-4 me-2"></i> Save Order
+								</button>
+							</div>
+							<div class="col-12 col-md-auto px-md-0 mt-3 mt-md-0">
+								<a href="order-list.html" class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3">Cancel</a>
+							</div>
+							<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+								<a href="#" class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1">
+									<i class="bx bx-trash text-4 me-2"></i> Delete Order
+								</a>
+							</div>
+						</div>
+					</form>
+
+					<!-- end: page -->
+				</section>
+			</div>
+
+		</section>
+
+		<!-- Vendor -->
+		<script src="vendor/jquery/jquery.js"></script>
+		<script src="vendor/jquery-browser-mobile/jquery.browser.mobile.js"></script>
+		<script src="vendor/popper/umd/popper.min.js"></script>
+		<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+		<script src="vendor/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+		<script src="vendor/common/common.js"></script>
+		<script src="vendor/nanoscroller/nanoscroller.js"></script>
+		<script src="vendor/magnific-popup/jquery.magnific-popup.js"></script>
+		<script src="vendor/jquery-placeholder/jquery.placeholder.js"></script>
+
+		<!-- Specific Page Vendor -->
+		<script src="vendor/datatables/media/js/jquery.dataTables.min.js"></script>
+		<script src="vendor/datatables/media/js/dataTables.bootstrap5.min.js"></script>
+		<script src="vendor/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+		<script src="vendor/fuelux/js/spinner.js"></script>
+		<script src="vendor/autosize/autosize.js"></script>
+		<script src="vendor/select2/js/select2.js"></script>
+
+		<!-- Theme Base, Components and Settings -->
+		<script src="js/theme.js"></script>
+
+		<!-- Theme Custom -->
+		<script src="js/custom.js"></script>
+
+		<!-- Theme Initialization Files -->
+		<script src="js/theme.init.js"></script>
+
+		<!-- Examples -->
+		<script src="js/examples/onsite.datatables.default.js"></script>
+		<script src="js/examples/examples.modals.js"></script>
+		<script src="js/examples/examples.advanced.form.js"></script>
+		<script src="js/examples/sales.addproduct.datatables.list.js"></script>
+<script>
+	function setDisplay(){
+    if($('input:radio[id=cash]').is(':checked')){
+			$('#payment').show();
+			$('#checkpayment').hide();
+		} else if ($('input:radio[id=moneyorder]').is(':checked')){
+			$('#payment').show();
+			$('#checkpayment').hide();
+		} else if ($('input:radio[id=check]').is(':checked')){
+			$('#payment').hide();
+			$('#checkpayment').show();
+		} else if ($('input:radio[id=ar]').is(':checked')){
+			$('#payment').hide();
+			$('#checkpayment').hide();
+		} else if ($('input:radio[id=bymail]').is(':checked')){
+			$('#payment').hide();
+			$('#checkpayment').hide();
+		}
+	}
+		
+</script>
+
+	</body>
+</html>

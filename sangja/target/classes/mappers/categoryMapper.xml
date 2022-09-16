@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sangja.mappers.category">
+	<!-- 게시물 목록 -->
+	<select id="list" resultType="com.sangja.domain.CategoryVO">
+		select ctgry_mng_num,
+		ctgry_nm,
+		editor,
+		crt_ymdt,
+		mod_ymdt from tbl_category order by ctgry_mng_num desc
+	</select>
+
+	<!-- 게시물 작성 -->
+	<insert id="write" parameterType="com.sangja.domain.CategoryVO">
+		insert into
+		tbl_category(ctgry_nm,
+		editor, crt_ymdt,mod_ymdt)
+		values(#{ctgry_nm},
+		#{editor}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s'),DATE_FORMAT(now(),
+		'%Y-%m-%d %H:%i:%s'))
+	</insert>
+
+	<!-- 게시물 조회 -->
+	<select id="view" parameterType="int"
+		resultType="com.sangja.domain.CategoryVO">
+		select
+		ctgry_mng_num,
+		ctgry_nm ,
+		editor ,
+		crt_ymdt ,
+		mod_ymdt
+		from
+		tbl_category
+		where
+		ctgry_mng_num = #{ctgry_mng_num}
+	</select>
+
+	<!-- 게시물 수정 -->
+	<update id="modify" parameterType="com.sangja.domain.CategoryVO">
+		update tbl_category
+		set
+		ctgry_nm =
+		#{ctgry_nm},
+		editor = #{editor},		
+		mod_ymdt =DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')
+		where ctgry_mng_num = #{ctgry_mng_num}
+	</update>
+
+	<!-- 게시물 삭제 -->
+	<delete id="delete" parameterType="com.sangja.domain.CategoryVO">
+		delete
+		from tbl_category
+		where
+		ctgry_mng_num
+		= #{ctgry_mng_num}
+	</delete>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="count" resultType="int">
+		select count(ctgry_mng_num) from
+		tbl_category
+	</select>
+	<!-- 게시물 목록 + 페이징 -->
+	<select id="listPage" parameterType="hashMap"
+		resultType="com.sangja.domain.CategoryVO">
+		select
+		ctgry_mng_num,
+		ctgry_nm,
+		editor,
+		crt_ymdt,mod_ymdt
+		from
+		tbl_category
+		order by ctgry_nm asc
+		limit #{displayPost}, #{postNum}
+	</select>
+	<!-- 게시물 목록 + 페이징 +검색 -->
+	<select id="listPageSearch" parameterType="hashMap"
+		resultType="com.sangja.domain.CategoryVO">
+		select
+		ctgry_mng_num,
+		ctgry_nm,
+		editor,
+		crt_ymdt,mod_ymdt
+		from tbl_category
+
+		<if test='searchType.equals("ctgry_nm")'>
+			WHERE ctgry_nm LIKE concat('%', #{keyword}, '%')
+		</if>
+
+		order by ctgry_nm asc
+		limit #{displayPost}, #{postNum}
+	</select>
+
+	<!-- 게시물 총 갯수 -->
+	<select id="searchCount" parameterType="hashMap"
+		resultType="int">
+		select count(ctgry_mng_num) from tbl_category
+		<if test='searchType.equals("ctgry_nm")'>
+			WHERE ctgry_nm LIKE concat('%', #{keyword}, '%')
+		</if>
+	</select>
+</mapper>
