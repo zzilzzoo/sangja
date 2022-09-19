@@ -144,7 +144,7 @@
 				</tr>
 				<tr>
 					<td colspan="3" align="right" class="border-0">Shipping Cost</td>
-					<td align="right" class="shippingcost"><fmt:formatNumber value="${svo.tot_tax_amt}" pattern="#,##0.00"/></td>
+					<td align="right" class="shippingcost"><fmt:formatNumber value="${svo.shopping_cost}" pattern="#,##0.00"/></td>
 				</tr>
 				<tr>
 					<td colspan="3" align="right" class="border-0 total">Total</td>

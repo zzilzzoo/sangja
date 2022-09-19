@@ -270,7 +270,11 @@ public class SalesMngController {
 			model.addAttribute("url", "/");
 			return;
 		}
-
+		String msg = (String) req.getParameter("msg");
+		System.out.print((new Date().toString()) + "getOnSiteSales1 msg :" + msg + "\n");
+		if (msg != "") {
+			model.addAttribute("msg", msg);
+		}
 		model.addAttribute("umvo", umvo);
 
 		List<UserMenuVO> umList = umService.list(unum);
@@ -391,6 +395,8 @@ public class SalesMngController {
 		// old vo
 		SaleVO osvo = saleService.view(sale_num);
 		if (osvo != null) {
+			svo.setSale_ymd(osvo.getSale_ymd());
+			svo.setSale_time(osvo.getSale_time());
 			svo.setTot_pay_amt(osvo.getTot_pay_amt());
 			svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
 		}
@@ -407,10 +413,9 @@ public class SalesMngController {
 			for (int i = 0; i < spvo.getSaleProdVOList().size(); i++) {
 				// 판매번호 셋팅
 				spvo.getSaleProdVOList().get(i).setSale_num(svo.getSale_num());
-				//값이 중복으로 넘어오는 경우 있어 처리함..스프링 버그인듯
-				String[] sale_opts=spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
-				if(sale_opts.length>1)
-				{
+				// 값이 중복으로 넘어오는 경우 있어 처리함..스프링 버그인듯
+				String[] sale_opts = spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
+				if (sale_opts.length > 1) {
 					spvo.getSaleProdVOList().get(i).setSale_opt(sale_opts[0]);
 				}
 				// System.out.println(spvo.getSaleProdVOList().get(i).getSale_price());
@@ -494,12 +499,11 @@ public class SalesMngController {
 			for (int i = 0; i < spvo.getSaleProdVOList().size(); i++) {
 				// 판매번호 셋팅
 				spvo.getSaleProdVOList().get(i).setSale_num(svo.getSale_num());
-				String[] sale_opts=spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
-				if(sale_opts.length>1)
-				{
+				String[] sale_opts = spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
+				if (sale_opts.length > 1) {
 					spvo.getSaleProdVOList().get(i).setSale_opt(sale_opts[0]);
 				}
-				//System.out.println(spvo.getSaleProdVOList().get(i).getSale_price());
+				// System.out.println(spvo.getSaleProdVOList().get(i).getSale_price());
 				spService.write(spvo.getSaleProdVOList().get(i));
 			}
 		}
@@ -515,11 +519,11 @@ public class SalesMngController {
 	public String postSalePay(HttpServletRequest request) throws Exception {
 
 		String sale_num = request.getParameter("pay_sale_num");
-		System.out.println(sale_num);
+		System.out.println("postSalePay:" + sale_num);
 		String pay_type = request.getParameter("pay_type");
-		System.out.println(pay_type);
+		System.out.println("postSalePay:" + pay_type);
 		String check_no = request.getParameter("check_no");
-		System.out.println(check_no);
+		System.out.println("postSalePay:" + check_no);
 		String _pay_amt = request.getParameter("pay_amt");
 		String return_url = request.getParameter("posturl");
 
@@ -555,7 +559,12 @@ public class SalesMngController {
 
 		saleService.modifyPayAmt(sale_num, pay_amt, pay_ymdt);
 
-		return "redirect:" + return_url + "?sale_num=" + sale_num;
+		// request.setAttribute("msg", "The deposit is complete.");
+		String msg = "The deposit is complete.";
+		// request.setAttribute("url", return_url + "?sale_num=" + sale_num);
+		// return "alert";
+
+		return "redirect:" + return_url + "?sale_num=" + sale_num + "&msg=" + msg;
 	}
 
 	@RequestMapping(value = "/sale-file", method = RequestMethod.POST)
@@ -752,14 +761,13 @@ public class SalesMngController {
 	public String postOtherSales(@RequestParam(value = "sale_num", defaultValue = "0") String sale_num, SaleVO svo,
 			SaleProdVO spvo) throws Exception {
 
-		
 		String[] sale_nums = sale_num.split(",");
 		// sale_num 두개 넘어오는 거 보정
 		if (sale_nums.length > 1) {
 			sale_num = sale_nums[0];
 			svo.setSale_num(sale_num);
 		}
-		
+
 		try {
 			// svo.setSale_type("onsite");
 
@@ -800,17 +808,16 @@ public class SalesMngController {
 			for (int i = 0; i < spvo.getSaleProdVOList().size(); i++) {
 				// 판매번호 셋팅
 				spvo.getSaleProdVOList().get(i).setSale_num(svo.getSale_num());
-				//값이 이중으로 넘어오는 경우 있어 처리함
-				String[] sale_opts=spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
-				if(sale_opts.length>1)
-				{
+				// 값이 이중으로 넘어오는 경우 있어 처리함
+				String[] sale_opts = spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
+				if (sale_opts.length > 1) {
 					spvo.getSaleProdVOList().get(i).setSale_opt(sale_opts[0]);
 				}
-				
-				//System.out.println("sale_qty:"+spvo.getSaleProdVOList().get(i).getSale_qty());
+
+				// System.out.println("sale_qty:"+spvo.getSaleProdVOList().get(i).getSale_qty());
 				spService.write(spvo.getSaleProdVOList().get(i));
 
-				//고객별 최종 판매가 저장
+				// 고객별 최종 판매가 저장
 				cuspService.delete(svo.getCust_num(), spvo.getSaleProdVOList().get(i).getPrd_mng_num());
 
 				CustSalePriceVO cspvo = new CustSalePriceVO();
@@ -875,26 +882,22 @@ public class SalesMngController {
 		if (sale_ymd_s != "" && sale_ymd_s != null) {
 			String[] _sale_ymd_s = sale_ymd_s.split("/");
 			sale_ymd_s = _sale_ymd_s[2] + "-" + _sale_ymd_s[0] + "-" + _sale_ymd_s[1];
-		}
-		else
-		{
+		} else {
 			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormatD = new SimpleDateFormat("yyyy-MM-dd");
 			dateFormatD.setTimeZone(TimeZone.getTimeZone("CST"));
 			String sale_ymd = dateFormatD.format(date);
-			sale_ymd_s=sale_ymd;
+			sale_ymd_s = sale_ymd;
 		}
 		if (sale_ymd_e != "" && sale_ymd_e != null) {
 			String[] _sale_ymd_e = sale_ymd_e.split("/");
 			sale_ymd_e = _sale_ymd_e[2] + "-" + _sale_ymd_e[0] + "-" + _sale_ymd_e[1];
-		}
-		else
-		{
+		} else {
 			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormatD = new SimpleDateFormat("yyyy-MM-dd");
 			dateFormatD.setTimeZone(TimeZone.getTimeZone("CST"));
 			String sale_ymd = dateFormatD.format(date);
-			sale_ymd_e=sale_ymd;
+			sale_ymd_e = sale_ymd;
 		}
 		System.out.print("\n" + sale_ymd_s + "\n");
 		System.out.print("\n" + sale_ymd_e + "\n");
@@ -981,20 +984,25 @@ public class SalesMngController {
 
 		model.addAttribute("salelist", salelist);
 
-		List<UserVO> uListC = null;
-		uListC = usService.listbyWhere(" and category='commissioner'");
-		model.addAttribute("uListC", uListC);
-		// System.out.print(uListC.size());
+		if (umvo.getRead_yn().equals("Territory Only")) {
+			System.out.print("/order-list strSearch : Territory Only");
 
-		List<UserVO> uListE = null;
-		uListE = usService.listbyWhere(" and category='employee'");
-		model.addAttribute("uListE", uListE);
+		} else {
+			List<UserVO> uListC = null;
+			uListC = usService.listbyWhere(" and category='commissioner'");
+			model.addAttribute("uListC", uListC);
+			// System.out.print(uListC.size());
 
-		// System.out.print(uListE.size());
+			List<UserVO> uListE = null;
+			uListE = usService.listbyWhere(" and category='employee'");
+			model.addAttribute("uListE", uListE);
 
-		List<UserVO> uListS = null;
-		uListS = usService.listbyWhere(" and category='seller'");
-		model.addAttribute("uListS", uListS);
+			// System.out.print(uListE.size());
+
+			List<UserVO> uListS = null;
+			uListS = usService.listbyWhere(" and category='seller'");
+			model.addAttribute("uListS", uListS);
+		}
 
 	}
 
@@ -1140,21 +1148,25 @@ public class SalesMngController {
 
 		}
 		model.addAttribute("salelist", salelist);
+		if (umvo.getRead_yn().equals("Territory Only")) {
+			System.out.print("/order-list strSearch : Territory Only");
 
-		List<UserVO> uListC = null;
-		uListC = usService.listbyWhere(" and category='commissioner'");
-		model.addAttribute("uListC", uListC);
-		// System.out.print(uListC.size());
+		} else {
+			List<UserVO> uListC = null;
+			uListC = usService.listbyWhere(" and category='commissioner'");
+			model.addAttribute("uListC", uListC);
+			// System.out.print(uListC.size());
 
-		List<UserVO> uListE = null;
-		uListE = usService.listbyWhere(" and category='employee'");
-		model.addAttribute("uListE", uListE);
+			List<UserVO> uListE = null;
+			uListE = usService.listbyWhere(" and category='employee'");
+			model.addAttribute("uListE", uListE);
 
-		// System.out.print(uListE.size());
+			// System.out.print(uListE.size());
 
-		List<UserVO> uListS = null;
-		uListS = usService.listbyWhere(" and category='seller'");
-		model.addAttribute("uListS", uListS);
+			List<UserVO> uListS = null;
+			uListS = usService.listbyWhere(" and category='seller'");
+			model.addAttribute("uListS", uListS);
+		}
 
 	}
 
@@ -1320,21 +1332,25 @@ public class SalesMngController {
 
 		}
 		model.addAttribute("salelist", salelist);
+		if (umvo.getRead_yn().equals("Territory Only")) {
+			System.out.print("/order-list strSearch : Territory Only");
 
-		List<UserVO> uListC = null;
-		uListC = usService.listbyWhere(" and category='commissioner'");
-		model.addAttribute("uListC", uListC);
-		// System.out.print(uListC.size());
+		} else {
+			List<UserVO> uListC = null;
+			uListC = usService.listbyWhere(" and category='commissioner'");
+			model.addAttribute("uListC", uListC);
+			// System.out.print(uListC.size());
 
-		List<UserVO> uListE = null;
-		uListE = usService.listbyWhere(" and category='employee'");
-		model.addAttribute("uListE", uListE);
+			List<UserVO> uListE = null;
+			uListE = usService.listbyWhere(" and category='employee'");
+			model.addAttribute("uListE", uListE);
 
-		// System.out.print(uListE.size());
+			// System.out.print(uListE.size());
 
-		List<UserVO> uListS = null;
-		uListS = usService.listbyWhere(" and category='seller'");
-		model.addAttribute("uListS", uListS);
+			List<UserVO> uListS = null;
+			uListS = usService.listbyWhere(" and category='seller'");
+			model.addAttribute("uListS", uListS);
+		}
 
 	}
 
@@ -1390,26 +1406,24 @@ public class SalesMngController {
 		if (sale_ymd_s != "" && sale_ymd_s != null) {
 			String[] _sale_ymd_s = sale_ymd_s.split("/");
 			sale_ymd_s = _sale_ymd_s[2] + "-" + _sale_ymd_s[0] + "-" + _sale_ymd_s[1];
-		}else
-		{
+		} else {
 			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormatD = new SimpleDateFormat("yyyy-MM-dd");
 			dateFormatD.setTimeZone(TimeZone.getTimeZone("CST"));
 			String sale_ymd = dateFormatD.format(date);
 
-			sale_ymd_s=sale_ymd;
+			sale_ymd_s = sale_ymd;
 		}
 		if (sale_ymd_e != "" && sale_ymd_e != null) {
 			String[] _sale_ymd_e = sale_ymd_e.split("/");
 			sale_ymd_e = _sale_ymd_e[2] + "-" + _sale_ymd_e[0] + "-" + _sale_ymd_e[1];
-		}else
-		{
+		} else {
 			Date date = Calendar.getInstance().getTime();
 			DateFormat dateFormatD = new SimpleDateFormat("yyyy-MM-dd");
 			dateFormatD.setTimeZone(TimeZone.getTimeZone("CST"));
 			String sale_ymd = dateFormatD.format(date);
 
-			sale_ymd_e=sale_ymd;
+			sale_ymd_e = sale_ymd;
 		}
 		System.out.print("\n" + sale_ymd_s + "\n");
 		System.out.print("\n" + sale_ymd_e + "\n");
@@ -1494,20 +1508,25 @@ public class SalesMngController {
 
 		}
 		model.addAttribute("salelist", salelist);
-		List<UserVO> uListC = null;
-		uListC = usService.listbyWhere(" and category='commissioner'");
-		model.addAttribute("uListC", uListC);
-		// System.out.print(uListC.size());
+		if (umvo.getRead_yn().equals("Territory Only")) {
+			System.out.print("/order-list strSearch : Territory Only");
 
-		List<UserVO> uListE = null;
-		uListE = usService.listbyWhere(" and category='employee'");
-		model.addAttribute("uListE", uListE);
+		} else {
+			List<UserVO> uListC = null;
+			uListC = usService.listbyWhere(" and category='commissioner'");
+			model.addAttribute("uListC", uListC);
+			// System.out.print(uListC.size());
 
-		// System.out.print(uListE.size());
+			List<UserVO> uListE = null;
+			uListE = usService.listbyWhere(" and category='employee'");
+			model.addAttribute("uListE", uListE);
 
-		List<UserVO> uListS = null;
-		uListS = usService.listbyWhere(" and category='seller'");
-		model.addAttribute("uListS", uListS);
+			// System.out.print(uListE.size());
+
+			List<UserVO> uListS = null;
+			uListS = usService.listbyWhere(" and category='seller'");
+			model.addAttribute("uListS", uListS);
+		}
 
 	}
 
@@ -1725,19 +1744,19 @@ public class SalesMngController {
 		return cspvo;
 
 	}
-	
-	/*판매내역 삭제
-	 * 1.삭제할 내용을 tbs_sale_rec_del로 카피해서 이동 mapper - del_backup
-	 * 2.삭제 진행 mapper - delete  
+
+	/*
+	 * 판매내역 삭제 1.삭제할 내용을 tbs_sale_rec_del로 카피해서 이동 mapper - del_backup 2.삭제 진행
+	 * mapper - delete
 	 */
 	@RequestMapping(value = "/del-sales")
 	public @ResponseBody String postDelSales(@RequestParam(value = "sale_num") String sale_num) throws Exception {
-		System.out.print("del-sales:"+sale_num);
-		
+		System.out.print("del-sales:" + sale_num);
+
 		try {
-			//삭제전 백업
+			// 삭제전 백업
 			saleService.delete_backup(sale_num);
-			//삭제
+			// 삭제
 			saleService.delete(sale_num);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -1747,7 +1766,6 @@ public class SalesMngController {
 		return "ok";
 
 	}
-
 
 	@RequestMapping(value = "/invoice-mobile-print-write", method = RequestMethod.POST)
 	public @ResponseBody String getInvoiceMobilePrintWrite(

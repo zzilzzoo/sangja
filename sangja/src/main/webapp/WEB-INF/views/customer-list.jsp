@@ -115,17 +115,24 @@
 													<c:choose>
 														<c:when test="${umvo.write_yn eq 'y'}">
 															<a href="customer-form"
-														class="btn btn-primary btn-md font-weight-semibold btn-py-2 px-4">Add
+														class="btn btn-primary btn-md font-weight-semibold ">Add
 														<i class="fas fa-plus"></i>
 													</a>
 														</c:when>
 														<c:otherwise>
 															<a onclick="alert('You do not have permission to write.');return false"
-														class="btn btn-primary btn-md font-weight-semibold btn-py-2 px-4">Add
+														class="btn btn-primary btn-md font-weight-semibold ">Add
 														<i class="fas fa-plus"></i>
 													</a>
 														</c:otherwise>
 													</c:choose>
+												</div>
+												<div class="col-8 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
+													<a
+														href="/excel/customer-list?search_user=${search_user}&filter_by=${filter_by}&search_term=${search_term }"
+														class="btn btn-success btn-md font-weight-semibold">Excel
+														<i class="far fa-file-excel"></i>
+													</a>
 												</div>
 												<div class="col-4 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
 													<div

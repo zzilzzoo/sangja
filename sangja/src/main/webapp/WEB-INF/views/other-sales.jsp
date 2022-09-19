@@ -1280,6 +1280,19 @@
 	<script>
 		function payPost() {
 
+			if(${salevo.tot_pay_amt}>=${salevo.tot_sale_amt})
+			{
+			alert('The deposit has already been completed.');
+			return;
+			}
+		var editmode=document.getElementById("editmode").value;
+		if(editmode=="new")
+			{
+			alert('You need to save first.');
+			return;
+			}
+		
+		
 			var sale_num;
 			var pay_type;
 			var check_no;
@@ -1671,7 +1684,7 @@
 		if (!confirm("You sure you want to delete it?")) {            
             return;
         }else{
-        	alert(sale_num);
+        	//alert(sale_num);
 		$.ajax({
 			url : "del-sales",
 			type : "POST",
