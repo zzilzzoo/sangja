@@ -143,8 +143,8 @@ public class ProductController {
 		}
 		String strWhere = " and t1.sale_status<>'delete'";
 		if (req.getParameter("filter-by") != null) {
-			if(filter.equals("category")) {
-				strWhere="";
+			if (filter.equals("category")) {
+				strWhere = "";
 			}
 			if (filter.equals("all")) {
 				strWhere = "";
@@ -154,7 +154,7 @@ public class ProductController {
 			} else {
 				strWhere = " and " + filter + " like '" + strSearch + "%'";
 			}
-			
+
 		}
 
 		System.out.print("filter:" + filter);
@@ -241,12 +241,16 @@ public class ProductController {
 		}
 		// upc 코드 확인
 		ProductVO pdvo = service.viewByUpc(vo.getUpc_code());
-		if (pdvo != null && pdvo.getPrd_mng_num() != vo.getPrd_mng_num()) {
-			ScriptUtils.alertAndMovePage(response, "The UPC code already exists!!",
-					"product-form?prd_mng_num=" + vo.getPrd_mng_num());
-			return;
-		}
+		System.out.print(pdvo.getPrd_mng_num()+"\n");
 		System.out.print(vo.getPrd_mng_num());
+		if (pdvo != null) {
+			if (!pdvo.getPrd_mng_num().equals(vo.getPrd_mng_num())) {
+				ScriptUtils.alertAndMovePage(response, "The UPC code already exists!!",
+						"product-form?prd_mng_num=" + vo.getPrd_mng_num());
+				return;
+			}
+		}
+
 		if (vo.getPrd_mng_num() == 0) {
 			service.write(vo);
 		} else {

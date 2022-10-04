@@ -1735,6 +1735,13 @@ public class SalesMngController {
 		return pvo;
 
 	}
+	@RequestMapping(value = "/sale-prod-add-num", method = RequestMethod.POST)
+	public @ResponseBody ProductVO getSaleProdAddNum(@RequestParam(value = "prod_num", defaultValue = "0") String prod_num,
+			Model model) throws Exception {
+		ProductVO pvo = pdService.view(Integer.parseInt(prod_num));
+		return pvo;
+
+	}
 
 	@RequestMapping(value = "/find-cust-sale-price", method = RequestMethod.POST)
 	public @ResponseBody CustSalePriceVO getFindCustSalePrice(@RequestParam("cust_num") int cust_num,
@@ -1746,7 +1753,7 @@ public class SalesMngController {
 	}
 
 	/*
-	 * 판매내역 삭제 1.삭제할 내용을 tbs_sale_rec_del로 카피해서 이동 mapper - del_backup 2.삭제 진행
+	 * 판매내역 삭제 1.삭제할 내용을 tbl_sale_rec_del로 카피해서 이동 mapper - del_backup 2.삭제 진행
 	 * mapper - delete
 	 */
 	@RequestMapping(value = "/del-sales")
@@ -2224,6 +2231,7 @@ public class SalesMngController {
 			System.out.print("ivvo: is null\r\n");
 			editMode = "new";
 			ivvo = new InvoiceVO();
+			ivvo.setInvoice_no(svo.getSale_num()); 
 			ivvo.setSale_num(svo.getSale_num());
 			ivvo.setCust_num(svo.getCust_num());
 			Date date = Calendar.getInstance().getTime();
@@ -2238,6 +2246,7 @@ public class SalesMngController {
 			ivvo.setShip_title(custvo.getCust_nm());
 			ivvo.setShip_addr1(custvo.getAddr());
 			ivvo.setShip_addr2(custvo.getCity() + " " + custvo.getState() + " " + custvo.getZip_code());
+			ivvo.setShip_method(svo.getSale_type());
 
 		} else {
 			editMode = "modify";

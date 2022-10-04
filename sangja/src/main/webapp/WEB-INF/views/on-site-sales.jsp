@@ -144,7 +144,8 @@
 											</div>
 
 											<div class="input-group mb-3">
-												<span class="input-group-text"> <i class="fas fa-store"></i>
+												<span class="input-group-text">
+													<i class="fas fa-store"></i>
 												</span>
 												<!-- 모든 주소중 셀렉트 검색하여 찾기 -->
 												<select id="selectaddress" name="selectaddress" data-plugin-selectTwo
@@ -154,8 +155,10 @@
 													<option value="">Choose Address</option>
 													<c:forEach items="${cuList}" var="cuList" varStatus="status">
 														<option value="${cuList.cust_num}"><span class="name">${cuList.cust_nm}</span>,
-															<span class="address">${cuList.addr}</span>, <span class="city">${cuList.city}</span>,
-															<span class="state">${cuList.state}</span>, <span class="zip">${cuList.zip_code}</span>
+															<span class="address">${cuList.addr}</span>,
+															<span class="city">${cuList.city}</span>,
+															<span class="state">${cuList.state}</span>,
+															<span class="zip">${cuList.zip_code}</span>
 														</option>
 													</c:forEach>
 												</select>
@@ -357,6 +360,7 @@
 																	<tr>
 																		<td><input type="checkbox" name="checkboxRow1"
 																				class="checkbox-style-1 p-relative top-2" value="${pcList.prd_mng_num}"
+																				onclick="getCheckboxValue(event)"
 																			/></td>
 																		<td>${pcList.ctgry_nm}</td>
 																		<td>${pcList.upc_code}</td>
@@ -375,6 +379,7 @@
 															<button class="btn btn-primary modal-confirm px-4" id="addBtn">Add</button>
 															<button class="btn btn-default modal-dismiss">Cancel</button>
 														</div>
+														<input type="hidden" id="check_result">
 													</div>
 												</footer>
 											</section>
@@ -491,19 +496,29 @@
 											</div>
 											<div class="row justify-content-end">
 												<div class="col-auto">
-													<h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
-													<span class="d-flex align-items-center"> <span class="item-cnt">${rowcnt}</span>
-														&nbsp;Items <i class="fas fa-chevron-right text-color-primary px-3"></i> <span
-														class="d-flex align-items-center justify-content-lg-end"
-													> <strong class="text-color-dark text-5">$ &nbsp; <span
-																class="total-sale-amt"
-															><fmt:formatNumber value="${salevo.tot_sale_amt}" pattern="#,##0.00" /></span> <input
-																	class="total-sale-amt-val" type="hidden" name="tot_sale_amt" value="0"
-																>
-														</strong>
-													</span>
-													</span>
+													(-)Discount
+													<input type="text" name="discount_amt" id="discount_amt"
+														value="<fmt:formatNumber value="${salevo.discount_amt}" pattern="#,##0.00" />"
+														class="form-control form-control-sm"
+														onKeyUp="removeChar(event);""
+														onChange="inputNumberFormat(this);calcTotal();"
+													>
+												</div>
+											</div>
+											<div class="row justify-content-end">
 
+												<div class="col-auto">
+													<h3 class="font-weight-bold text-color-dark text-4 mb-3">Order Total</h3>
+													<span class="d-flex align-items-center">
+														<span class="item-cnt">${rowcnt}</span>
+														&nbsp;Items <i class="fas fa-chevron-right text-color-primary px-3"></i>
+														<span class="d-flex align-items-center justify-content-lg-end">
+															<strong class="text-color-dark text-5">$ &nbsp; <span class="total-sale-amt">
+																	<fmt:formatNumber value="${salevo.tot_sale_amt}" pattern="#,##0.00" />
+																</span> <input class="total-sale-amt-val" type="hidden" name="tot_sale_amt" value="0">
+															</strong>
+														</span>
+													</span>
 												</div>
 											</div>
 											<div class="row justify-content-end mt-3">
@@ -640,13 +655,15 @@
 													<div class="fileupload fileupload-new my-2" data-provides="fileupload">
 														<div class="input-append">
 															<div class="uneditable-input">
-																<i class="fas fa-file fileupload-exists"></i> <span class="fileupload-preview"></span>
+																<i class="fas fa-file fileupload-exists"></i>
+																<span class="fileupload-preview"></span>
 															</div>
-															<span class="btn btn-default btn-file"> <span class="fileupload-exists">Change</span>
-																<span class="fileupload-new">Select Invoice</span> <input type="file"
-																	id="upload_file" name="upload_file" accept=".gif, .jpg, .png"
-																/>
-															</span> <a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
+															<span class="btn btn-default btn-file">
+																<span class="fileupload-exists">Change</span>
+																<span class="fileupload-new">Select Invoice</span>
+																<input type="file" id="upload_file" name="upload_file" accept=".gif, .jpg, .png" />
+															</span>
+															<a href="#" class="btn btn-default fileupload-exists" data-dismiss="fileupload">Remove</a>
 														</div>
 													</div>
 												</div>
@@ -674,16 +691,22 @@
 										<div class="alert alert-info mb-2">
 											<div class="row">
 												<div class="col-lg-5 mb-2">
-													<span class="text-4 px-2"><strong>${saleList.sale_ymd}</strong></span> <span
-														class="text-4 px-2"
-													><strong> <span class="text-2 px-2">$ <fmt:formatNumber
-																	value="${saleList.tot_ord_amt}" pattern="#,##0.00"
-																/> ($ <fmt:formatNumber value="${saleList.tot_pay_amt}" pattern="#,##0.00" />)
-														</span> $ <fmt:formatNumber value="${saleList.tot_ord_amt - saleList.tot_pay_amt}"
+													<span class="text-4 px-2">
+														<strong>${saleList.sale_ymd}</strong>
+													</span>
+													<span class="text-4 px-2">
+														<strong> <span class="text-2 px-2">
+																$
+																<fmt:formatNumber value="${saleList.tot_ord_amt}" pattern="#,##0.00" />
+																($
+																<fmt:formatNumber value="${saleList.tot_pay_amt}" pattern="#,##0.00" />
+																)
+															</span> $ <fmt:formatNumber value="${saleList.tot_ord_amt - saleList.tot_pay_amt}"
 																pattern="#,##0.00"
 															/>
 
-													</strong></span>
+														</strong>
+													</span>
 												</div>
 												<div class="col-lg-7">
 													<div class="row justify-content-end">
@@ -809,168 +832,41 @@
 		$("#addBtn")
 				.click(
 						function() {
-							var cust_num = document.getElementById("cust_num").value;
-							var rowData = new Array();
-							var tdArr = new Array();
-							var checkbox = $("input[name=checkboxRow1]:checked");
-
-							var selectOption = document
-									.getElementById("popup-option");
-							selectOption = selectOption.options[selectOption.selectedIndex].value;
-							//alert(selectOption);
-
-							// 체크된 체크박스 값을 가져온다
-							checkbox
-									.each(function(i) {
-
-										// checkbox.parent() : checkbox의 부모는 <td>이다.
-										// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-										var tr = checkbox.parent().parent().eq(
-												i);
-										var td = tr.children();
-
-										// 체크된 row의 모든 값을 배열에 담는다.
-										rowData.push(tr.text());
-
-										// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-										var prd_mng_num = td.eq(0).children()
-												.val();
-										//alert(xx);
-										var sale_price=0;
-										if(cust_num!=""){
-											sale_price=find_cust_sale_price(cust_num,prd_mng_num);
-										}
-										
-										//alert(sale_price);
-										var ctgry_nm = td.eq(1).text();
-										var upc_code = td.eq(2).text();
-										var prd_nm = td.eq(3).text();
-										var unit_price = td.eq(4).text();
-										if (sale_price=="0"){
-											sale_price=unit_price;
-										}else
-											{
-											sale_price=commaStr(sale_price);
+							
+							 var result = '';
+							  var oldResult=document.getElementById('check_result').value;
+							  var arr=oldResult.split(",");
+							  if(arr.length>0){
+								  for(var i=0;i<arr.length-1;i++){
+									
+									  var formData = new FormData();
+									  formData.append("prod_num", arr[i]);
+									  $.ajax({
+											type : "POST",				
+											url : "sale-prod-add-num",
+											data : formData,
+											processData:false,
+											contentType:false,
+											dataType:"text",
+											async: false,
+											success : function(data) {
+												//log.textContent = data;
+												//var contact=JSON.parse(data); 
+												//alert(contact["ctgry_mng_num"]);
+												prod_add(data);
+												document.getElementById('bar-code').value="";
+												document.getElementById('bar-code').focus();
+												
+												
+											},
+											error : function(request, status, error) {
+												alert("code:" + request.status + "\n" + "message:"
+														+ request.responseText + "\n" + "error:" + error);
 											}
-										if(selectOption=="credit")
-										{
-											sale_price='-'+sale_price;
-										}
-										else if(selectOption=="sample")
-										{
-											sale_price='0.00'
-										}
-										else if(selectOption=="defecitve-return")
-										{
-											sale_price='0.00'
-										}else
-											{}
-										
-										//alert(prd_mng_num);
-										var ic = 0;
-										var chkc = 0;
-										$('#saleprodTbl tr')
-												.each(
-														function() {
-															var trc = $(this);
-															var idxc = trc
-																	.index();
-															//alert(i);
-															if (ic > 0) {
-
-																var tdc = trc
-																		.children();
-																var valc = tdc
-																		.eq(1)
-																		.children()
-																		.eq(0)
-																		.val();
-																var valc2 = tdc
-																		.eq(2)
-																		.children()
-																		.eq(0)
-																		.val();
-																//alert(valc);
-																//alert(valc2);
-																if (prd_mng_num == valc
-																		&& selectOption == valc2) {
-																	chkc = 1;
-																}
-
-															}
-															ic++;
-														});
-										//값이 없는 경우
-										if (chkc == 0) {
-
-											// 가져온 값을 배열에 담는다.
-											tdArr.push(prd_mng_num);
-											tdArr.push(ctgry_nm);
-											tdArr.push(upc_code);
-											tdArr.push(prd_nm);
-											tdArr.push(unit_price);
-											var trLen = $('#saleprodTbl > tbody tr').length;
-											var rownum = trLen + 1;
-											$('#saleprodTbl > tbody:last')
-													.append(
-															'<tr>' + '<td>'
-																	+ rownum
-																	+ '</td>'
-																	//상품묭
-																	+ '<td>'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_mng_num" value="'+prd_mng_num+'">'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_nm" value="'+prd_nm+'">'
-																	+ prd_nm
-																	+ '</td>'
-																	//판매 옵션
-																	+ '<td>'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].sale_opt" value="'+selectOption+'">'
-																	+ selectOption
-																	//+ '<select class="form-control form-control-sm"	name="SaleProdVOList['+trLen+'].sale_opt" required>'
-																	//+ '<option value="sales" selected>Sales</option>'
-																	//+ '<option value="credit">Credit</option>'
-																	//+ '<option value="sample">Sample</option>'
-																	//+ '<option value="defecitve-return">DefecitveReturn</option>'
-																	//+ '</select>'
-																	+ '</td>'
-																	//단가
-																	+ '<td><input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].unit_price" value="'+unit_price+'" readonly>'
-																	+ '</td>'
-																	//판가
-																	+ '<td>'
-																	+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['
-																	+ trLen
-																	+ '].sale_price" value="'
-																	+ sale_price
-																	+ '" '
-																	+ 'onKeyUp="removeChar(event);"	 onchange="getVal(this);inputNumberFormat(this);">'
-																	+ '</td>'
-																	//수량
-																	+ '<td>'
-																	+ '<input type="number" class="form-control form-control-sm" name="SaleProdVOList['
-																	+ trLen
-																	+ '].sale_qty" value="" onchange="getVal(this);">'
-																	+ '</td>'
-																	//총판매가
-																	+ '<td>'
-																	+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].tot_sale_price" value="'
-																+ sale_price
-																+ '" '
-																+ 'readonly >'
-																	+ '</td>'
-																	+ '<td>'
-																	+ '<button class="btn btn-danger btn-sm" onclick="deleterow(this);"><i class="fas fa-times"></i>'
-																	+ '</td>'
-																	+ '</tr>');
-
-										}
-										//console.log("userid : " + userid);
-										//console.log("name : " + name);
-										//tr.hide();
-									});
-							//alert(rowData);
-							//$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = " + rowData);
-							//$("#ex3_Result2").html(tdArr);
+										});	
+									  
+								  }
+						  	}
 							calcTotal();
 							checkClear();
 						});
@@ -1074,6 +970,9 @@
 				i++;
 			});
 
+			var disc_val=uncomma(document.getElementById('discount_amt').value);
+			//alert(disc_val);
+			total=total+disc_val;
 			$(".item-cnt").text(i - 1);
 			$(".total-sale-amt").text(comma(String(total.toFixed(2))));
 			$(".total-sale-amt-val").val(total);
@@ -1580,32 +1479,51 @@
             return;
         }else{
         	//alert(sale_num);
-		$.ajax({
-			url : "del-sales",
-			type : "POST",
-			data : {
-				"sale_num" : sale_num
-			},
-			dataType : "text",
-			success : function(data) {
-				if (data == "ok") {
-					alert("Deleted!!.");
-					location.href="/order-list";
-				
+			$.ajax({
+				url : "del-sales",
+				type : "POST",
+				data : {
+					"sale_num" : sale_num
+				},
+				dataType : "text",
+				success : function(data) {
+					if (data == "ok") {
+						alert("Deleted!!.");
+						location.href="/order-list";
+					
+					}
+	
+					else {
+						alert(data);
+					}
+				},
+				error : function(error) {
+					alert(error);
 				}
-
-				else {
-					alert(data);
-				}
-			},
-			error : function(error) {
-				alert(error);
-			}
-		});
+			});
         }
 		
 		
-		}
+	}
+	 function getCheckboxValue(event)  {
+		  var result = '';
+		  var oldResult=document.getElementById('check_result').value;
+		  if(event.target.checked)  {
+		    result = oldResult + event.target.value + ",";
+		  }else {
+			  var arr=oldResult.split(",");
+			  if(arr.length>0){
+				  for(var i=0;i<arr.length-1;i++){
+					  if(arr[i]!=event.target.value)
+						  {
+						  result=result+arr[i]+","
+						  }
+				  }
+		  	}
+		  }
+		  //alert(result);
+		  document.getElementById('check_result').value = result;
+	 }
 	</script>
 
 	<script type="text/javascript">

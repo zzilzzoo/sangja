@@ -355,7 +355,7 @@ public class CustomerController {
 			cell.setCellValue(list.get(i).getVisit_term());
 			cell = row.createCell(7);
 			cell.setCellValue(list.get(i).getMng_user_nm());
-			cell = row.createCell(7);
+			cell = row.createCell(8);
 			cell.setCellValue(list.get(i).getCust_status());
 		}
 

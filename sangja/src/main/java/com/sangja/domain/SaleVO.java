@@ -2,7 +2,7 @@ package com.sangja.domain;
 
 public class SaleVO {
 	/*
-	 * CREATE TABLE `tbs_sale_rec` ( `sale_num` varchar(50) NOT NULL, `ord_no`
+	 * CREATE TABLE `tbl_sale_rec` ( `sale_num` varchar(50) NOT NULL, `ord_no`
 	 * varchar(50) DEFAULT NULL, `sale_ymd` varchar(30) NOT NULL, `sale_time`
 	 * varchar(30) NOT NULL, `sale_type` varchar(10) DEFAULT NULL, `sale_user_num`
 	 * int(11) DEFAULT NULL, `cust_num` int(11) DEFAULT NULL, `cust_nm` varchar(100)
@@ -30,6 +30,7 @@ public class SaleVO {
 	private double tot_sale_amt = 0;
 	private double tot_tax_amt = 0;
 	private double shopping_cost = 0;
+	private double discount_amt = 0;
 	private double tot_ord_amt = 0;
 	private double tot_pay_amt = 0;
 	private String last_pay_ymdt;
@@ -241,6 +242,14 @@ public class SaleVO {
 
 	public void setSale_user_nm(String sale_user_nm) {
 		this.sale_user_nm = sale_user_nm;
+	}
+
+	public double getDiscount_amt() {
+		return discount_amt;
+	}
+
+	public void setDiscount_amt(double discount_amt) {
+		this.discount_amt = discount_amt;
 	}
 
 }

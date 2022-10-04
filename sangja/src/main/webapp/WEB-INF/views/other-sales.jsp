@@ -291,7 +291,7 @@
 																<div class="col-md-12 center">
 																	<button class="btn btn-primary modal-confirm">Add Customer</button>
 																	<button class="btn btn-default modal-dismiss">Cancel</button>
-																</div>
+																</div>																
 															</div>
 														</footer>
 													</section>
@@ -438,7 +438,7 @@
 																<c:forEach items="${pcList}" var="pcList" varStatus="status">
 																	<tr>
 																		<td><input type="checkbox" name="checkboxRow1"
-																				class="checkbox-style-1 p-relative top-2" value="${pcList.prd_mng_num}"
+																				class="checkbox-style-1 p-relative top-2" value="${pcList.prd_mng_num}" onclick="getCheckboxValue(event)" 
 																			/></td>
 																		<td>${pcList.ctgry_nm}</td>
 																		<td>${pcList.upc_code}</td>
@@ -457,6 +457,7 @@
 															<button id="addBtn" class="btn btn-primary modal-confirm">Add Product</button>
 															<button class="btn btn-default modal-dismiss">Cancel</button>
 														</div>
+														<input type="text" id="check_result">
 													</div>
 												</footer>
 											</section>
@@ -905,170 +906,42 @@
 	</script>
 	<script>
 		$("#addBtn")
-				.click(
-						function() {
-							var cust_num = document.getElementById("cust_num").value;
-							var rowData = new Array();
-							var tdArr = new Array();
-							var checkbox = $("input[name=checkboxRow1]:checked");
-							var selectOption = document.getElementById("popup-option");
-					       selectOption = selectOption.options[selectOption.selectedIndex].value;
-							// 체크된 체크박스 값을 가져온다
-							checkbox
-									.each(function(i) {
-
-										// checkbox.parent() : checkbox의 부모는 <td>이다.
-										// checkbox.parent().parent() : <td>의 부모이므로 <tr>이다.
-										var tr = checkbox.parent().parent().eq(i);
-										var td = tr.children();
-
-										// 체크된 row의 모든 값을 배열에 담는다.
-										rowData.push(tr.text());
-
-										// td.eq(0)은 체크박스 이므로  td.eq(1)의 값부터 가져온다.
-										var prd_mng_num = td.eq(0).children()
-												.val();
-										var sale_price=0;
-										if(cust_num!=""){
-											sale_price=find_cust_sale_price(cust_num,prd_mng_num);
-										}
-										//alert(xx);
-										var ctgry_nm = td.eq(1).text();
-										var upc_code = td.eq(2).text();
-										var prd_nm = td.eq(3).text();
-										var unit_price = td.eq(4).text();
-										if (sale_price=="0"){
-											sale_price=unit_price;
-										}else
-											{
-											sale_price=commaStr(sale_price);
+				.click(	function() {							
+							 var result = '';
+							  var oldResult=document.getElementById('check_result').value;
+							  var arr=oldResult.split(",");
+							  if(arr.length>0){
+								  for(var i=0;i<arr.length-1;i++){
+									
+									  var formData = new FormData();
+									  formData.append("prod_num", arr[i]);
+									  $.ajax({
+											type : "POST",				
+											url : "sale-prod-add-num",
+											data : formData,
+											processData:false,
+											contentType:false,
+											dataType:"text",
+											async: false,
+											success : function(data) {
+												//log.textContent = data;
+												//var contact=JSON.parse(data); 
+												//alert(contact["ctgry_mng_num"]);
+												prod_add(data);
+												document.getElementById('bar-code').value="";
+												document.getElementById('bar-code').focus();
+												
+												
+											},
+											error : function(request, status, error) {
+												alert("code:" + request.status + "\n" + "message:"
+														+ request.responseText + "\n" + "error:" + error);
 											}
-										//옵션에따라 가격 조정
-										if(selectOption=="credit")
-										{
-											sale_price='-'+sale_price;
-										}
-										else if(selectOption=="sample")
-										{
-											sale_price='0.00'
-										}
-										else if(selectOption=="defecitve-return")
-										{
-											sale_price='0.00'
-										}else
-											{}
-										// 가져온 값을 배열에 담는다.
-										tdArr.push(prd_mng_num);
-										tdArr.push(ctgry_nm);
-										tdArr.push(upc_code);
-										tdArr.push(prd_nm);
-										tdArr.push(unit_price);
-
-										var ic = 0;
-										var chkc = 0;
-										$('#saleprodTbl tr')
-												.each(
-														function() {
-															var trc = $(this);
-															var idxc = trc.index();
-															//alert(i);
-															if (ic > 0) {
-
-																var tdc = trc.children();
-																var valc = tdc.eq(1).children().eq(0).val();
-																var valc2 = tdc.eq(3).children().eq(0).val();
-																//alert(valc);
-																//alert(valc2);
-																if (prd_mng_num == valc	&& selectOption == valc2) {
-																	chkc = 1;
-																}
-
-															}
-															ic++;
-														});
-										//값이 없는 경우
-										if (chkc == 0) {
-
-											var trLen = $('#saleprodTbl > tbody tr').length;
-											var rownum = trLen + 1;
-											$('#saleprodTbl > tbody:last')
-													.append(
-															'<tr>' + '<td>'
-																	+ rownum
-																	+ '</td>'
-																	+ '<td>'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_mng_num" value="'+prd_mng_num+'">'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_nm" value="'+prd_nm+'">'
-																	+ upc_code
-																	+ '</td>'
-																	+ '<td>'
-																	+ prd_nm
-																	+ '</td>'
-																	//판매 옵션
-																	+ '<td>'
-																	+ '<input type="hidden" name="SaleProdVOList['+trLen+'].sale_opt" value="'+selectOption+'">'
-																	+ selectOption
-																	//+ '<select class="form-control" name="SaleProdVOList['+trLen+'].sale_opt" required>'
-																	//+ '<option value="sales" selected>Sales</option>'
-																	//+ '<option value="credit">Credit</option>'
-																	//+ '<option value="sample">Sample</option>'
-																	//+ '<option value="defecitve-return">DefecitveReturn</option>'
-																	//+ '</select>'
-																	+ '</td>'
-																	//단가
-																	+ '<td><div class="input-group"><span class="input-group-text">$</span>'
-																	+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].unit_price" value="'+unit_price+'" readonly>'
-																	+ '</div></td>'
-																	//판가
-																	+ '<td><div class="input-group"><span class="input-group-text">$</span>'
-																	+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['
-																	+ trLen
-																	+ '].sale_price" value="'
-																	+ sale_price
-																	+ '" '
-																	+ 'onKeyUp="removeChar(event);"	onchange="getVal(this);inputNumberFormat(this);">'
-																	+ '</div></td>'
-																	//수량
-																	+ '<td>'
-																	+ '<div data-plugin-spinner data-plugin-options="{ \'value\':1, \'step\': 1, \'min\': 1}">'
-																	+ '<div class="input-group">'
-																	+ '<button type="button" class="btn btn-default spinner-up" onclick="qtyupdown(\'plus\',\'s_qty'
-																	+ trLen
-																	+ '\');getVal2(this);">'
-																	+ '<i class="fas fa-plus"></i>'
-																	+ '</button>'
-																	+ '<input id="s_qty'
-																	+ trLen
-																	+ '" type="text" class="spinner-input form-control"	maxlength="3" name="SaleProdVOList['
-																	+ trLen
-																	+ '].sale_qty" value="" onchange="getVal2(this);">'
-																	+ '<button type="button"	class="btn btn-default spinner-down" onclick="qtyupdown(\'minus\',\'s_qty'
-																	+ trLen
-																	+ '\');getVal2(this);">'
-																	+ '<i class="fas fa-minus"></i>'
-																	+ '</button></div></div>'
-																	+ '</td>'
-																	+ '<td>'
-																	+ '<div class="input-group">'
-																	+ '<span class="input-group-text">$</span>'
-																	+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].tot_sale_price" value="'
-														+ sale_price
-														+ '" '
-														+ 'readonly >'
-																	+ '</div>'
-																	+ '</td>'
-																	+ '<td>'
-																	+ '<button class="btn btn-danger btn-px-2 py-2" onclick="deleterow(this);"><i class="fas fa-times"></i>'
-																	+ '</td>'
-																	+ '</tr>');
-										}
-									});
-							//alert(rowData);
-							//$("#ex3_Result1").html(" * 체크된 Row의 모든 데이터 = " + rowData);
-							//$("#ex3_Result2").html(tdArr);
-							calcTotal();
-							checkClear();
-						});
+										});	
+									  
+								  }
+						  	}		
+				});
 
 		function deleterow(obj) {
 			var tr = $(obj).parent().parent();
@@ -1123,7 +996,15 @@
 			str.replace(/(\d)(?=(?:\d{3})+(?!\d))/g, '$1,');
 			try{
 				var arr=str.split(".");
-				str=arr[0]+"."+arr[1].padEnd(2,"0");
+				var strb=arr[1];
+				//65.00+15.96=80.960000001로 표시되는 오류 수정
+				if(strb.length>2)
+					{
+					strb=strb.substring(0,2);
+					}
+				
+				str=arr[0]+"."+strb.padEnd(2,"0");
+				
 			}catch{
 				str=str+".00"
 			}
@@ -1203,7 +1084,7 @@
 			$(".tot-sale-amt").val(commaStr(total.toFixed(2)));
 
 			var tot_sale_amt = $(".tot-sale-amt").val();
-
+		    //console.log(tot_sale_amt);
 			var tot_tax_amt = 0;
 			if ($(".tot-tax-amt").val() == "") {
 				tot_tax_amt = 0;
@@ -1211,7 +1092,7 @@
 			} else {
 				tot_tax_amt = $(".tot-tax-amt").val();
 			}
-
+			//console.log(tot_tax_amt);
 			var shopping_cost = 0;
 			if ($(".shopping-cost").val() == "") {
 				shopping_cost = 0;
@@ -1219,10 +1100,10 @@
 			} else {
 				shopping_cost = $(".shopping-cost").val();
 			}
-
+			//console.log(uncomma(shopping_cost));
 			var tot_ord_amt = uncomma(tot_sale_amt) + uncomma(tot_tax_amt)
-					+ uncomma(shopping_cost);
-			
+					+ uncomma(shopping_cost);			
+			//console.log(tot_ord_amt);
 			$(".tot-sale-amt-bttm").text(commaStr(tot_sale_amt));
 			$(".tot-tax-amt-bttm").text(commaStr(tot_tax_amt));
 			$(".shopping-cost-bttm").text(commaStr(shopping_cost));
@@ -1710,7 +1591,26 @@
         }
 		
 		
-		}
+	}
+	function getCheckboxValue(event)  {
+		  var result = '';
+		  var oldResult=document.getElementById('check_result').value;
+		  if(event.target.checked)  {
+		    result = oldResult + event.target.value + ",";
+		  }else {
+			  var arr=oldResult.split(",");
+			  if(arr.length>0){
+				  for(var i=0;i<arr.length-1;i++){
+					  if(arr[i]!=event.target.value)
+						  {
+						  result=result+arr[i]+","
+						  }
+				  }
+		  	}
+		  }
+		  //alert(result);
+		  document.getElementById('check_result').value = result;
+	 }
 	</script>
 	<script type="text/javascript">
 		var message = "${msg}";
