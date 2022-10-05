@@ -1735,9 +1735,10 @@ public class SalesMngController {
 		return pvo;
 
 	}
+
 	@RequestMapping(value = "/sale-prod-add-num", method = RequestMethod.POST)
-	public @ResponseBody ProductVO getSaleProdAddNum(@RequestParam(value = "prod_num", defaultValue = "0") String prod_num,
-			Model model) throws Exception {
+	public @ResponseBody ProductVO getSaleProdAddNum(
+			@RequestParam(value = "prod_num", defaultValue = "0") String prod_num, Model model) throws Exception {
 		ProductVO pvo = pdService.view(Integer.parseInt(prod_num));
 		return pvo;
 
@@ -1776,6 +1777,136 @@ public class SalesMngController {
 
 	@RequestMapping(value = "/invoice-mobile-print-write", method = RequestMethod.POST)
 	public @ResponseBody String getInvoiceMobilePrintWrite(
+			@RequestParam(value = "sale_num", defaultValue = "0") String sale_num, Model model) throws Exception {
+
+		System.out.print(sale_num);
+		String fname = "";
+		try {
+			// 1. 파일 객체 생성
+			File file = new File(
+					"/usr/local/src/apache-tomcat-9.0.60/webapps/sangja/resources/invoice/" + sale_num + ".prn");
+
+			// 2. 파일 존재여부 체크 및 생성
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+
+			List<SaleProdVO> spvoList = spService.listBySaleNum(sale_num);
+			int papersz = spvoList.size() * 136 + 747 + 103;
+			String printBody = "CT~~CD,~CC^~CT~\r\n" + "^XA\r\n" + "~TA000\r\n" + "~JSN\r\n" + "^LT0\r\n" + "^MNN\r\n"
+					+ "^MTD\r\n" + "^PON\r\n" + "^PMN\r\n" + "^LH0,0\r\n" + "^JMA\r\n" + "^PR5,5\r\n" + "~SD10\r\n"
+					+ "^JUS\r\n" + "^LRN\r\n" + "^CI27\r\n" + "^PA0,1,1,0\r\n" + "^XZ\r\n" + "^XA\r\n" + "^MML\r\n"
+					+ "^PW799\r\n" + "^LL" + Integer.toString(papersz) + "\r\n" // 용지현재 상품리스트 2 LL1199,상품 리스트1일때 용지 사이즈
+																				// : ^LL1039
+					+ "^LS0\r\n" + "^FPH,2^FT480,242^A0N,23,23^FH\\^CI28^FDINVOICE #^FS^CI27\r\n"
+					+ "^FPH,1^FT7,162^A0N,56,61^FB792,1,14,C^FH\\^CI28^FDINVOICE^FS^CI27\r\n"
+					+ "^FT6,290^A0N,25,25^FB793,1,6,C^FH\\^CI28^FDTX EAGLE SUPPLY^FS^CI27\r\n"
+					+ "^FT6,321^A0N,25,25^FB793,1,6,C^FH\\^CI28^FD2051 W WALNUT HILL LN^FS^CI27\r\n"
+					+ "^FT6,352^A0N,25,25^FB793,1,6,C^FH\\^CI28^FDIRVING, TX 75038^FS^CI27\r\n"
+					+ "^FT6,383^A0N,25,25^FB793,1,6,C^FH\\^CI28^FD972-600-8443^FS^CI27"
+					+ "^FT21,453^A0N,23,23^FH\\^CI28^FDCUTOMER^FS^CI27\r\n"
+					+ "^FPH,2^FT480,209^A0N,23,25^FH\\^CI28^FDDATE^FS^CI27\r\n"
+					+ "^FT21,490^A0N,23,23^FH\\^CI28^FDADDRESS^FS^CI27\r\n"
+					+ "^FO8,616^GFA,33,200,100,:Z64:eJw7b/P5PG0RAwONLQDbAQB3sYGX:EB2D\r\n"
+					+ "^FT286,597^A0N,20,20^FH\\^CI28^FDITEM^FS^CI27\r\n"
+					+ "^FT517,597^A0N,20,20^FH\\^CI28^FDQTY^FS^CI27\r\n"
+					+ "^FT0,597^A0N,20,20^FB648,1,5,R^FH\\^CI28^FDPRICE^FS^CI27\r\n"
+					+ "^FT703,597^A0N,20,20^FH\\^CI28^FDAMOUNT^FS^CI27\r\n"
+					+ "^FT11,597^A0N,20,20^FH\\^CI28^FDSALES OPTION^FS^CI27\r\n"
+					+ "^FO8,568^GFA,33,200,100,:Z64:eJw7b/P5PG0RAwONLQDbAQB3sYGX:EB2D\r\n";
+
+			// 판매 정보
+			SaleVO svo = saleService.view(sale_num);
+			// 이름
+			printBody = printBody + "^FT131,453^A0N,23,23^FH\\^CI28^FD" + svo.getCust_nm() + "^FS^CI27\r\n";
+			// 영수증번호(판매번호
+			printBody = printBody + "^FT605,242^A0N,23,25^FH\\^CI28^FD" + svo.getSale_num() + "^FS^CI27\r\n";
+
+			// 문자열 -> Date
+			SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			Date sale_date1 = formatter.parse(svo.getSale_ymd());
+			System.out.print(sale_date1);
+			// date -> 문자열
+			SimpleDateFormat formatter2 = new SimpleDateFormat("MM-dd-yyyy");
+			String sale_date2 = formatter2.format(sale_date1);
+			System.out.print(sale_date2);
+			// 날짜
+			printBody = printBody + "^FT605,209^A0N,23,23^FH\\^CI28^FD" + sale_date2 + "^FS^CI27\r\n";
+			// 주소
+			printBody = printBody + "^FT131,490^A0N,23,23^FH\\^CI28^FD" + svo.getAddr() + "^FS^CI27\r\n";
+			// city,state,zipcode
+			printBody = printBody + "^FT131,519^A0N,23,23^FH\\^CI28^FD" + svo.getCity() + " " + svo.getState() + " "
+					+ svo.getZip_code() + "^FS^CI27\r\n";
+
+			// 판매상품
+			// 미국달러
+			Currency usd = java.util.Currency.getInstance("USD");
+			// 화페포멧
+			NumberFormat usd_format = java.text.NumberFormat.getCurrencyInstance(java.util.Locale.US);
+			usd_format.setCurrency(usd);
+			int yAlias = 747;
+
+			for (int i = 0; i < spvoList.size(); i++) {
+				// 옵션
+				printBody = printBody + "^FT13," + Integer.toString(yAlias) + "^A0N,20,20^FH\\^CI28^FD"
+						+ spvoList.get(i).getSale_opt() + "^FS^CI27\r\n";
+				// 상품영
+				printBody = printBody + "^FT177," + Integer.toString(yAlias) + "^A0N,20,20^FH\\^CI28^FD"
+						+ spvoList.get(i).getPrd_nm() + "^FS^CI27\r\n";
+				// qty
+				printBody = printBody + "^FT0," + Integer.toString(yAlias) + "^A0N,20,20^FB555,1,5,R^FH\\^CI28^FD"
+						+ spvoList.get(i).getSale_qty() + "^FS^CI27\r\n";
+				// 단가
+				printBody = printBody + "^FT0," + Integer.toString(yAlias) + "^A0N,20,20^FB657,1,5,R^FH\\^CI28^FD"
+						+ usd_format.format(spvoList.get(i).getSale_price()) + "^FS^CI27\r\n";
+				// Amount
+				printBody = printBody + "^FT0," + Integer.toString(yAlias) + "^A0N,20,20^FB786,1,5,R^FH\\^CI28^FD"
+						+ usd_format.format(spvoList.get(i).getTot_sale_price()) + "^FS^CI27\r\n";
+				yAlias = yAlias + 136;
+			}
+			printBody = printBody + "^FO8," + Integer.toString(yAlias - 110)
+					+ "^GFA,33,200,100,:Z64:eJw7b/P5PG0RAwONLQDbAQB3sYGX:EB2D\r\n";
+			// 할인추가
+			printBody = printBody + "^FT440," + Integer.toString(yAlias - 80)
+					+ "^A0N,25,25^FH\\^CI28^FDDISCOUNT^FS^CI27\r\n";
+			printBody = printBody + "^FT660," + Integer.toString(yAlias - 80) + "^A0N,25,25^FH\\^CI28^FD"
+					+ usd_format.format(svo.getDiscount_amt()) + "^FS^CI27\r\n";
+			printBody = printBody + "^FT440," + Integer.toString(yAlias - 50)
+					+ "^A0N,25,25^FH\\^CI28^FDTOTAL^FS^CI27\r\n";
+			printBody = printBody + "^FT660," + Integer.toString(yAlias - 50) + "^A0N,25,25^FH\\^CI28^FD"
+					+ usd_format.format(svo.getTot_ord_amt()) + "^FS^CI27\r\n";
+			printBody = printBody + "^FT24," + Integer.toString(yAlias + 80)
+					+ "^A0N,28,28^FH\\^CI28^FDSignature^FS^CI27\r\n";
+			printBody = printBody + "^FO160," + Integer.toString(yAlias + 83) + "^GB631,0,2^FS\r\n";
+
+			yAlias = 680;
+			for (int i = 0; i < spvoList.size(); i++) {
+				// 바코드 좌표
+				printBody = printBody + "^BY2,2,41^FT214," + Integer.toString(yAlias) + "^BUN,,Y,N,Y\r\n";
+				// 바코드upc
+				printBody = printBody + "^FH\\^FD" + spvoList.get(i).getUpc_code() + "^FS\r\n";
+				yAlias = yAlias + 136;
+			}
+			printBody = printBody + "^PQ1,0,1,Y\r\n" + "^XZ\r\n";
+
+			// 3. Buffer를 사용해서 File에 write할 수 있는 BufferedWriter 생성
+			FileWriter fw = new FileWriter(file);
+			BufferedWriter writer = new BufferedWriter(fw);
+			// 4. 파일에 쓰기
+			writer.write(printBody);
+			// 5. BufferedWriter close
+			writer.close();
+			fname = file.getName();
+		} catch (IOException e) {
+			e.printStackTrace();
+			fname = "";
+		}
+
+		return fname;
+	}
+
+	@RequestMapping(value = "/invoice-mobile-print-write_b20221005", method = RequestMethod.POST)
+	public @ResponseBody String getInvoiceMobilePrintWriteB20221005(
 			@RequestParam(value = "sale_num", defaultValue = "0") String sale_num, Model model) throws Exception {
 
 		System.out.print(sale_num);
@@ -2218,12 +2349,14 @@ public class SalesMngController {
 		 * println("<script>alert('sale number not exist.'); location.href='order-list';</script>"
 		 * ); }
 		 */
+		
 		String editMode = "new";
 		InvoiceVO ivvo = null;
 		SaleVO svo = null;
 		svo = saleService.view(sale_num);
 		ivvo = invService.view(sale_num);
-
+        if(svo==null)
+        	return;
 		// 고객정보
 		CustomerVO custvo = null;
 		// 팻킹 기본정보
@@ -2231,7 +2364,7 @@ public class SalesMngController {
 			System.out.print("ivvo: is null\r\n");
 			editMode = "new";
 			ivvo = new InvoiceVO();
-			ivvo.setInvoice_no(svo.getSale_num()); 
+			ivvo.setInvoice_no(svo.getSale_num());
 			ivvo.setSale_num(svo.getSale_num());
 			ivvo.setCust_num(svo.getCust_num());
 			Date date = Calendar.getInstance().getTime();
