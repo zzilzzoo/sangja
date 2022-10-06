@@ -215,6 +215,13 @@
 												<tfoot>
 													<tr>
 														<td colspan="4" class="border-0"></td>
+														<td  align="center">Discount</td>
+														<td class="font-weight-bold"></td>
+														<td class="font-weight-bold"><fmt:formatNumber
+																value="${salevo.discount_amt}" pattern="#,##0.00" /></td>
+													</tr>
+													<tr>
+														<td colspan="4" class="border-0"></td>
 														<td class="font-weight-bold" align="center">Order
 															Total</td>
 														<td class="font-weight-bold">${tot_qty}</td>

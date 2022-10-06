@@ -223,7 +223,7 @@
 												<th>Balance($)</th>
 												<th>Over Due(Days)</th>
 												<th class="text-center" style="min-width: 65px;">View
-													the inv</th>
+													the Invoice</th>
 												<th class="text-center" style="min-width: 80px;">Reprint
 													the Invoice</th>
 												<th>Sales Type</th>

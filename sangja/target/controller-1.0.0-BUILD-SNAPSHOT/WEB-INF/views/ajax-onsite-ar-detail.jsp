@@ -151,10 +151,10 @@
 									class="image-popup-vertical-fit mt-2 m-lg-2 mt-sm-2 mt-xl-2 col-lg-5 btn btn-dark btn-px-4 py-3 font-weight-semibold line-height-1"
 									href="../resources/img/${sfvo.save_file_nm}"
 									title="사진찍은 인보이스 이미지"> <i
-									class="bx bx-photo-album text-4 me-2"></i> View the saved inv
+									class="bx bx-photo-album text-4 me-2"></i> View the saved invoice
 								</a> <a href="invoice-mobile-print.html" target="_blank"
 									class="mt-2 m-lg-2 mt-sm-2 mt-xl-2 col-lg-5 btn btn-dark btn-px-4 py-3 font-weight-semibold line-height-1">
-									<i class="bx bx-printer text-4 me-2"></i> Reprint the inv
+									<i class="bx bx-printer text-4 me-2"></i> Reprint invoice
 								</a>
 							</div>
 						</div>

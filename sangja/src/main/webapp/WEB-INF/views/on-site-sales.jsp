@@ -1086,7 +1086,11 @@
 	function check_save(){
 		var status=true;
 		var i=0;
-		//alert(document.getElementById('sale_num').value);
+		if(document.getElementById('discount_amt').value=="")
+			{			
+			document.getElementById('discount_amt').value="0.00";			
+			}
+		//alert(document.getElementById('discount_amt').value);
 		//return;
 		$('#saleprodTbl tr').each(function() {
 			var tr = $(this);
@@ -1118,6 +1122,10 @@
 	</script>
 	<script>
 		function saleSave() {
+			if(document.getElementById('discount_amt').value=="")
+			{				
+			document.getElementById('discount_amt').value="0.00";
+			}
 		//수량 체크
 		var status=true;
       	var i=0;

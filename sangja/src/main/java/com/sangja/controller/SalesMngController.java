@@ -451,6 +451,7 @@ public class SalesMngController {
 		String sale_ymd = "";
 		String sale_time = "";
 		String[] sale_nums = sale_num.split(",");
+		System.out.println("svo.getDiscount_amt()"+svo.getDiscount_amt());
 		// sale_num 두개 넘어오는 거 보정
 		if (sale_nums.length > 1) {
 			sale_num = sale_nums[0];
@@ -477,7 +478,7 @@ public class SalesMngController {
 			// 에러시 수행
 			System.out.println(e.getMessage());
 		}
-
+		
 		// old vo
 		SaleVO osvo = saleService.view(sale_num);
 		if (osvo != null) {

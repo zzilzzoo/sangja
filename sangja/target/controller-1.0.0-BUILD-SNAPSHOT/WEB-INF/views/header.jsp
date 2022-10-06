@@ -6,7 +6,7 @@
 <header class="header">
 	<div class="logo-container">
 		<a href="/" class="logo"> <img src="../resources/img/logo.png"
-			width="75" height="35" alt="SangJa Admin" />
+			height="47" alt="SangJa Admin" />
 		</a>
 
 		<div class="d-md-none toggle-sidebar-left"

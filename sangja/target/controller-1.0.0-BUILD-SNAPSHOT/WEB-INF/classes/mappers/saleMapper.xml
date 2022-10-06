@@ -21,6 +21,7 @@
 		tot_sale_amt,
 		tot_tax_amt,
 		shopping_cost,
+		discount_amt,
 		tot_ord_amt,
 		tot_pay_amt,
 		last_pay_ymdt,
@@ -28,10 +29,12 @@
 		editor,
 		crt_ymdt,
 		mod_ymdt
-		from tbs_sale_rec 
+		from
+		tbl_sale_rec
 	</select>
-	
-	<select id="listByWhere" parameterType="string" resultType="com.sangja.domain.SaleVO">
+
+	<select id="listByWhere" parameterType="string"
+		resultType="com.sangja.domain.SaleVO">
 		select
 		sale_num,
 		ord_no,
@@ -48,6 +51,7 @@
 		tot_sale_amt,
 		tot_tax_amt,
 		shopping_cost,
+		discount_amt,
 		tot_ord_amt,
 		tot_pay_amt,
 		last_pay_ymdt,
@@ -55,13 +59,14 @@
 		editor,
 		crt_ymdt,
 		mod_ymdt
-		from tbs_sale_rec where 1=1 ${strWhere} 
+		from tbl_sale_rec where 1=1
+		${strWhere}
 	</select>
 
 	<!-- 게시물 작성 -->
 	<insert id="write" parameterType="com.sangja.domain.SaleVO">
 		insert into
-		tbs_sale_rec(
+		tbl_sale_rec(
 		sale_num,
 		ord_no,
 		sale_ymd,
@@ -77,6 +82,7 @@
 		tot_sale_amt,
 		tot_tax_amt,
 		shopping_cost,
+		discount_amt,
 		tot_ord_amt,
 		tot_pay_amt,
 		last_pay_ymdt,
@@ -100,6 +106,7 @@
 		#{tot_sale_amt},
 		#{tot_tax_amt},
 		#{shopping_cost},
+		#{discount_amt},
 		#{tot_ord_amt},
 		#{tot_pay_amt},
 		#{last_pay_ymdt},
@@ -128,6 +135,7 @@
 		tot_sale_amt,
 		tot_tax_amt,
 		shopping_cost,
+		discount_amt,
 		tot_ord_amt,
 		tot_pay_amt,
 		last_pay_ymdt,
@@ -136,18 +144,18 @@
 		crt_ymdt,
 		mod_ymdt
 		from
-		tbs_sale_rec
+		tbl_sale_rec
 		where
-		sale_num = #{sale_num}
+		sale_num =
+		#{sale_num}
 	</select>
 
 	<!-- 게시물 수정 -->
 	<update id="modify" parameterType="com.sangja.domain.SaleVO">
-		update tbs_sale_rec
+		update tbl_sale_rec
 		set
 		ord_no=#{ord_no},
-		<!-- sale_ymd=#{sale_ymd},
-		sale_time=#{sale_time},-->
+		<!-- sale_ymd=#{sale_ymd}, sale_time=#{sale_time}, -->
 		sale_type=#{sale_type},
 		sale_user_num=#{sale_user_num},
 		cust_num=#{cust_num},
@@ -159,9 +167,9 @@
 		tot_sale_amt=#{tot_sale_amt},
 		tot_tax_amt=#{tot_tax_amt},
 		shopping_cost=#{shopping_cost},
+		discount_amt=#{discount_amt},
 		tot_ord_amt=#{tot_ord_amt},
-		<!-- tot_pay_amt=#{tot_pay_amt},
-	    last_pay_ymdt=#{last_pay_ymdt},-->
+		<!-- tot_pay_amt=#{tot_pay_amt}, last_pay_ymdt=#{last_pay_ymdt}, -->
 		sale_note=#{sale_note},
 		editor=#{editor},
 		crt_ymdt=#{crt_ymdt},
@@ -172,7 +180,7 @@
 	<!-- 총 결제 금액 수정 hashMap(sale_num,tot_pay_amt,last_pay_ymdt) -->
 	<update id="modifyPayAmt"
 		parameterType="com.sangja.domain.SaleVO">
-		update tbs_sale_rec
+		update tbl_sale_rec
 		set
 		tot_pay_amt=tot_pay_amt+#{tot_pay_amt},
 		last_pay_ymdt=#{last_pay_ymdt}
@@ -180,10 +188,16 @@
 		sale_num = #{sale_num}
 	</update>
 
+	<!-- 게시물 삭제 전 백업 -->
+	<insert id="del_backup" parameterType="string">
+		insert into
+		tbl_sale_rec_del select DATE_FORMAT(now(), '%Y%m%d%H%i%s'), t1.* FROM
+		tbl_sale_rec t1 where sale_num = #{sale_num}
+	</insert>
 	<!-- 게시물 삭제 -->
 	<delete id="delete" parameterType="string">
 		delete
-		from tbs_sale_rec
+		from tbl_sale_rec
 		where
 		sale_num
 		= #{sale_num}
@@ -198,12 +212,14 @@
 	<!-- 게시물 총 갯수 -->
 	<select id="count" resultType="int">
 		select count(sale_num) from
-		tbs_sale_rec
+		tbl_sale_rec
 	</select>
 	<!-- 게시물 총 갯수 -->
-	<select id="countByWhere" parameterType="string"  resultType="int">
+	<select id="countByWhere" parameterType="string"
+		resultType="int">
 		select count(sale_num) from
-		tbs_sale_rec where 1=1 ${strWhere}
+		tbl_sale_rec where 1=1
+		${strWhere}
 	</select>
 	<!-- 게시물 목록 + 페이징 -->
 	<select id="listPage" parameterType="hashMap"
@@ -222,7 +238,7 @@
 		editor,
 		crt_ymdt,
 		mod_ymdt
-		from tbs_sale_rec
+		from tbl_sale_rec
 		order by sale_num desc
 		limit
 		#{displayPost},
@@ -246,7 +262,7 @@
 		crt_ymdt,
 		mod_ymdt
 		from
-		tbs_sale_rec
+		tbl_sale_rec
 
 		<if test='searchType.equals("title")'>
 			WHERE title LIKE concat('%', #{keyword}, '%')
@@ -272,7 +288,7 @@
 	<!-- 게시물 총 갯수 -->
 	<select id="searchCount" parameterType="hashMap"
 		resultType="int">
-		select count(sale_prod_num) from tbs_sale_rec
+		select count(sale_prod_num) from tbl_sale_rec
 		<if test='searchType.equals("title")'>
 			WHERE title LIKE concat('%', #{keyword}, '%')
 		</if>
