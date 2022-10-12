@@ -241,8 +241,8 @@ public class ProductController {
 		}
 		// upc 코드 확인
 		ProductVO pdvo = service.viewByUpc(vo.getUpc_code());
-		System.out.print(pdvo.getPrd_mng_num()+"\n");
-		System.out.print(vo.getPrd_mng_num());
+		//System.out.print(pdvo.getPrd_mng_num()+"\n");
+		//System.out.print(vo.getPrd_mng_num());
 		if (pdvo != null) {
 			if (!pdvo.getPrd_mng_num().equals(vo.getPrd_mng_num())) {
 				ScriptUtils.alertAndMovePage(response, "The UPC code already exists!!",

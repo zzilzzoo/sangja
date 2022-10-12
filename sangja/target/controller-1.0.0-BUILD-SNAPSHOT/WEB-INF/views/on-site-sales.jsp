@@ -496,7 +496,7 @@
 											</div>
 											<div class="row justify-content-end">
 												<div class="col-auto">
-													(-)Discount
+													Discount
 													<input type="text" name="discount_amt" id="discount_amt"
 														value="<fmt:formatNumber value="${salevo.discount_amt}" pattern="#,##0.00" />"
 														class="form-control form-control-sm"
@@ -853,9 +853,9 @@
 												//log.textContent = data;
 												//var contact=JSON.parse(data); 
 												//alert(contact["ctgry_mng_num"]);
-												prod_add(data);
-												document.getElementById('bar-code').value="";
-												document.getElementById('bar-code').focus();
+												prod_add2(data);
+												//document.getElementById('bar-code').value="";
+												//document.getElementById('bar-code').focus();
 												
 												
 											},
@@ -972,7 +972,7 @@
 
 			var disc_val=uncomma(document.getElementById('discount_amt').value);
 			//alert(disc_val);
-			total=total+disc_val;
+			total=total-disc_val;
 			$(".item-cnt").text(i - 1);
 			$(".total-sale-amt").text(comma(String(total.toFixed(2))));
 			$(".total-sale-amt-val").val(total);
@@ -1086,7 +1086,11 @@
 	function check_save(){
 		var status=true;
 		var i=0;
-		//alert(document.getElementById('sale_num').value);
+		if(document.getElementById('discount_amt').value=="")
+			{			
+			document.getElementById('discount_amt').value="0.00";			
+			}
+		//alert(document.getElementById('discount_amt').value);
 		//return;
 		$('#saleprodTbl tr').each(function() {
 			var tr = $(this);
@@ -1118,6 +1122,10 @@
 	</script>
 	<script>
 		function saleSave() {
+			if(document.getElementById('discount_amt').value=="")
+			{				
+			document.getElementById('discount_amt').value="0.00";
+			}
 		//수량 체크
 		var status=true;
       	var i=0;
@@ -1464,7 +1472,126 @@
 			calcTotal();			
 
 		}
-	
+	  function prod_add2(data) {
+		    var contact=JSON.parse(data); 
+		    var cust_num = document.getElementById("cust_num").value;
+			var prd_mng_num=contact["prd_mng_num"];
+			var sale_price=0;
+			if(cust_num!=""){
+				sale_price=find_cust_sale_price(cust_num,prd_mng_num);
+			}
+			
+			//alert(prd_mng_num);
+			var prd_nm=contact["prd_nm"];
+			var selectOption = document.getElementById("popup-option");
+		    selectOption = selectOption.options[selectOption.selectedIndex].value;		       
+			var unit_price=comma(String(contact["unit_price"]));
+			
+			if (sale_price=="0"){
+				sale_price=unit_price;
+			}else
+				{
+				sale_price=commaStr(sale_price);
+				}
+			
+			if(selectOption=="credit")
+			{
+				sale_price='-'+sale_price;
+			}
+			else if(selectOption=="sample")
+			{
+				sale_price='0.00'
+			}
+			else if(selectOption=="defecitve-return")
+			{
+				sale_price='0.00'
+			}else
+				{}
+			
+			var ic = 0;
+			var chkc = 0;
+			$('#saleprodTbl tr')
+					.each(
+							function() {
+								var trc = $(this);
+								var idxc = trc.index();
+								//alert(i);
+								if (ic > 0) {
+
+									var tdc = trc.children();
+									var valc = tdc.eq(1).children().eq(0).val();
+									var valc2 = tdc.eq(2).children().eq(0).val();
+									//alert(valc);
+									//alert(valc2);
+									if (prd_mng_num == valc
+											&& selectOption == valc2) {
+										chkc = 1;
+									}
+
+								}
+								ic++;
+							});
+			if (chkc>0){
+				return;
+			}
+			var trLen = $('#saleprodTbl > tbody tr').length;
+			var rownum = trLen + 1;
+			
+			$('#saleprodTbl > tbody:last')
+					.append(
+							'<tr>' + '<td>'
+									+ rownum
+									+ '</td>'
+									//상품묭
+									+ '<td>'
+									+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_mng_num" value="'+prd_mng_num+'">'
+									+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_nm" value="'+prd_nm+'">'
+									+ prd_nm
+									+ '</td>'
+									//판매 옵션
+									+ '<td>'
+									+ '<input type="hidden" name="SaleProdVOList['+trLen+'].sale_opt" value="'+selectOption+'">'
+									+ selectOption
+									//+ '<select class="form-control form-control-sm"	name="SaleProdVOList['+trLen+'].sale_opt" required>'
+									//+ '<option value="sales" selected>Sales</option>'
+									//+ '<option value="credit">Credit</option>'
+									//+ '<option value="sample">Sample</option>'
+									//+ '<option value="defecitve-return">DefecitveReturn</option>'
+									//+ '</select>'
+									+ '</td>'
+									//단가
+									+ '<td><input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].unit_price" value="'+unit_price+'" readonly>'
+									+ '</td>'
+									//판가
+									+ '<td>'
+									+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['
+									+ trLen
+									+ '].sale_price" value="'
+									+ sale_price
+									+ '" '
+									+ 'onKeyUp="removeChar(event);" onchange="getVal(this);inputNumberFormat(this);">'
+									+ '</td>'
+									//수량
+									+ '<td>'
+									+ '<input type="number" class="form-control form-control-sm" name="SaleProdVOList['
+									+ trLen
+									+ '].sale_qty" value="" onchange="getVal(this);">'
+									+ '</td>'
+									//총판매가
+									+ '<td>'
+									+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].tot_sale_price" value="'
+								+ sale_price
+								+ '" '
+								+ 'readonly >'
+									+ '</td>'
+									+ '<td>'
+									+ '<button class="btn btn-danger btn-sm" onclick="deleterow(this);"><i class="fas fa-times"></i>'
+									+ '</td>'
+									+ '</tr>');
+			
+			calcTotal();			
+
+		}
 	</script>
 	<script type="text/javascript">
 	//삭제

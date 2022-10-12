@@ -457,7 +457,7 @@
 															<button id="addBtn" class="btn btn-primary modal-confirm">Add Product</button>
 															<button class="btn btn-default modal-dismiss">Cancel</button>
 														</div>
-														<input type="text" id="check_result">
+														<input type="hidden" id="check_result">
 													</div>
 												</footer>
 											</section>
@@ -630,6 +630,7 @@
 																		onKeyUp="removeChar(event);inputNumberFormat(this);"
 																		onKeyDown="inputNumberFormat(this);" onchange="calcTotal();"
 																	>
+																	<input type="hidden" name="discount_amt" id="discount_amt" value="0"/>
 																</div></td>
 														</tr>
 													</tfoot>
@@ -927,9 +928,9 @@
 												//log.textContent = data;
 												//var contact=JSON.parse(data); 
 												//alert(contact["ctgry_mng_num"]);
-												prod_add(data);
-												document.getElementById('bar-code').value="";
-												document.getElementById('bar-code').focus();
+												prod_add2(data);
+												//document.getElementById('bar-code').value="";
+												//document.getElementById('bar-code').focus();
 												
 												
 											},
@@ -1374,6 +1375,145 @@
 			var prd_nm=contact["prd_nm"];
 			var upc_code=contact["upc_code"];
 			var selectOption = document.getElementById("borcode-option");
+			selectOption = selectOption.options[selectOption.selectedIndex].value;
+			var unit_price=comma(String(contact["unit_price"]));
+			
+			if (sale_price=="0"){
+				sale_price=unit_price;
+			}else
+				{
+				sale_price=commaStr(sale_price);
+				}
+			//옵션에따라 가격 조정
+			if(selectOption=="credit")
+			{
+				sale_price='-'+sale_price;
+			}
+			else if(selectOption=="sample")
+			{
+				sale_price='0.00'
+			}
+			else if(selectOption=="defecitve-return")
+			{
+				sale_price='0.00'
+			}else
+				{}
+			var ic = 0;
+			var chkc = 0;
+			$('#saleprodTbl tr')
+					.each(
+							function() {
+								var trc = $(this);
+								var idxc = trc.index();
+								//alert(i);
+								if (ic > 0) {
+
+									var tdc = trc.children();
+									var valc = tdc.eq(1).children().eq(0).val();
+									var valc2 = tdc.eq(2).children().eq(0).val();
+									//alert(valc);
+									//alert(valc2);
+									if (prd_mng_num == valc
+											&& selectOption == valc2) {
+										chkc = 1;
+									}
+
+								}
+								ic++;
+							});
+			if (chkc>0){
+				return;
+			}
+			var trLen = $('#saleprodTbl > tbody tr').length;
+			var rownum = trLen + 1;
+			
+			$('#saleprodTbl > tbody:last')
+			.append(
+					'<tr>' + '<td>'
+							+ rownum
+							+ '</td>'
+							+ '<td>'
+							+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_mng_num" value="'+prd_mng_num+'">'
+							+ '<input type="hidden" name="SaleProdVOList['+trLen+'].prd_nm" value="'+prd_nm+'">'
+							+ upc_code
+							+ '</td>'
+							+ '<td>'
+							+ prd_nm
+							+ '</td>'
+							//판매 옵션
+							+ '<td>'
+							+ '<input type="hidden" name="SaleProdVOList['+trLen+'].sale_opt" value="'+selectOption+'">'
+							+ selectOption
+							//+ '<select class="form-control" name="SaleProdVOList['+trLen+'].sale_opt" required>'
+							//+ '<option value="sales" selected>Sales</option>'
+							//+ '<option value="credit">Credit</option>'
+							//+ '<option value="sample">Sample</option>'
+							//+ '<option value="defecitve-return">DefecitveReturn</option>'
+							//+ '</select>'
+							+ '</td>'
+							//단가
+							+ '<td><div class="input-group"><span class="input-group-text">$</span>'
+							+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].unit_price" value="'+unit_price+'" readonly>'
+							+ '</div></td>'
+							//판가
+							+ '<td><div class="input-group"><span class="input-group-text">$</span>'
+							+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['
+							+ trLen
+							+ '].sale_price" value="'
+							+ sale_price
+							+ '" '
+							+ 'onKeyUp="removeChar(event);"	onchange="getVal(this);inputNumberFormat(this);">'
+							+ '</div></td>'
+							//수량
+							+ '<td>'
+							+ '<div data-plugin-spinner data-plugin-options="{ \'value\':1, \'step\': 1, \'min\': 1}">'
+							+ '<div class="input-group">'
+							+ '<button type="button" class="btn btn-default spinner-up" onclick="qtyupdown(\'plus\',\'s_qty'
+							+ trLen
+							+ '\');getVal2(this);">'
+							+ '<i class="fas fa-plus"></i>'
+							+ '</button>'
+							+ '<input id="s_qty'
+							+ trLen
+							+ '" type="text" class="spinner-input form-control"	maxlength="3" name="SaleProdVOList['
+							+ trLen
+							+ '].sale_qty" value="" onchange="getVal2(this);">'
+							+ '<button type="button"	class="btn btn-default spinner-down" onclick="qtyupdown(\'minus\',\'s_qty'
+							+ trLen
+							+ '\');getVal2(this);">'
+							+ '<i class="fas fa-minus"></i>'
+							+ '</button></div></div>'
+							+ '</td>'
+							+ '<td>'
+							+ '<div class="input-group">'
+							+ '<span class="input-group-text">$</span>'
+							+ '<input type="text" class="form-control form-control-sm" style="min-width: 60px;" name="SaleProdVOList['+trLen+'].tot_sale_price" value="'
+				+ sale_price
+				+ '" '
+				+ 'readonly >'
+							+ '</div>'
+							+ '</td>'
+							+ '<td>'
+							+ '<button class="btn btn-danger btn-px-2 py-2" onclick="deleterow(this);"><i class="fas fa-times"></i>'
+							+ '</td>'
+							+ '</tr>');
+			
+			calcTotal();			
+
+		}
+	  
+	  function prod_add2(data) {
+		    var contact=JSON.parse(data);			
+			var prd_mng_num=contact["prd_mng_num"];
+			var cust_num = document.getElementById("cust_num").value;			
+			var sale_price=0;
+			if(cust_num!=""){
+				sale_price=find_cust_sale_price(cust_num,prd_mng_num);
+			}
+			//alert(prd_mng_num);
+			var prd_nm=contact["prd_nm"];
+			var upc_code=contact["upc_code"];
+			var selectOption = document.getElementById("popup-option");
 			selectOption = selectOption.options[selectOption.selectedIndex].value;
 			var unit_price=comma(String(contact["unit_price"]));
 			
