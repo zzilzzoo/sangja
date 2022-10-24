@@ -499,8 +499,8 @@
 													Discount
 													<input type="text" name="discount_amt" id="discount_amt"
 														value="<fmt:formatNumber value="${salevo.discount_amt}" pattern="#,##0.00" />"
-														class="form-control form-control-sm"
-														onKeyUp="removeChar(event);""
+														class="form-control form-control-sm" onKeyUp="removeChar(event);"
+														"
 														onChange="inputNumberFormat(this);calcTotal();"
 													>
 												</div>
@@ -753,11 +753,22 @@
 								class="btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3"
 							>Cancel</a>
 						</div>
-						<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-							<a href="#" onclick="del_sales('${salenum}')"
-								class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
-							><i class="bx bx-trash text-4 me-2"></i> Delete </a>
-						</div>
+						<c:choose>
+							<c:when test="${umvo.delete_yn eq 'y'}">
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a href="#" onclick="del_sales('${salenum}')"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									><i class="bx bx-trash text-4 me-2"></i> Delete </a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a href="#" onclick="alert('You do not have permission to write.');return false;"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									><i class="bx bx-trash text-4 me-2"></i> Delete </a>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</form>
 

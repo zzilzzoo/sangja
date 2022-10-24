@@ -101,7 +101,9 @@
 				</header>
 
 				<!-- start: page -->
-				<form class="ecommerce-form action-buttons-fixed" name="saveSales" id="saveSales" action="#" method="post">
+				<form class="ecommerce-form action-buttons-fixed" name="saveSales" id="saveSales" action="#"
+					method="post"
+				>
 					<div class="row">
 						<div class="col-lg-6 mb-4 mb-lg-0">
 
@@ -170,7 +172,8 @@
 											<div class="date-time-field">
 												<div class="date">
 													<div class="input-group">
-														<span class="input-group-text"> <i class="fas fa-calendar-alt"></i>
+														<span class="input-group-text">
+															<i class="fas fa-calendar-alt"></i>
 														</span>
 														<input type="text" class="form-control" name="sale_ymd" value="${sale_ymd}" required
 															data-plugin-datepicker
@@ -180,7 +183,8 @@
 												</div>
 												<div class="time">
 													<div class="input-group">
-														<span class="input-group-text"> <i class="far fa-clock"></i>
+														<span class="input-group-text">
+															<i class="far fa-clock"></i>
 														</span>
 														<input type="text" data-plugin-timepicker name="sale_time" value="${sale_time}"
 															class="form-control"
@@ -229,7 +233,8 @@
 									<div class="row">
 										<div class="col-lg-12">
 											<div class="input-group mb-3">
-												<span class="input-group-text"> <i class="fas fa-store"></i>
+												<span class="input-group-text">
+													<i class="fas fa-store"></i>
 												</span>
 												<!-- ëª¨ë  ì£¼ìì¤ ìë í¸ ê²ìíì¬ ì°¾ê¸° -->
 												<select id="selectaddress" name="selectaddress" data-plugin-selectTwo
@@ -239,8 +244,10 @@
 													<option value="">Choose Address</option>
 													<c:forEach items="${cuList}" var="cuList" varStatus="status">
 														<option value="${cuList.cust_num}"><span class="name">${cuList.cust_nm}</span>,
-															<span class="address">${cuList.addr}</span>, <span class="city">${cuList.city}</span>,
-															<span class="state">${cuList.state}</span>, <span class="zip">${cuList.zip_code}</span>
+															<span class="address">${cuList.addr}</span>,
+															<span class="city">${cuList.city}</span>,
+															<span class="state">${cuList.state}</span>,
+															<span class="zip">${cuList.zip_code}</span>
 														</option>
 													</c:forEach>
 												</select>
@@ -276,7 +283,7 @@
 																					></td>
 																				<td>${cuList.cust_nm}</td>
 																				<td>${cuList.addr}</td>
-																				<td>${cuList.city}${cuList.city},${cuList.state} ${cuList.zip_code}</td>
+																				<td>${cuList.city}${cuList.city},${cuList.state}${cuList.zip_code}</td>
 																				<td>${cuList.state}</td>
 																				<td>${cuList.zip_code}</td>
 																			</tr>
@@ -291,7 +298,7 @@
 																<div class="col-md-12 center">
 																	<button class="btn btn-primary modal-confirm">Add Customer</button>
 																	<button class="btn btn-default modal-dismiss">Cancel</button>
-																</div>																
+																</div>
 															</div>
 														</footer>
 													</section>
@@ -438,7 +445,8 @@
 																<c:forEach items="${pcList}" var="pcList" varStatus="status">
 																	<tr>
 																		<td><input type="checkbox" name="checkboxRow1"
-																				class="checkbox-style-1 p-relative top-2" value="${pcList.prd_mng_num}" onclick="getCheckboxValue(event)" 
+																				class="checkbox-style-1 p-relative top-2" value="${pcList.prd_mng_num}"
+																				onclick="getCheckboxValue(event)"
 																			/></td>
 																		<td>${pcList.ctgry_nm}</td>
 																		<td>${pcList.upc_code}</td>
@@ -564,8 +572,8 @@
 																				<i class="fas fa-plus"></i>
 																			</button>
 																			<input id="s_qty${status.count-1}" type="text" class="spinner-input form-control"
-																				maxlength="3" name="SaleProdVOList[${status.count-1}].sale_qty" value="${spvoList.sale_qty}"
-																				onchange="getVal2(this);"
+																				maxlength="3" name="SaleProdVOList[${status.count-1}].sale_qty"
+																				value="${spvoList.sale_qty}" onchange="getVal2(this);"
 																			>
 																			<button type="button" class="btn btn-default spinner-down"
 																				onclick="qtyupdown('minus','s_qty${status.count-1}');getVal2(this);"
@@ -596,9 +604,9 @@
 														<tr>
 															<td colspan="5" class="border-0"></td>
 															<td align="center" class="font-weight-bold">Subtotal</td>
-															<td align="center"><span class="d-flex align-items-center"><span
-																	class="item-cnt"
-																>0</span></span></td>
+															<td align="center"><span class="d-flex align-items-center">
+																	<span class="item-cnt">0</span>
+																</span></td>
 															<td colspan="2"><div class="input-group">
 																	<span class="input-group-text">$</span>
 																	<input type="text" name="tot_sale_amt" class="form-control tot-sale-amt"
@@ -630,7 +638,7 @@
 																		onKeyUp="removeChar(event);inputNumberFormat(this);"
 																		onKeyDown="inputNumberFormat(this);" onchange="calcTotal();"
 																	>
-																	<input type="hidden" name="discount_amt" id="discount_amt" value="0"/>
+																	<input type="hidden" name="discount_amt" id="discount_amt" value="0" />
 																</div></td>
 														</tr>
 													</tfoot>
@@ -645,26 +653,26 @@
 											<div class="row justify-content-end flex-column flex-lg-row my-3">
 												<div class="col-auto me-5">
 													<h3 class="font-weight-bold text-color-dark text-4 mb-3">Items Subtotal</h3>
-													<span class="d-flex align-items-center" id="item-cnt"><span
-														class="item-cnt-bttm"
-													>0</span> &nbsp;Items <i class="fas fa-chevron-right text-color-primary px-3"></i> <b
-														class="text-color-dark text-xxs"
-													>$ <span class="tot-sale-amt-bttm">0</span></b> </span>
+													<span class="d-flex align-items-center" id="item-cnt">
+														<span class="item-cnt-bttm">0</span>
+														&nbsp;Items <i class="fas fa-chevron-right text-color-primary px-3"></i> <b
+															class="text-color-dark text-xxs"
+														>$ <span class="tot-sale-amt-bttm">0</span></b>
+													</span>
 
 												</div>
 												<div class="col-auto me-5">
 													<h3 class="font-weight-bold text-color-dark text-4 mb-3">Sales Tax</h3>
-													<span class="d-flex align-items-center"> Sales Tax <i
-														class="fas fa-chevron-right text-color-primary px-3"
-													></i> <b class="text-color-dark text-xxs">$ <span class="tot-tax-amt-bttm">0.00</span></b>
+													<span class="d-flex align-items-center">
+														Sales Tax <i class="fas fa-chevron-right text-color-primary px-3"></i>
+														<b class="text-color-dark text-xxs">$ <span class="tot-tax-amt-bttm">0.00</span></b>
 													</span>
 												</div>
 												<div class="col-auto me-5">
 													<h3 class="font-weight-bold text-color-dark text-4 mb-3">Shopping Cost</h3>
-													<span class="d-flex align-items-center"> Shopping Cost <i
-														class="fas fa-chevron-right text-color-primary px-3"
-													></i> <b class="text-color-dark text-xxs">$ <span class="shopping-cost-bttm">
-																0</span></b>
+													<span class="d-flex align-items-center">
+														Shopping Cost <i class="fas fa-chevron-right text-color-primary px-3"></i>
+														<b class="text-color-dark text-xxs">$ <span class="shopping-cost-bttm"> 0</span></b>
 													</span>
 												</div>
 												<div class="col-auto">
@@ -672,9 +680,10 @@
 														Order Total
 														<input type="hidden" class="tot-ord-amt-bttm" name="tot_ord_amt" value="0">
 													</h3>
-													<span class="d-flex align-items-center justify-content-lg-end"> <strong
-														class="text-color-dark text-5 "
-													>$ <span class="tot-ord-amt">0</span></strong>
+													<span class="d-flex align-items-center justify-content-lg-end">
+														<strong class="text-color-dark text-5 ">$ <span
+																class="tot-ord-amt"
+															>0</span></strong>
 													</span>
 												</div>
 											</div>
@@ -837,12 +846,25 @@
 								class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3"
 							>Cancel</a>
 						</div>
-						<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-							<a href="#" onclick="del_sales('${salenum}')"
-								class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
-							> <i class="bx bx-trash text-4 me-2"></i> Delete Order
-							</a>
-						</div>
+
+						<c:choose>
+							<c:when test="${umvo.delete_yn eq 'y'}">
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a href="#" onclick="del_sales('${salenum}')"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									> <i class="bx bx-trash text-4 me-2"></i> Delete Order
+									</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a href="#" onclick="alert('You do not have permission to write.');return false;"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									> <i class="bx bx-trash text-4 me-2"></i> Delete Order
+									</a>
+								</div>
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</form>
 

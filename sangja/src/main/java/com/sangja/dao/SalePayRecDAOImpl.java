@@ -29,11 +29,13 @@ public class SalePayRecDAOImpl implements SalePayRecDAO {
 		// TODO Auto-generated method stub
 		return sql.selectList(namespace + ".listBysalenum", sale_num);
 	}
+
 	@Override
 	public List<SalePayRecVO> salepaylistBysalenums(List<SaleVO> sale_list) throws Exception {
 		// TODO Auto-generated method stub
 		return sql.selectList(namespace + ".listBysalenums", sale_list);
 	}
+
 	@Override
 	public void write(SalePayRecVO vo) throws Exception {
 		// TODO Auto-generated method stub
@@ -56,7 +58,7 @@ public class SalePayRecDAOImpl implements SalePayRecDAO {
 	@Override
 	public void delete(int pay_num) throws Exception {
 		// TODO Auto-generated method stub
-
+		sql.delete(namespace + ".delete", pay_num);
 	}
 
 	@Override
@@ -83,7 +85,5 @@ public class SalePayRecDAOImpl implements SalePayRecDAO {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
 
 }

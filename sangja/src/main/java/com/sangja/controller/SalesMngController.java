@@ -399,6 +399,8 @@ public class SalesMngController {
 			svo.setSale_time(osvo.getSale_time());
 			svo.setTot_pay_amt(osvo.getTot_pay_amt());
 			svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
+			svo.setSale_user_num(osvo.getSale_user_num());
+			svo.setSale_user_nm(osvo.getSale_user_nm());
 		}
 		// 삭제후
 		saleService.delete(sale_num);
@@ -486,6 +488,8 @@ public class SalesMngController {
 			svo.setSale_time(osvo.getSale_time());
 			svo.setTot_pay_amt(osvo.getTot_pay_amt());
 			svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
+			svo.setSale_user_num(osvo.getSale_user_num());
+			svo.setSale_user_nm(osvo.getSale_user_nm());
 		}
 
 		saleService.delete(sale_num);
@@ -566,6 +570,31 @@ public class SalesMngController {
 		// return "alert";
 
 		return "redirect:" + return_url + "?sale_num=" + sale_num + "&msg=" + msg;
+	}
+	
+	@RequestMapping(value = "/sale-pay-del", method = RequestMethod.POST)
+	public  @ResponseBody String postSalePayDel(@RequestParam(value = "pay_num") String pay_num) throws Exception {
+
+		//String pay_num = request.getParameter("pay_num");
+		System.out.println("postSalePayDel:" + pay_num);
+		if(pay_num.equals(""))
+		{
+			return "false";
+		}
+		// 내역등록
+		try {
+			payService.delete(Integer.parseInt(pay_num));
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return e.getMessage();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
+			return e.getMessage();
+		}
+		
+		return "ok";
 	}
 
 	@RequestMapping(value = "/sale-file", method = RequestMethod.POST)
@@ -795,8 +824,15 @@ public class SalesMngController {
 		// old vo
 		SaleVO osvo = saleService.view(sale_num);
 		if (osvo != null) {
+			//svo.setTot_pay_amt(osvo.getTot_pay_amt());
+			//svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
+			
+			svo.setSale_ymd(osvo.getSale_ymd());
+			svo.setSale_time(osvo.getSale_time());
 			svo.setTot_pay_amt(osvo.getTot_pay_amt());
 			svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
+			svo.setSale_user_num(osvo.getSale_user_num());
+			svo.setSale_user_nm(osvo.getSale_user_nm());
 		}
 
 		saleService.delete(sale_num);
