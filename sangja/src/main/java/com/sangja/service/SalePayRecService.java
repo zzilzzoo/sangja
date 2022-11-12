@@ -23,6 +23,8 @@ public interface SalePayRecService {
 
 	// 게시물 총 갯수
 	public int count() throws Exception;
+	
+	public double salepaySum(String sale_num) throws Exception ;
 
 	// 게시물 목록 + 페이징
 	public List<SalePayRecVO> listPage(int displayPost, int postNum) throws Exception;

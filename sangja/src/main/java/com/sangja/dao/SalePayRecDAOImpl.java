@@ -86,4 +86,10 @@ public class SalePayRecDAOImpl implements SalePayRecDAO {
 		return 0;
 	}
 
+	@Override
+	public double salepaySum(String sale_num) throws Exception {
+		// TODO Auto-generated method stub
+		return sql.selectOne(namespace + ".paysum",sale_num);
+	}
+
 }

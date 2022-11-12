@@ -84,5 +84,11 @@ public class SalePayRecServiceImpl implements SalePayRecService {
 		return dao.searchCount(searchType, keyword);
 	}
 
+	@Override
+	public double salepaySum(String sale_num) throws Exception {
+		// TODO Auto-generated method stub
+		return dao.salepaySum(sale_num);
+	}
+
 	
 }

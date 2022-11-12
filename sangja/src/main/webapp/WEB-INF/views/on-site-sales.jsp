@@ -1010,7 +1010,8 @@
 			});
 			//divReload();
 			$("#filter-by").val("all").prop("selected", true);
-			$("#search-term").val("");			
+			$("#search-term").val("");	
+			document.getElementById('check_result').value="";
 			//document.getElementById("modalForm").innerHTML.reload;
 			//$("#checkbox-style-1").show();
 		}

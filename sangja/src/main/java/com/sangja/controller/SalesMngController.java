@@ -284,7 +284,8 @@ public class SalesMngController {
 		model.addAttribute("custvo", custvo);
 
 		List<CustomerVO> cuList = null;
-		cuList = cuService.list();
+		//정상인 상태만 불러오기
+		cuList = cuService.listByWhere(" and cust_status='active'");
 		model.addAttribute("cuList", cuList);
 		System.out.print(new Date().toString() + "user count : " + cuList.size() + "\n");
 		String editMode = "new";
@@ -581,9 +582,24 @@ public class SalesMngController {
 		{
 			return "false";
 		}
-		// 내역등록
+		// 내역삭제
 		try {
+			
+			//기존 정보 가져오기
+			SalePayRecVO sprvo=payService.view(Integer.parseInt(pay_num));
+			//판매내역가져오기
+			SaleVO svo=saleService.view(sprvo.getSale_num());
+			//삭제
 			payService.delete(Integer.parseInt(pay_num));
+			//현제 지급금액 계산
+			double paySum=payService.salepaySum(sprvo.getSale_num());
+			if(svo!=null)
+			{
+				svo.setTot_pay_amt(paySum);
+				saleService.modify(svo);
+				
+			}
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			//e.printStackTrace();

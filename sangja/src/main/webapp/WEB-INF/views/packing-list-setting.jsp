@@ -313,7 +313,7 @@
 										</tfoot>
 									</table>
 									<div class="col-lg-12">
-										<div class="row">
+										<!-- div class="row">
 											<div class="col-4 mx-2">
 												<div class="mb-2">
 													<strong>Payment Term :<br> Wire transfer
@@ -336,7 +336,7 @@
 													</strong>
 												</div>
 											</div>
-										</div>
+										</div -->
 									</div>
 									<div class="row justify-content-center mt-3">	
 										<button  onclick="packSave();return false;"

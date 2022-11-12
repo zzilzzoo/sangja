@@ -1157,6 +1157,7 @@
 			
 			$("#filter-by").val("all").prop("selected", true);			
 			$("#search-term").val("");
+			document.getElementById('check_result').value="";
 
 		}
 	</script>

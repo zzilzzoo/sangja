@@ -138,6 +138,16 @@
 		select count(pay_num) from
 		tbl_sale_pay_rec
 	</select>
+	
+	<select id="paysum" parameterType="string"
+		resultType="double">
+		select
+		sum(pay_amt)
+		from
+		tbl_sale_pay_rec where
+		sale_num=#{sale_num}
+	</select>
+	
 	<!-- 게시물 목록 + 페이징 -->
 	<select id="listPage" parameterType="hashMap"
 		resultType="com.sangja.domain.SalePayRecVO">
