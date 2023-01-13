@@ -179,7 +179,7 @@
 	</update>
 	<!-- 총 결제 금액 수정 hashMap(sale_num,tot_pay_amt,last_pay_ymdt) -->
 	<update id="modifyPayAmt"
-		parameterType="com.sangja.domain.SaleVO">
+		parameterType="hashMap">
 		update tbl_sale_rec
 		set
 		tot_pay_amt=tot_pay_amt+#{tot_pay_amt},
@@ -187,6 +187,18 @@
 		where
 		sale_num = #{sale_num}
 	</update>
+	
+	<!-- update id="modifyPayAmt"
+		parameterType="com.sangja.domain.SaleVO">
+		update tbl_sale_rec
+		set
+		tot_pay_amt=tot_pay_amt+#{tot_pay_amt},
+		last_pay_ymdt=#{last_pay_ymdt}
+		where
+		sale_num = #{sale_num}
+	</update-->
+	
+	
 
 	<!-- 게시물 삭제 전 백업 -->
 	<insert id="del_backup" parameterType="string">

@@ -102,8 +102,8 @@
 		from
 		tbl_sale_pay_rec
 		where
-		cust_num =
-		#{cust_num}
+		pay_num =
+		#{pay_num}
 	</select>
 
 	<!-- 게시물 수정 -->
