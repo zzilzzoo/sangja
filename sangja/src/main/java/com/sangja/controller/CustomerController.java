@@ -140,7 +140,6 @@ public class CustomerController {
 		List<CustomerVO> list = null;
 		System.out.print(new Date() + " customer-list : " + strSearch + "\n");
 		list = service.listByWhere(strSearch);
-
 		int mng_user_num;
 		// String mng_user_nm;
 		UserVO uvo = null;

@@ -969,7 +969,7 @@
 		function deleterow(obj) {
 			var tr = $(obj).parent().parent();
 			tr.remove();
-			calcTotal();
+			calcTotal();						
 		}
 
 		function removeChar(event) {

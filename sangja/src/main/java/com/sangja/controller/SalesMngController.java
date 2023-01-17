@@ -417,9 +417,15 @@ public class SalesMngController {
 				// 판매번호 셋팅
 				spvo.getSaleProdVOList().get(i).setSale_num(svo.getSale_num());
 				// 값이 중복으로 넘어오는 경우 있어 처리함..스프링 버그인듯
-				String[] sale_opts = spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
-				if (sale_opts.length > 1) {
-					spvo.getSaleProdVOList().get(i).setSale_opt(sale_opts[0]);
+				
+				try {
+					String[] sale_opts = spvo.getSaleProdVOList().get(i).getSale_opt().split(",");
+					if (sale_opts.length > 1) {
+						spvo.getSaleProdVOList().get(i).setSale_opt(sale_opts[0]);
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					//e.printStackTrace();
 				}
 				// System.out.println(spvo.getSaleProdVOList().get(i).getSale_price());
 				spService.write(spvo.getSaleProdVOList().get(i));
@@ -1804,6 +1810,15 @@ public class SalesMngController {
 		CustSalePriceVO cspvo = cuspService.view(cust_num, prd_mng_num);
 		return cspvo;
 
+	}
+	@RequestMapping(value = "/find-cust-sale-rec", method = RequestMethod.POST)
+	public @ResponseBody List<SaleVO> getFindCustSaleRec(@RequestParam("cust_num") int cust_num) throws Exception {
+		System.out.print(cust_num);
+		List<SaleVO> saleList = null;
+		if (cust_num != 0) {
+			saleList = saleService.listByWhere(" and cust_num='" + cust_num + "' and tot_ord_amt > tot_pay_amt");
+		}
+		return saleList;
 	}
 
 	/*

@@ -46,7 +46,7 @@ public class SalePayRecDAOImpl implements SalePayRecDAO {
 	@Override
 	public SalePayRecVO view(int pay_num) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return sql.selectOne(namespace + ".view", pay_num);
 	}
 
 	@Override

@@ -61,6 +61,8 @@
 
 <!-- Head Libs -->
 <script src="../resources/vendor/modernizr/modernizr.js"></script>
+<!-- 화폐 -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 </head>
 <body>
@@ -686,7 +688,7 @@
 								<div class="card-header">
 									<h2 class="card-title">Account Receivable</h2>
 								</div>
-								<div class="card-body">
+								<div class="card-body" id="account-receivale">
 									<c:forEach items="${saleList}" var="saleList" varStatus="status">
 										<div class="alert alert-info mb-2">
 											<div class="row">
@@ -1247,13 +1249,72 @@
 			$('#city').val(ltrim(addrs[2]));
 			$('#state').val(ltrim(addrs[3]));
 			$('#zip_code').val(ltrim(addrs[4]));
-
 			//alert(addr); //value값 가져오기
+			getSaleRec(ltrim(cust_num));
 		});
 		$(document).ready(function() {
 			calcTotal();
 		});
 	</script>
+	<script>
+	function getSaleRec(cust_num) {
+		 var formData = new FormData();
+		  formData.append("cust_num", cust_num);		  
+		  $.ajax({
+				type : "POST",				
+				url : "find-cust-sale-rec",
+				data : formData,
+				processData:false,
+				contentType:false,
+				dataType:"text",
+				async: false,
+				success : function(data) {
+					console.log(data);
+					var sr=JSON.parse(data);					
+					var innerHtml="";
+					//var bl=0;
+					for(i=0;i<sr.length;i++){
+						
+						var bl=sr[i].tot_ord_amt - sr[i].tot_pay_amt;
+						var bl2=numeral(bl);
+						var bl3=bl2.format('0,0.00');
+						
+						var tot=sr[i].tot_ord_amt;
+						var tot2=numeral(tot);
+						var tot3=tot2.format('0,0.00');
+						
+						var pay=sr[i].tot_pay_amt;
+						var pay2=numeral(pay);
+						var pay3=pay2.format('0,0.00');
+						
+						innerHtml=innerHtml+`<div class="alert alert-info mb-2">`
+						+`<div class="row">`
+						+`<div class="col-lg-5 mb-2">`
+						+`<span class="text-4 px-2"><strong>`+sr[i].sale_ymd+`</strong></span>`
+						+`<span class="text-4 px-2">`
+						+`<strong> <span class="text-2 px-2">`
+						+`$ `+tot3
+						+`($ `+pay3+`)</span>`
+						+`$ `+bl3+`</strong></span>`
+						+`</div>`
+						+`<div class="col-lg-7">`
+						+`<div class="row justify-content-end">`
+						+`<a href="order-detail.html" data-ajax-url="ajax-onsite-ar-detail?sale_num=`+sr[i].sale_num+`"	class="ecommerce-sidebar-link col-lg-5 btn btn-info">`
+						+`Check a history</a>`
+						+`</div></div></div></div>`;
+						
+						console.log(innerHtml);
+					}
+					document.getElementById("account-receivale").innerHTML=innerHtml;
+				},
+				error : function(request, status, error) {
+					alert("code:" + request.status + "\n" + "message:"
+							+ request.responseText + "\n" + "error:" + error);					
+				}
+			});	
+	}
+	</script>
+	
 
 	<script>
 		function mkPrnFile(sale_num) {
