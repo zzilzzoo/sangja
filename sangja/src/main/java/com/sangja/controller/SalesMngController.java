@@ -891,6 +891,36 @@ public class SalesMngController {
 		// System.out.println(spvo.getSaleProdVOList().get(1).getPrd_nm());
 		return "redirect:other-sales?sale_num=" + sale_num;
 	}
+	
+	@RequestMapping(value = "/other-sales-detail", method = RequestMethod.POST)
+	public String postOtherSalesDetail(HttpServletRequest req, SaleVO svo) throws Exception {
+
+		/*String[] sale_nums = sale_num.split(",");
+		// sale_num 두개 넘어오는 거 보정
+		if (sale_nums.length > 1) {
+			sale_num = sale_nums[0];			
+		}*/
+		 System.out.println(svo.getSale_num());
+		// old vo
+		SaleVO osvo = saleService.view(svo.getSale_num());
+		if (osvo != null) {
+			//svo.setTot_pay_amt(osvo.getTot_pay_amt());
+			//svo.setLast_pay_ymdt(osvo.getLast_pay_ymdt());
+			osvo.setSale_note(svo.getSale_note());
+			
+		}
+
+
+		saleService.modify(osvo);
+
+		// System.out.println(svo.getSale_num());
+		// System.out.println(spvo.getSaleProdVOList().get(0).getPrd_nm());
+		// System.out.println(spvo.getSaleProdVOList().get(1).getPrd_nm());
+		req.setAttribute("msg","save complete.");
+		req.setAttribute("url","other-sales-detail?sale_num=" + svo.getSale_num());
+		return "alert";
+		//return "redirect:other-sales-detail?sale_num=" + svo.getSale_num();
+	}
 
 	@RequestMapping(value = "/order-list", method = { RequestMethod.GET, RequestMethod.POST })
 	public void getOrderList(Model model, HttpServletRequest req,

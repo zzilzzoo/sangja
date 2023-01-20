@@ -46,7 +46,10 @@ public class HomeController {
 		
 		return "home";
 	}
-	
+	@RequestMapping(value = "/alert", method = RequestMethod.GET)
+	public void getAlert(Locale locale, Model model) {
+		
+	}
 	@RequestMapping(value = "/print", method = RequestMethod.GET)
 	public void print(Locale locale, Model model) {
 		

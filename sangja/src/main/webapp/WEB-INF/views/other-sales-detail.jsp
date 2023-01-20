@@ -5,7 +5,7 @@
 <%@ include file="sideba-fixed.jsp"%>
 <head>
 <c:if test="${sess_user==null }">
-	<jsp:forward page="/signin?return_path=other-sales-detail"></jsp:forward>
+	<jsp:forward page="/signin?return_path=other-sales-detail?sale_num=${salevo.sale_num}"></jsp:forward>
 </c:if>
 <!-- Basic -->
 <meta charset="UTF-8">
@@ -97,7 +97,7 @@
 				</header>
 
 				<!-- start: page -->
-				<form class="order-details action-buttons-fixed" method="post">
+				<form class="order-details action-buttons-fixed" method="post" action="other-sales-detail">
 
 					<div class="row">
 						<div class="col-lg-6 mb-4 mb-lg-0">
@@ -112,7 +112,8 @@
 											<ul class="g-info list list-unstyled list-item-bottom-space-0">
 												<li><label>Order #</label> <span>${salevo.sale_num}</span></li>
 												<li><label>Sales Type</label> <span>${salevo.sale_type}</span> <span>
-														<input type="text" class="form-control form-control-sm">
+												<input type=hidden name="sale_num" value="${salevo.sale_num}">
+														<input type="text" class="form-control form-control-sm" name="sale_note" value="${salevo.sale_note}">
 													</span></li>
 												<li><label>Sales Date</label> <c:set var="sale_ymd" value="${salevo.sale_ymd}" />
 													<fmt:parseDate var="sale_ymd" value="${sale_ymd}" pattern="yyyy-MM-dd" /> <c:set
@@ -339,12 +340,31 @@
 								class="cancel-button btn btn-light btn-px-4 py-3 border font-weight-semibold text-color-dark text-3"
 							>Cancel</a>
 						</div>
-						<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
-							<a href="#"
-								class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
-							> <i class="bx bx-trash text-4 me-2"></i> Delete Order
-							</a>
-						</div>
+						<c:choose>
+							<c:when test="${umvo.delete_yn eq 'y'}">
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a onclick="del_sales('${salenum}')"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									> <i class="bx bx-trash text-4 me-2"></i> Delete Order
+									</a>
+								</div>
+							</c:when>
+							<c:otherwise>
+								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a onclick="del_sales('${salenum}')"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									> <i class="bx bx-trash text-4 me-2"></i> Delete Order
+									</a>
+								</div>
+								<!-- 								<div class="col-12 col-md-auto ms-md-auto mt-3 mt-md-0 ms-auto">
+									<a href="#" onclick="alert('You do not have permission to delete.');return false;"
+										class="delete-button btn btn-danger btn-px-4 py-3 d-flex align-items-center font-weight-semibold line-height-1"
+									> <i class="bx bx-trash text-4 me-2"></i> Delete Order
+									</a>
+								</div>
+								-->
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</form>
 
@@ -421,6 +441,45 @@
 			}
 
 		}
+		
+		function del_sales(salenum) {		
+			var sale_num=salenum;
+			if(salenum="")
+				{
+				alert("There is no information to delete.");
+				return;
+				}
+			if (!confirm("You sure you want to delete it?")) {            
+	            return;
+	        }else{
+	        	//alert(sale_num);
+			$.ajax({
+				url : "del-sales",
+				type : "POST",
+				data : {
+					"sale_num" : sale_num
+				},
+				dataType : "text",
+				success : function(data) {
+					if (data == "ok") {
+						alert("Deleted!!.");
+						location.href="/order-list";
+					
+					}
+
+					else {
+						alert(data);
+					}
+				},
+				error : function(error) {
+					alert(error);
+				}
+			});
+	        }
+			
+			
+		}
+		
 	</script>
 </body>
 </html>
