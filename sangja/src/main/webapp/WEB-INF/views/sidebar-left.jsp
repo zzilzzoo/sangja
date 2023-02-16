@@ -336,10 +336,10 @@
 									<div style="visibility:${shown};${height}">
 										<c:choose>
 											<c:when test="${secondmenu_code==2}">
-												<li class="nav-active"><a class="nav-link" href="ar-managment2">AR Management</a></li>
+												<li class="nav-active"><a class="nav-link" href="ar-managment">AR Management</a></li>
 											</c:when>
 											<c:otherwise>
-												<li><a class="nav-link" href="ar-managment2"> AR Management </a></li>
+												<li><a class="nav-link" href="ar-managment"> AR Management </a></li>
 											</c:otherwise>
 										</c:choose>
 									</div>

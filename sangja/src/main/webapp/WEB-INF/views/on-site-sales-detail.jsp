@@ -240,7 +240,7 @@
 																<td>${pay_ymd}</td>
 																<td>$ <fmt:formatNumber value=" ${payList.pay_amt}" pattern="#,##0.00" /></td>
 																<td>${payList.pay_type}</td>
-																<td><a href="#" onclick="del_pay('${payList.pay_num}')"
+																<td><a href="" onclick="del_pay('${payList.pay_num}')"
 																	class="delete-button btn btn-danger btn-px-1 py-1 line-height-1"
 																><i class="bx bx-trash text-2 me-1"></i></a></td>
 															</tr>

@@ -142,7 +142,7 @@
 	<select id="paysum" parameterType="string"
 		resultType="double">
 		select
-		sum(pay_amt)
+		ifnull(sum(pay_amt),0) pay_amt
 		from
 		tbl_sale_pay_rec where
 		sale_num=#{sale_num}

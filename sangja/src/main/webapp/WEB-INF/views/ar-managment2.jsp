@@ -201,7 +201,7 @@
 										</div>
 									</form>
 									<table class="table table-ecommerce-simple table-striped mb-0"
-										id="datatable-ecommerce-list1" style="min-width: 900px;"	>
+										id="datatable-ecommerce-list" style="min-width: 900px;"	>
 										<thead>
 											<tr>
 												<th>#</th>
@@ -227,7 +227,9 @@
 												<tr>
 													<fmt:parseDate var="sale_ymd" value="${salelist.sale_ymd}" pattern="yyyy-MM-dd" />
 													<td><input type="hidden" id="sale_num" value="${salelist.sale_num}" />${status.count }</td>
-													<td><c:if test="${salelist.sale_type eq 'onsite' }">
+													<td>
+													<span hidden>${salelist.sale_ymd}</span>
+													<c:if test="${salelist.sale_type eq 'onsite' }">
 															<a class="simple-ajax-popup" href="ajax-onsite-detail?sale_num=${salelist.sale_num}"><strong><fmt:formatDate
 																		value="${sale_ymd}" pattern="MM/dd/yyyy"
 																	/></strong></a>

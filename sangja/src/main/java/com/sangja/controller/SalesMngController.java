@@ -541,7 +541,7 @@ public class SalesMngController {
 
 		double pay_amt = 0;
 		try {
-			pay_amt = Double.parseDouble(_pay_amt);
+			pay_amt = Double.parseDouble(_pay_amt.replace(",",""));
 		} catch (Exception e) {
 			// 에러시 수행
 			System.out.println(e.getMessage());
@@ -569,7 +569,15 @@ public class SalesMngController {
 		payService.write(vo);
 		// 총결제금액 수정
 
-		saleService.modifyPayAmt(sale_num, pay_amt, pay_ymdt);
+		SaleVO svo=saleService.view(sale_num);
+		
+		System.out.println("postSalePay:" + sale_num);
+		
+		//현제 지급금액 계산
+		double paySum=payService.salepaySum(sale_num);
+		System.out.println("postSalePay:" + paySum);
+		
+		saleService.modifyPayAmt(sale_num, paySum, pay_ymdt);
 
 		// request.setAttribute("msg", "The deposit is complete.");
 		String msg = "The deposit is complete.";
@@ -595,16 +603,29 @@ public class SalesMngController {
 			SalePayRecVO sprvo=payService.view(Integer.parseInt(pay_num));
 			//판매내역가져오기
 			SaleVO svo=saleService.view(sprvo.getSale_num());
+			
+			System.out.println("postSalePayDel:" + sprvo.getSale_num());
 			//삭제
 			payService.delete(Integer.parseInt(pay_num));
 			//현제 지급금액 계산
 			double paySum=payService.salepaySum(sprvo.getSale_num());
-			if(svo!=null)
+			System.out.println("postSalePayDel:" + paySum);
+			/*if(svo!=null)
 			{
 				svo.setTot_pay_amt(paySum);
+				System.out.println("postSalePayDel:" + svo.getTot_pay_amt());
 				saleService.modify(svo);
 				
-			}
+			}*/
+			
+			String pay_ymdt = "";
+
+			Date date = Calendar.getInstance().getTime();
+			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			dateFormat.setTimeZone(TimeZone.getTimeZone("CST"));
+			pay_ymdt = dateFormat.format(date);
+			
+			saleService.modifyPayAmt(sprvo.getSale_num(), paySum, pay_ymdt);
 			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block

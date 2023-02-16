@@ -234,7 +234,7 @@
 													<td>${list.visit_term}</td>
 													<fmt:parseDate var="visit_ymd"
 														value="${list.last_visit_ymd}" pattern="yyyy-MM-dd" />
-													<td><fmt:formatDate value="${visit_ymd}"
+													<td><span hidden>${list.last_visit_ymd}</span><fmt:formatDate value="${visit_ymd}"
 															pattern="MM/dd/yyyy" /></td>
 													<td><a class="btn btn-primary btn-md btn-py-1 px-6"
 														href="on-site-sales?cust_num=${list.cust_num}"><i

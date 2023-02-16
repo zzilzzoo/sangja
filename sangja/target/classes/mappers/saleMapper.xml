@@ -182,7 +182,7 @@
 		parameterType="hashMap">
 		update tbl_sale_rec
 		set
-		tot_pay_amt=tot_pay_amt+#{tot_pay_amt},
+		tot_pay_amt=#{tot_pay_amt},
 		last_pay_ymdt=#{last_pay_ymdt}
 		where
 		sale_num = #{sale_num}

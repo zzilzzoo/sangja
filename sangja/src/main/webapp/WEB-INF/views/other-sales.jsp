@@ -104,6 +104,7 @@
 				<form class="ecommerce-form action-buttons-fixed" name="saveSales" id="saveSales" action="#"
 					method="post"
 				>
+				<input type="hidden" id="editmode" value="${editMode}">
 					<div class="row">
 						<div class="col-lg-6 mb-4 mb-lg-0">
 
@@ -1196,7 +1197,6 @@
 			alert('You need to save first.');
 			return;
 			}
-		
 		
 			var sale_num;
 			var pay_type;

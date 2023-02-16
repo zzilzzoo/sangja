@@ -139,11 +139,15 @@
 														data-plugin-datepicker>
 														<span class="input-group-text"> <i
 															class="fas fa-calendar-alt"></i>
-														</span> <input name="sale_ymd_s" type="text" class="form-control">
+														</span> 
+														<fmt:parseDate  var="dateValue_s"  value="${sale_ymd_s}" pattern="yyyy-MM-dd"/>
+														<input name="sale_ymd_s" type="text" class="form-control" value="<fmt:formatDate value="${dateValue_s}" pattern="MM/dd/yyyy"/>" autocomplete="off" >
 														<span
 															class="input-group-text border-start-0 border-end-0 rounded-0">
-															to </span> <input type="text" class="form-control"
-															name="sale_ymd_e">
+															to </span> 
+															<fmt:parseDate  var="dateValue_e"  value="${sale_ymd_e}" pattern="yyyy-MM-dd"/>
+															<input type="text" class="form-control"
+															name="sale_ymd_e" value="<fmt:formatDate value="${dateValue_e}" pattern="MM/dd/yyyy"/>" autocomplete="off" >
 													</div>
 												</div>
 												<div class="col-6 col-lg-auto ps-lg-1 mb-3 mb-lg-3">
@@ -239,7 +243,7 @@
 														pattern="yyyy-MM-dd" />
 													<td><input type="hidden" id="sale_num"
 														value="${salelist.sale_num}" />${status.count }</td>
-													<td><c:if test="${salelist.sale_type eq 'onsite' }">
+													<td><span hidden>${salelist.sale_ymd}</span><c:if test="${salelist.sale_type eq 'onsite' }">
 															<a class="simple-ajax-popup"
 																href="ajax-onsite-detail?sale_num=${salelist.sale_num}"><strong><fmt:formatDate
 																		value="${sale_ymd}" pattern="MM/dd/yyyy" /></strong></a>
